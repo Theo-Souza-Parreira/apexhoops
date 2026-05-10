@@ -1,7 +1,7 @@
+import AppRoutes from './routes/Index'
+
 function App() {
-  return (
-    <h1>ApexHoops</h1>
-  )
+  return <AppRoutes />
 }
 
 export default App
