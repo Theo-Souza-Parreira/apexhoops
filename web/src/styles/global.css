@@ -1,0 +1,63 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; 
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+
+
+:root{
+  /* COLORS */
+  
+  --color-primary: #ff7a00;
+  --color-secondary: #2563eb;
+  --white: #ffffff;
+  --black: #000000;
+
+  /* BACKGROUNDS */
+
+  --background-primary: #0f172a;
+  --background-secondary: #1e293b;
+
+  /* TEXT */
+
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+
+  /* SPACING */
+
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+
+  /* BORDER */
+
+  --radius-md: 12px;
+
+
+  /* FONT FAMILY */
+
+  --font-primary: 'Inter', sans-serif;
+  --font-logo: 'Poppins', sans-serif;
+
+  /* FONT SIZES */
+
+  --text-pp: 12px;
+  --text-p: 14px;
+  --text-m: 16px;
+  --text-g: 20px;
+  --text-gg: 28px;
+  --text-xl: 40px;
+  --text-2xl: 64px;
+
+  /* FONT WEIGHTS */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+
+}
