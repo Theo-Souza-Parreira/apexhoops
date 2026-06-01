@@ -1,6 +1,6 @@
-import styles from './Navbar.module.css'
+import styles from './Header.module.css'
 
-function Navbar() {
+function Header() {
   return (
     <header className={styles.header}>
       <a href="/" className={styles.logo}> ApexHoops </a>
@@ -17,4 +17,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+export default Header

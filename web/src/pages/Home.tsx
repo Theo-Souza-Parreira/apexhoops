@@ -1,9 +1,13 @@
-import Navbar from "../components/Navbar"
+import Header from "../components/header"
+import MainLayout from "../components/MainLayout"
+import Footer from "../components/Footer"
 
 function Home() {
   return (
     <div>
-      <Navbar />
+      <Header />
+      <MainLayout />
+      <Footer />
 
     </div>
   )

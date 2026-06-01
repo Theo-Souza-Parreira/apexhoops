@@ -1,0 +1,16 @@
+.conteiner {
+    background-color: var(--background-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    padding: var(--spacing-lg);
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    position: fixed;
+
+}
+
+.titulo {
+    color: var(--color-primary);
+}
