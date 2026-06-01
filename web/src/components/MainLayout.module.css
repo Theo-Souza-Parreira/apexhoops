@@ -1,0 +1,13 @@
+main{
+    margin-top: 120px;
+}
+
+.title{
+    font-size: var(--text-gg);
+    font-family: var(--font-logo);
+    color: var(--color-primary);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
