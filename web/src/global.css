@@ -2,33 +2,30 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box; 
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
 }
 
 
 
 :root{
-  /* COLORS */
+
+  --background-app: linear-gradient( 350deg, var(--color-secondary) 0%, var(--black) 45%, var(--color-primary) 100% );
   
-  --color-primary: #ff7a00;
-  --color-secondary: #2563eb;
+  --color-primary: #FF6A13;
+  --color-secondary: #003B5C;
   --white: #ffffff;
   --black: #000000;
-
-  /* BACKGROUNDS */
+  --mensagem: #ff5b5b;
 
   --background-primary: #0f172a;
   --background-secondary: #1e293b;
 
-  /* TEXT */
-
   --text-primary: #ffffff;
   --text-secondary: #94a3b8;
-
-  /* SPACING */
 
   --spacing-sm: 8px;
   --spacing-md: 16px;
@@ -37,17 +34,10 @@
   --spacing-gg: 64px;
   --spacing-supergg: 128px;
 
-  /* BORDER */
-
   --radius-md: 12px;
-
-
-  /* FONT FAMILY */
 
   --font-primary: 'Inter', sans-serif;
   --font-logo: 'Poppins', sans-serif;
-
-  /* FONT SIZES */
 
   --text-pp: 12px;
   --text-p: 14px;
@@ -55,9 +45,7 @@
   --text-g: 20px;
   --text-gg: 28px;
   --text-xl: 40px;
-  --text-2xl: 64px;
-
-  /* FONT WEIGHTS */
+  --text-xxl: 64px;
 
   --weight-regular: 400;
   --weight-medium: 500;
