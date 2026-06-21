@@ -1,32 +1,37 @@
-import estilos from './Login.module.css'
-import { TbLogin2 } from "react-icons/tb";
-import { FaUser } from "react-icons/fa6";
+import estilos from './Contato.module.css'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod';
+import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type UsuarioTipo } from '../tipos/Usuario';
 import { useNavigate } from 'react-router-dom'
 
 type FormValues = {
     email: string
-    senha: string
+    nome: string
+    numero: string
+    mensagem: string
 }
 
-const loginSchema = z.object({
+const contatoSchema = z.object({
 
     email: z.email({message: 'Informe um e-mail válido.'}),
 
-    senha: z.string()
-            .min(6, {message: 'A senha deve conter entre 6 a 18 caracteres.'})
-            .max(18, {message: 'A senha deve conter entre 6 a 18 caracteres.'})
+    nome: z.string()
+            .min(2, {message: 'Informe um nome válido.'}),
+
+    numero: z.string()
+            .min(8, { message: 'Informe um número válido.' }),
+
+    mensagem: z.string()
+            .min(10, { message: 'A mensagem deve ter pelo menos 10 caracteres' })
 })
 
-export function Login(){
+export function Contato(){
 
     const { 
         register, handleSubmit, formState:{errors} 
     } = useForm<FormValues>(
-        {resolver: zodResolver(loginSchema)}
+        {resolver: zodResolver(contatoSchema)}
     )
 
     const dadosUsuario: UsuarioTipo = {
@@ -41,28 +46,31 @@ export function Login(){
     const autenticarUsuario = (data: FormValues) => {
 
         dadosUsuario.email = data.email
-        dadosUsuario.senha = data.senha
+        dadosUsuario.nome = data.nome
+        dadosUsuario.numero = data.numero
 
         navegacao('home')
 
     }
 
-    const novoUsuario = ()=>{
-        navegacao('cadastro')
-    }
-
     return(
-        
         <div className={estilos.conteiner}>
 
             <h1 className={estilos.titulo}>
-                <span>Apex</span> <span className={estilos.hoops}>Hoops</span>
+                Contato
             </h1>
 
             <form 
                 className={estilos.formulario}
                 onSubmit={handleSubmit(autenticarUsuario)}
             >
+                
+                <input 
+                    {...register('nome')}
+                    className={estilos.campo}
+                    placeholder='Nome'
+                />
+                { errors.nome && <p className={estilos.mensagem}>{errors.nome.message}</p> }
                 
                 <input 
                     {...register('email')}
@@ -72,29 +80,27 @@ export function Login(){
                 { errors.email && <p className={estilos.mensagem}>{errors.email.message}</p> }
 
                 <input 
-                    {...register('senha')}
+                    {...register('numero')}
                     className={estilos.campo}
-                    placeholder='Senha'      
-                    type='password'      
+                    placeholder='Número'
                 />
-                { errors.senha && <p className={estilos.mensagem}>{errors.senha.message}</p> }
+                {errors.numero && <p className={estilos.mensagem}>{errors.numero.message}</p>}
+
+                <textarea
+                    {...register('mensagem')}
+                    placeholder= 'Digite sua mensagem'
+                    rows={6}
+                />
+                {errors.mensagem && <p className={estilos.mensagem}>{errors.mensagem.message}</p>}
               
                 <button 
                     className={estilos.botao}
                 >
-                    <TbLogin2 className={estilos.icone}/>
-                    Entrar
+                    Enviar
                 </button> 
 
-                <button 
-                    className={estilos.novoUsuario}
-                    onClick={novoUsuario}
-                >
-                    <FaUser className={estilos.icone}/>
-                    Cadastre-se
-                </button>
-
             </form>
+
         </div>
     )
 }

@@ -12,7 +12,7 @@ type FormValues = {
     senha: string
 }
 
-const loginSchema = z.object({
+const cadastroSchema = z.object({
     nome: z.string()
         .min(2, { message: 'O nome deve conter no mínimo 2 caracteres.' }),
 
@@ -28,13 +28,14 @@ export function Cadastro() {
     const {
         register, handleSubmit, formState: { errors }
     } = useForm<FormValues>(
-        { resolver: zodResolver(loginSchema) }
+        { resolver: zodResolver(cadastroSchema) }
     )
 
     const dadosUsuario: UsuarioTipo = {
         nome: '',
         email: '',
-        senha: ''
+        senha: '',
+        numero: ''
     }
 
     const navegacao = useNavigate()

@@ -4,6 +4,7 @@ import Home from '../pages/Home'
 import { Login } from '../pages/Login'
 import { Cadastro } from '../pages/Cadastro'
 import MainLayout from '../components/MainLayout'
+import { Contato } from '../pages/Contato'
 
 function AppRoutes() {
   return (
@@ -14,7 +15,8 @@ function AppRoutes() {
         </Route>
 
         <Route path="login" element={<Login />} />
-        <Route path="cadastro" element={<Cadastro/>}/>
+        <Route path='cadastro' element={<Cadastro/>}/>
+        <Route path='/' element={<Contato/>}/>
       </Routes>
     </BrowserRouter>
   )
