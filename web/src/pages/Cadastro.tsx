@@ -1,6 +1,5 @@
 import estilos from './Login.module.css'
 import { TbLogin2 } from "react-icons/tb";
-import { FaUser } from "react-icons/fa6";
 import { useForm } from 'react-hook-form'
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -8,11 +7,14 @@ import { type UsuarioTipo } from '../tipos/Usuario';
 import { useNavigate } from 'react-router-dom'
 
 type FormValues = {
+    nome: string
     email: string
     senha: string
 }
 
 const loginSchema = z.object({
+    nome: z.string()
+            .min(2, {message: 'O nome deve conter no mínimo 2 caracteres.'}),
 
     email: z.email({message: 'Informe um e-mail válido.'}),
 
@@ -21,7 +23,7 @@ const loginSchema = z.object({
             .max(18, {message: 'A senha deve conter entre 6 a 18 caracteres.'})
 })
 
-export function Login(){
+export function Cadastro(){
 
     const { 
         register, handleSubmit, formState:{errors} 
@@ -39,15 +41,10 @@ export function Login(){
 
     const autenticarUsuario = (data: FormValues) => {
 
+        dadosUsuario.nome = data.nome
         dadosUsuario.email = data.email
         dadosUsuario.senha = data.senha
-
-        navegacao('home')
-
-    }
-
-    const novoUsuario = ()=>{
-        navegacao('cadastro')
+        navegacao('/')
     }
 
     return(
@@ -62,6 +59,13 @@ export function Login(){
                 className={estilos.formulario}
                 onSubmit={handleSubmit(autenticarUsuario)}
             >
+                
+                <input 
+                    {...register('nome')}
+                    className={estilos.campo}
+                    placeholder='Nome'
+                />
+                { errors.nome && <p className={estilos.mensagem}>{errors.nome.message}</p> }
                 
                 <input 
                     {...register('email')}
@@ -82,16 +86,8 @@ export function Login(){
                     className={estilos.botao}
                 >
                     <TbLogin2 className={estilos.icone}/>
-                    Entrar
+                    Cadastrar
                 </button> 
-
-                <button 
-                    className={estilos.novoUsuario}
-                    onClick={novoUsuario}
-                >
-                    <FaUser className={estilos.icone}/>
-                    Cadastre-se
-                </button>
 
             </form>
         </div>
