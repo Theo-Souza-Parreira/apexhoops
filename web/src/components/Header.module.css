@@ -1,44 +1,74 @@
-.header{
+.header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 10%;
-    background: var(--background-primary);
+    /* Usando sua variável de espaçamento */
+    padding: var(--spacing-md) 10%; 
+    /* Cor --background-primary (#0f172a) com 85% de opacidade */
+    background: rgba(15, 23, 42, 0.85); 
+    /* Efeito de desfoque no fundo (Glassmorphism) */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
+    /* Linha sutil para separar o header do resto do app */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
 }
 
-.logo{
+.logo {
     font-size: var(--text-gg);
     font-family: var(--font-logo);
     color: var(--color-primary);
-
+    font-weight: var(--weight-bold);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: text-shadow 0.3s ease;
 }
 
+/* Brilho sutil na logo ao passar o mouse */
+.logo:hover {
+    text-shadow: 0 0 10px rgba(255, 106, 19, 0.4); 
+}
+
+/* Adicione esta classe ao container dos links <a> na sua tag <nav> */
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-g); /* Substitui o margin-left solto */
+}
 
 .navbar a {
     position: relative;
     font-size: var(--text-m);
-    color: var(--white);
-    margin-left: 40px;
+    color: var(--text-secondary); /* Começa mais discreto (cinza) */
     font-family: var(--font-primary);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-.navbar a::before{
+/* Fica branco (destaque) ao passar o mouse */
+.navbar a:hover {
+    color: var(--text-primary); 
+}
+
+.navbar a::before {
     content: "";
     position: absolute;
     top: 100%;
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--white);
-    transition: .3s;
-    
+    background: var(--color-primary); /* Barra na cor laranja primária */
+    transition: width 0.3s ease;
+    margin-top: 4px; /* Dá um leve respiro entre o texto e a linha */
+    border-radius: 2px; /* Deixa as pontas da linha arredondadas */
 }
 
-.navbar a:hover::before{
+.navbar a:hover::before {
     width: 100%;
 }

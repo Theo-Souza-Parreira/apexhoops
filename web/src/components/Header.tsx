@@ -1,20 +1,20 @@
-import styles from './Header.module.css'
+  import styles from './Header.module.css'
 
-function Header() {
-  return (
-    <header className={styles.header}>
-      <a href="/" className={styles.logo}> ApexHoops </a>
+  function Header() {
+    return (
+      <header className={styles.header}>
+        <a href="/" className={styles.logo}> ApexHoops </a>
 
-      <nav className={styles.navbar}>
+        <nav className={styles.navbar}>
 
-        <a href="/">Home</a>
-        <a href="/">About</a>
-        <a href="/">Services</a>
-        <a href="/">Contact</a>
+          <a href="/">Sobre</a>
+          <a href="/">Baixe</a>
+          <a href="/">Contato</a>
+          <a href="login">Entrar</a>
 
-      </nav>
-    </header>
-  )
-}
+        </nav>
+      </header>
+    )
+  }
 
-export default Header
+  export default Header

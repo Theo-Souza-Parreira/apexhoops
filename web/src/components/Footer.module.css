@@ -1,16 +1,70 @@
 .conteiner {
-    background-color: var(--background-primary);
-    display: flex;
-    justify-content: center;
-    align-items: center;    
-    padding: var(--spacing-lg);
-    bottom: 0;
-    left: 0;
     width: 100%;
-    position: fixed;
-
+    /* Mesmo preenchimento lateral da Nav (10%) para alinhar perfeitamente */
+    padding: var(--spacing-lg) 10%; 
+    
+    /* Efeito Glassmorphism idêntico ao da Navbar */
+    background: rgba(15, 23, 42, 0.85); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+    
+    /* Linha sutil no TOPO para separar o footer do conteúdo de cima */
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.titulo {
+/* Texto de copyright */
+.copyright {
+    font-family: var(--font-primary);
+    font-size: var(--text-p);
+    color: var(--text-secondary);
+}
+
+/* Destaque para o nome do sistema no texto */
+.logoTxt {
+    font-family: var(--font-logo);
     color: var(--color-primary);
+    font-weight: var(--weight-bold);
+}
+
+/* Alinhamento dos links do footer */
+.footerNav {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+/* Estilo dos links (Espelhado da Navbar, ligeiramente menor) */
+.footerNav a {
+    position: relative;
+    font-size: var(--text-p);
+    color: var(--text-secondary);
+    font-family: var(--font-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footerNav a:hover {
+    color: var(--text-primary);
+}
+
+/* Efeito da linha laranja subindo no hover */
+.footerNav a::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-primary);
+    transition: width 0.3s ease;
+    margin-top: 4px;
+    border-radius: 2px;
+}
+
+.footerNav a:hover::before {
+    width: 100%;
 }

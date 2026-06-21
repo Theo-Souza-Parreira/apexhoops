@@ -1,0 +1,155 @@
+/* Container pai que segura todas as seções empilhadas */
+.pageContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* PRIMEIRA SEÇÃO (Antigo .conteiner) */
+.secaoHero {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    background: var(--background-app);
+    padding: 0 8%;
+    gap: var(--spacing-g);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+    max-width: 624px;
+    flex-shrink: 0;
+}
+
+.title {
+    font-family: var(--font-primary);
+    font-size: 52px;
+    font-weight: var(--weight-bold);
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.context {
+    font-family: var(--font-primary);
+    font-size: 21px;
+    font-weight: var(--weight-regular);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.btn {
+    background-color: var(--color-primary);
+    color: var(--white);
+    font-family: var(--font-primary);
+    font-size: 18px;
+    font-weight: var(--weight-bold);
+    padding: var(--spacing-md) var(--spacing-g); 
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    margin-top: var(--spacing-sm);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #e55a00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(255, 106, 19, 0.25);
+}
+
+.ladoDireito {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 450px;
+}
+
+.img {
+    width: 150%;
+    height: auto;
+    max-height: 530px;
+    object-fit: contain;
+}
+
+/* ==========================================================================
+   SEGUNDA SEÇÃO (NOVA PÁGINA PARA BAIXO)
+   ========================================================================== */
+.secaoRecursos {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Usando seu segundo fundo escuro para criar divisão visual */
+    background: var(--background-secondary); 
+    padding: var(--spacing-supergg) 8%;
+}
+
+.recursosContent {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-supergg); /* Grande espaço entre o título e os cards */
+    align-items: center;
+}
+
+.secaoTitle {
+    font-family: var(--font-primary);
+    font-size: var(--text-xl);
+    color: var(--text-primary);
+    font-weight: var(--weight-bold);
+    text-align: center;
+}
+
+/* Grid automático que alinha os 3 cards lado a lado */
+.cardsGrid {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    width: 100%;
+    flex-wrap: wrap; /* Faz quebrar de linha em telas pequenas */
+}
+
+/* Estilo individual de cada Card */
+.card {
+    background: var(--background-primary); /* Fundo contrastante escuro */
+    padding: var(--spacing-g);
+    border-radius: var(--radius-md);
+    flex: 1;
+    min-width: 280px;
+    max-width: 360px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-primary); /* Acende a borda em laranja no hover */
+}
+
+.cardIcon {
+    font-size: var(--text-xl);
+    display: inline-block;
+    margin-bottom: var(--spacing-md);
+}
+
+.card h3 {
+    font-family: var(--font-primary);
+    color: var(--text-primary);
+    font-size: var(--text-g);
+    margin-bottom: var(--spacing-sm);
+}
+
+.card p {
+    font-family: var(--font-primary);
+    color: var(--text-secondary);
+    font-size: var(--text-p);
+    line-height: 1.5;
+}
