@@ -32,7 +32,8 @@ export function Login(){
     const dadosUsuario: UsuarioTipo = {
         nome: '',
         email: '',
-        senha: ''
+        senha: '',
+        numero: ''
     }
 
     const navegacao = useNavigate()

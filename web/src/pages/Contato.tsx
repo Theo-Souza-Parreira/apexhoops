@@ -1,5 +1,4 @@
-import estilos from './Cadastro.module.css'
-import { TbLogin2 } from "react-icons/tb";
+import estilos from './Contato.module.css'
 import { useForm } from 'react-hook-form'
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -7,28 +6,32 @@ import { type UsuarioTipo } from '../tipos/Usuario';
 import { useNavigate } from 'react-router-dom'
 
 type FormValues = {
-    nome: string
     email: string
-    senha: string
+    nome: string
+    numero: string
+    mensagem: string
 }
 
-const cadastroSchema = z.object({
-    nome: z.string()
-            .min(2, {message: 'O nome deve conter no mínimo 2 caracteres.'}),
+const contatoSchema = z.object({
 
     email: z.email({message: 'Informe um e-mail válido.'}),
 
-    senha: z.string()
-            .min(6, {message: 'A senha deve conter entre 6 a 18 caracteres.'})
-            .max(18, {message: 'A senha deve conter entre 6 a 18 caracteres.'})
+    nome: z.string()
+            .min(2, {message: 'Informe um nome válido.'}),
+
+    numero: z.string()
+            .min(8, { message: 'Informe um número válido.' }),
+
+    mensagem: z.string()
+            .min(10, { message: 'A mensagem deve ter pelo menos 10 caracteres' })
 })
 
-export function Cadastro(){
+export function Contato(){
 
     const { 
         register, handleSubmit, formState:{errors} 
     } = useForm<FormValues>(
-        {resolver: zodResolver(cadastroSchema)}
+        {resolver: zodResolver(contatoSchema)}
     )
 
     const dadosUsuario: UsuarioTipo = {
@@ -42,18 +45,19 @@ export function Cadastro(){
 
     const autenticarUsuario = (data: FormValues) => {
 
-        dadosUsuario.nome = data.nome
         dadosUsuario.email = data.email
-        dadosUsuario.senha = data.senha
-        navegacao('/')
+        dadosUsuario.nome = data.nome
+        dadosUsuario.numero = data.numero
+
+        navegacao('home')
+
     }
 
     return(
-        
         <div className={estilos.conteiner}>
 
             <h1 className={estilos.titulo}>
-                <span>Apex</span> <span className={estilos.hoops}>Hoops</span>
+                Contato
             </h1>
 
             <form 
@@ -76,21 +80,27 @@ export function Cadastro(){
                 { errors.email && <p className={estilos.mensagem}>{errors.email.message}</p> }
 
                 <input 
-                    {...register('senha')}
+                    {...register('numero')}
                     className={estilos.campo}
-                    placeholder='Senha'      
-                    type='password'      
+                    placeholder='Número'
                 />
-                { errors.senha && <p className={estilos.mensagem}>{errors.senha.message}</p> }
+                {errors.numero && <p className={estilos.mensagem}>{errors.numero.message}</p>}
+
+                <textarea
+                    {...register('mensagem')}
+                    placeholder= 'Digite sua mensagem'
+                    rows={6}
+                />
+                {errors.mensagem && <p className={estilos.mensagem}>{errors.mensagem.message}</p>}
               
                 <button 
                     className={estilos.botao}
                 >
-                    <TbLogin2 className={estilos.icone}/>
-                    Cadastrar
+                    Enviar
                 </button> 
 
             </form>
+
         </div>
     )
 }
