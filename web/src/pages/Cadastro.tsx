@@ -3,7 +3,7 @@ import { TbLogin2 } from "react-icons/tb";
 import { useForm } from 'react-hook-form'
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
-import { type UsuarioTipo } from '../tipos/Usuario';
+import { type UsuarioTipo } from '../types/Usuario';
 import { useNavigate } from 'react-router-dom'
 
 type FormValues = {
@@ -28,7 +28,7 @@ export function Cadastro() {
     const {
         register, handleSubmit, formState: { errors }
     } = useForm<FormValues>(
-        { resolver: zodResolver(cadastroSchema) }
+        {resolver: zodResolver(cadastroSchema)}
     )
 
     const dadosUsuario: UsuarioTipo = {
@@ -49,7 +49,7 @@ export function Cadastro() {
     }
 
     const voltar = () => {
-        navegacao('/')
+        navegacao('login')
     }
 
     return (
