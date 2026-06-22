@@ -1,5 +1,4 @@
 import estilos from './Home.module.css'
-import HomeImage from "../assets/HomeImage.png"
 import { useNavigate } from 'react-router-dom'
 
 
@@ -16,29 +15,22 @@ function Home() {
     <div className={estilos.pageContainer}>
       
       {/* PRIMEIRA SEÇÃO (TELA INICIAL) */}
-      <section className={estilos.secaoHero}>
-        <div className={estilos.content}>
-          <h1 className={estilos.title}>
-            Visualização e
-            <br/>
-            análise dos dados
-            <br/>
-            de treinos de basquete
-          </h1>
-          
-          <h2 className={estilos.context}>
-            O Apex Hoops Viewer organiza usuários, treinos,
-            métricas e estatísticas geradas pelo aplicativo mobile de treinamento,
-            apoiando análise administrativa e evolução dos atletas.
-          </h2>
+      <section className={estilos.banner}>
+        <div className={estilos.conteudo}>
 
-          <button className={estilos.btn} onClick={acessar}>
-            Acessar sistema
+          <h1 className={estilos.titulo}> Treine. </h1>
+          <h1 className={estilos.titulo}> Evolua. </h1>
+          <h1 className={estilos.titulo2}> Supere. </h1>
+
+          <button 
+            className={estilos.botao}
+            onClick={acessar}
+          >
+            Conhecer
           </button>
-        </div>
 
-        <div className={estilos.ladoDireito}>
-          <img className={estilos.img} src={HomeImage} alt="Dashboard Preview" />
+          <p className={estilos.texto}>“Treine melhor, evolua mais rápido. <br/> Uma plataforma de basquete feita para melhorar desempenho.”</p>
+
         </div>
       </section>
 
