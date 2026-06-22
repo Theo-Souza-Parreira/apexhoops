@@ -2,7 +2,7 @@ import estilos from './Contato.module.css'
 import { useForm } from 'react-hook-form'
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
-import { type UsuarioTipo } from '../tipos/Usuario';
+import { type UsuarioTipo } from '../types/Usuario';
 import { useNavigate } from 'react-router-dom'
 
 type FormValues = {

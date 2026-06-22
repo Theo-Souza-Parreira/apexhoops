@@ -9,7 +9,7 @@
 
           <a href="/">Sobre</a>
           <a href="/">Baixe</a>
-          <a href="/">Contato</a>
+          <a href="contato">Contato</a>
           <a href="login">Entrar</a>
 
         </nav>

@@ -1,7 +1,17 @@
 import estilos from './Home.module.css'
 import HomeImage from "../assets/HomeImage.png"
+import { useNavigate } from 'react-router-dom'
+
 
 function Home() {
+
+      const navegacao = useNavigate()
+
+        const acessar = () => {
+        navegacao('login')
+    }
+
+
   return (
     <div className={estilos.pageContainer}>
       
@@ -22,7 +32,7 @@ function Home() {
             apoiando análise administrativa e evolução dos atletas.
           </h2>
 
-          <button className={estilos.btn}>
+          <button className={estilos.btn} onClick={acessar}>
             Acessar sistema
           </button>
         </div>
