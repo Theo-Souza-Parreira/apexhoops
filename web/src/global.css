@@ -13,16 +13,16 @@ a{
 
 :root{
 
-  --background-app: linear-gradient( 350deg, var(--color-secondary) 0%, var(--black) 45%, var(--color-primary) 100% );
+  --background-app: linear-gradient( 350deg, var(--color-secondary) 0%, var(--black) 45%, var(--color-primary) 200% );
   
   --color-primary: #FF6A13;
-  --color-secondary: #003B5C;
+  --color-secondary: #212529;
   --white: #ffffff;
   --black: #000000;
   --mensagem: #ff5b5b;
 
-  --background-primary: #0f172a;
-  --background-secondary: #1e293b;
+  --background-primary: #212529;
+  --background-secondary: #0F0F0F;
 
   --text-primary: #ffffff;
   --text-secondary: #94a3b8;
@@ -38,7 +38,7 @@ a{
 
   --font-title: "Roboto Mono", monospace;
   --font-primary: 'Inter', sans-serif;
-  --font-logo: 'Poppins', sans-serif;
+  --font-logo: "Zen Dots", sans-serif;
 
   --text-pp: 12px;
   --text-p: 14px;

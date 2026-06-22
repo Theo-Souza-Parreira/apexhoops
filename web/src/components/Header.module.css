@@ -6,7 +6,7 @@
     /* Usando sua variável de espaçamento */
     padding: var(--spacing-md) 10%; 
     /* Cor --background-primary (#0f172a) com 85% de opacidade */
-    background: rgba(15, 23, 42, 0.85); 
+    background: var(--background-secondary);
     /* Efeito de desfoque no fundo (Glassmorphism) */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
