@@ -1,70 +1,71 @@
 .conteiner {
-    width: 100%;
-    /* Mesmo preenchimento lateral da Nav (10%) para alinhar perfeitamente */
-    padding: var(--spacing-lg) 10%; 
-    
-    /* Efeito Glassmorphism idêntico ao da Navbar */
-    background: rgba(15, 23, 42, 0.85); 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;    
-    
-    /* Linha sutil no TOPO para separar o footer do conteúdo de cima */
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  width: 100%;
+  padding: 2rem 10%;
+  background: var(--color-secondary);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Texto de copyright */
-.copyright {
-    font-family: var(--font-primary);
-    font-size: var(--text-p);
-    color: var(--text-secondary);
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3rem;
+  flex-wrap: wrap;
 }
 
-/* Destaque para o nome do sistema no texto */
+.brand {
+  max-width: 380px;
+}
+
 .logoTxt {
-    font-family: var(--font-logo);
-    color: var(--color-primary);
-    font-weight: var(--weight-bold);
+  font-family: var(--font-logo);
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
 }
 
-/* Alinhamento dos links do footer */
+.brand p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
 .footerNav {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-lg);
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
-/* Estilo dos links (Espelhado da Navbar, ligeiramente menor) */
-.footerNav a {
-    position: relative;
-    font-size: var(--text-p);
-    color: var(--text-secondary);
-    font-family: var(--font-primary);
-    text-decoration: none;
-    transition: color 0.3s ease;
+.footerNav a,
+.linksSecundarios a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: 0.2s;
 }
 
-.footerNav a:hover {
-    color: var(--text-primary);
+.footerNav a:hover,
+.linksSecundarios a:hover {
+  color: var(--color-primary);
 }
 
-/* Efeito da linha laranja subindo no hover */
-.footerNav a::before {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--color-primary);
-    transition: width 0.3s ease;
-    margin-top: 4px;
-    border-radius: 2px;
+.divisor {
+  margin: 1.75rem 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
 }
 
-.footerNav a:hover::before {
-    width: 100%;
+.base {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.linksSecundarios {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }

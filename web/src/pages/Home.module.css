@@ -5,7 +5,6 @@
     flex-direction: column;
 }
 
-/* PRIMEIRA SEÇÃO (Antigo .conteiner) */
 .banner{
     margin-top: 80px;
     width: 100%;
@@ -91,7 +90,7 @@
     align-items: center;
     justify-content: center;
     /* Usando seu segundo fundo escuro para criar divisão visual */
-    background: var(--background-secondary); 
+    background: var(--background-app); 
     padding: var(--spacing-supergg) 8%;
 }
 
