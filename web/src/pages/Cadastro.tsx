@@ -49,7 +49,7 @@ export function Cadastro() {
     }
 
     const voltar = () => {
-        navegacao('login')
+        navegacao('/login')
     }
 
     return (
@@ -95,6 +95,7 @@ export function Cadastro() {
                 </button>
 
                 <button
+                    type='button'
                     className={estilos.novoUsuario}
                     onClick={voltar}
                 >

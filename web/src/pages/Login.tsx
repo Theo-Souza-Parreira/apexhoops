@@ -48,7 +48,7 @@ export function Login(){
     }
 
     const novoUsuario = ()=>{
-        navegacao('cadastro')
+        navegacao('/cadastrar')
     }
 
     return(
@@ -87,6 +87,7 @@ export function Login(){
                 </button> 
 
                 <button 
+                    type='button'
                     className={estilos.novoUsuario}
                     onClick={novoUsuario}
                 >

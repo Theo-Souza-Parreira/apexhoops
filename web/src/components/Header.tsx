@@ -1,18 +1,20 @@
   import styles from './Header.module.css'
+  import { Link } from "react-router-dom";
 
   function Header() {
     return (
       <header className={styles.header}>
-        <a href="/" className={styles.logo}> ApexHoops </a>
+        <Link to="/" className={styles.logo}>ApexHoops</Link>
 
         <nav className={styles.navbar}>
-
-          <a href="/">Sobre</a>
-          <a href="/">Baixe</a>
-          <a href="contato">Contato</a>
-          <a href="login">Entrar</a>
-
+          <Link to="/">Sobre</Link>
+          <Link to="/">Baixe</Link>
+          <Link to="/contato">Contato</Link>
+          <Link to="/login" className={styles.loginButton}>
+            Entrar
+          </Link>
         </nav>
+
       </header>
     )
   }
