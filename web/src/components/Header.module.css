@@ -17,20 +17,15 @@
     z-index: 1000;
 }
 
-.logo {
-    text-decoration: none;
-    font-size: var(--text-gg);
-    font-weight: var(--weight-bold);
-    color: var(--color-primary);
-
-    transition: 0.3s ease;
-
-    font-family: var(--font-logo);
+.logo img {
+    height: 50px;      
+    width: auto;       
+    display: block;
+    transition: transform 0.3s ease;
 }
 
-.logo:hover {
-    transform: scale(1.03);
-    text-shadow: 0 0 12px rgba(255, 106, 19, 0.4);
+.logo:hover img {
+    transform: scale(1.05);
 }
 
 .navbar {

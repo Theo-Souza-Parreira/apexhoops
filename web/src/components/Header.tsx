@@ -1,10 +1,11 @@
   import styles from './Header.module.css'
   import { Link } from "react-router-dom";
+  import  Logo  from '../assets/img/Logo.png'
 
   function Header() {
     return (
       <header className={styles.header}>
-        <Link to="/" className={styles.logo}>ApexHoops</Link>
+        <Link to="/" className={styles.logo}><img src={Logo}/></Link>
 
         <nav className={styles.navbar}>
           <Link to="/">Sobre</Link>
