@@ -6,7 +6,7 @@
 
 
 .banner{
-    margin-top: 60px;
+    margin-top: 80px;
     width: 100%;
     min-height: 80vh;
     display: flex;
@@ -36,12 +36,10 @@
 }
 
 .titulo2{
-    width: 250px;
     border-radius: 15px 0 15px 0;
     color: var(--color-primary);
     font-size: var(--text-xxl);
     font-family: var(--font-title);
-    background-color: var(--white);
     align-items: center;
     justify-content: center;
 }
