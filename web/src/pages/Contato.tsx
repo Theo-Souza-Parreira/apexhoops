@@ -1,4 +1,4 @@
-import estilos from './Contato.module.css'
+import styles from './Contato.module.css'
 import { useForm } from 'react-hook-form'
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -51,50 +51,50 @@ export function Contato(){
 
         navegacao('home')
 
-    }
+    }   
 
     return(
-        <div className={estilos.conteiner}>
+        <div className={styles.conteiner}>
 
-            <h1 className={estilos.titulo}>
+            <h1 className={styles.titulo}>
                 Contato
             </h1>
 
             <form 
-                className={estilos.formulario}
+                className={styles.formulario}
                 onSubmit={handleSubmit(autenticarUsuario)}
             >
                 
                 <input 
                     {...register('nome')}
-                    className={estilos.campo}
+                    className={styles.campo}
                     placeholder='Nome'
                 />
-                { errors.nome && <p className={estilos.mensagem}>{errors.nome.message}</p> }
+                { errors.nome && <p className={styles.mensagem}>{errors.nome.message}</p> }
                 
                 <input 
                     {...register('email')}
-                    className={estilos.campo}
+                    className={styles.campo}
                     placeholder='Email'
                 />
-                { errors.email && <p className={estilos.mensagem}>{errors.email.message}</p> }
+                { errors.email && <p className={styles.mensagem}>{errors.email.message}</p> }
 
                 <input 
                     {...register('numero')}
-                    className={estilos.campo}
+                    className={styles.campo}
                     placeholder='Número'
                 />
-                {errors.numero && <p className={estilos.mensagem}>{errors.numero.message}</p>}
+                {errors.numero && <p className={styles.mensagem}>{errors.numero.message}</p>}
 
                 <textarea
                     {...register('mensagem')}
                     placeholder= 'Digite sua mensagem'
                     rows={6}
                 />
-                {errors.mensagem && <p className={estilos.mensagem}>{errors.mensagem.message}</p>}
+                {errors.mensagem && <p className={styles.mensagem}>{errors.mensagem.message}</p>}
               
                 <button 
-                    className={estilos.botao}
+                    className={styles.botao}
                 >
                     Enviar
                 </button> 

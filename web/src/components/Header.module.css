@@ -7,13 +7,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     padding: 0 8%;
-
     background: var(--background-secondary);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-
     z-index: 1000;
 }
 
@@ -35,60 +32,65 @@
     font-family: var(--font-title);
 }
 
-.navbar a {
+/* Classe aplicada nos links de navegação */
+.navLink {
     position: relative;
-
     text-decoration: none;
     color: var(--white);
     font-size: var(--text-g);
     font-weight: var(--weight-medium);
-
     transition: color 0.25s ease;
 }
 
-.navbar a:hover {
+.navLink:hover {
     color: var(--text-primary);
 }
 
-.navbar a::after {
+.navLink::after {
     content: "";
-
     position: absolute;
     left: 50%;
     bottom: calc(var(--spacing-sm) * -1);
-
     width: 0;
     height: 2px;
-
     background: var(--color-primary);
     border-radius: 999px;
-
     transform: translateX(-50%);
     transition: width 0.25s ease;
 }
 
-.navbar a:hover::after {
+.navLink:hover::after {
     width: 100%;
 }
 
-/* Destaque para o botão Entrar */
-.loginButton {
-    padding: var(--spacing-sm) var(--spacing-md);
 
-    background: var(--color-primary);
-    color: var(--white);
-
-    border-radius: 15px;
-    font-weight: var(--weight-semibold);
-
-    transition: transform 0.25s ease, opacity 0.25s ease;
+.navLink.active {
+    color: var(--text-primary);
 }
 
-.loginButton::after {
-    display: none;
+
+.navLink.active::after {
+    width: 100%; 
+}
+
+
+.loginButton {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-primary);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 15px;
+    font-weight: var(--weight-semibold);
+    font-family: var(--font-title);
+    font-size: var(--text-g);
+    transition: transform 0.25s ease, opacity 0.25s ease, background-color 0.25s ease;
 }
 
 .loginButton:hover {
     transform: translateY(-2px);
     opacity: 0.9;
+}
+
+.loginButton.active {
+    background: #e55a00; 
 }
