@@ -6,6 +6,7 @@
     justify-content: center;
     align-items: center;
     background: var(--background-app);
+    margin-top: var(--spacing-gg);            
 }
 
 .titulo {

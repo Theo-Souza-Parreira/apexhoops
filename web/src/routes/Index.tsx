@@ -5,6 +5,7 @@ import { Login } from '../pages/Login'
 import { Cadastro } from '../pages/Cadastro'
 import MainLayout from '../components/MainLayout'
 import { Contato } from '../pages/Contato'
+import { Baixar } from '../pages/Baixar'
 
 function AppRoutes() {
   return (
@@ -15,20 +16,11 @@ function AppRoutes() {
           <Route path='contato' element={<Contato />} />
           <Route path='login' element={<Login />} />
           <Route path='cadastrar' element={<Cadastro />} />
+          <Route path='baixar' element={<Baixar />} />
         </Route>
-
       </Routes>
     </BrowserRouter>
   )
 }
-/* * Rota Pai (Layout): Não tem um 'path' próprio. Ela serve exclusivamente como uma 
-  * "casca protetora". Qualquer rota colocada aqui dentro herdará o MainLayout.
-  */
-/* Rota Filha: O caminho é '/'. Quando acessado, o componente <Home /> 
-* é injetado diretamente no <Outlet /> do MainLayout (com Header e Footer).
-*/
-/* Rotas Externas: Como estão FORA do bloco do MainLayout, as páginas de 
-* Login e Cadastro serão renderizadas "limpas", sem o Header e o Footer.
-  */
 
-export default AppRoutes
+export default AppRoutes;

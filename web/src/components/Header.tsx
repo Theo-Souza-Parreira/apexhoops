@@ -1,23 +1,31 @@
-  import styles from './Header.module.css'
-  import { Link } from "react-router-dom";
-  import  Logo  from '../assets/img/Logo.png'
+import styles from './Header.module.css'
+import { Link, useLocation } from "react-router-dom";
+import Logo from '../assets/img/Logo.png'
 
-  function Header() {
-    return (
-      <header className={styles.header}>
-        <Link to="/" className={styles.logo}><img src={Logo}/></Link>
+function Header() {
+  const location = useLocation();
 
-        <nav className={styles.navbar}>
-          <Link to="/">Sobre</Link>
-          <Link to="/">Baixe</Link>
-          <Link to="/contato">Contato</Link>
-          <Link to="/login" className={styles.loginButton}>
-            Entrar
-          </Link>
-        </nav>
+  // Função que devolve a classe active se a rota tiver q nem o link
+  const checkIsActive = (path: string) => {
+    return location.pathname === path ? styles.active : '';
+  };
 
-      </header>
-    )
-  }
+  return (
+    <header className={styles.header}>
+      <Link to="/" className={styles.logo}><img src={Logo} alt="Logo ApexHoops" /></Link>
 
-  export default Header
+      <nav className={styles.navbar}>
+        {/* Adicionamos a classe ativa dinamicamente a cada Link */}
+        <Link to="/" className={`${styles.navLink} ${checkIsActive('/')}`}>Sobre</Link>
+        <Link to="/baixar" className={`${styles.navLink} ${checkIsActive('/baixar')}`}>Baixe</Link>
+        <Link to="/contato" className={`${styles.navLink} ${checkIsActive('/contato')}`}>Contato</Link>
+        
+        <Link to="/login" className={`${styles.loginButton} ${checkIsActive('/login')}`}>
+          Entrar
+        </Link>
+      </nav>
+    </header>
+  )
+}
+
+export default Header;
