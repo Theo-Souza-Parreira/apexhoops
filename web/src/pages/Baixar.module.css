@@ -1,10 +1,111 @@
 .conteiner {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     background: var(--background-app);
-    margin-top: var(--spacing-gg);            
+    position: relative;
+    overflow: hidden; 
+    padding: var(--spacing-gg) 8%;
+}
+
+.glowEffect {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 106, 19, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none; 
+}
+
+.card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    
+    background: rgba(30, 41, 59, 0.3); /* Fundo sutil */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    
+    padding: var(--spacing-supergg) var(--spacing-gg);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    
+    animation: fadeUp 0.8s ease-out forwards;
+}
+
+.titulo {
+    font-family: var(--font-primary);
+    font-size: var(--text-xxl); /* Um título maior e imponente */
+    font-weight: var(--weight-bold);
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.1;
+}
+
+.brand {
+    font-family: var(--font-logo);
+}
+
+.logo {
+    color: var(--color-primary);
+    text-shadow: 0 0 15px rgba(255, 106, 19, 0.3); /* Um brilho suave no texto laranja */
+}
+
+.content {
+    font-family: var(--font-primary);
+    color: var(--text-secondary); /* Cinza para leitura mais confortável */
+    font-size: var(--text-g);
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-gg);
+    max-width: 600px;
+}
+
+.destaque {
+    color: var(--text-primary); /* Branco para destacar a marca no meio do texto */
+    font-weight: var(--weight-medium);
+}
+
+.conteinerDownload {
+    display: flex;
+    gap: var(--spacing-lg);
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Em celulares, os botões caem para a próxima linha automaticamente */
+}
+
+.downloadBtn {
+    display: block;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.downloadBtn img {
+    height: 60px; /* Padroniza a altura das duas lojas para ficarem alinhadas */
+    width: auto;
+}
+
+.downloadBtn:hover {
+    transform: translateY(-5px) scale(1.02);
+    filter: drop-shadow(0 12px 20px rgba(255, 106, 19, 0.25)); 
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
