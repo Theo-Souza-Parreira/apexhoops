@@ -6,6 +6,7 @@ import { Cadastro } from '../pages/Cadastro'
 import MainLayout from '../components/MainLayout'
 import { Contato } from '../pages/Contato'
 import { Baixar } from '../pages/Baixar'
+import { Sobre } from '../pages/Sobre'
 
 function AppRoutes() {
   return (
@@ -17,6 +18,8 @@ function AppRoutes() {
           <Route path='login' element={<Login />} />
           <Route path='cadastrar' element={<Cadastro />} />
           <Route path='baixar' element={<Baixar />} />
+          <Route path='sobre' element={<Sobre />} />
+
         </Route>
       </Routes>
     </BrowserRouter>

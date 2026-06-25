@@ -15,8 +15,9 @@ function Header() {
       <Link to="/" className={styles.logo}><img src={Logo} alt="Logo ApexHoops" /></Link>
 
       <nav className={styles.navbar}>
-        {/* Adicionamos a classe ativa dinamicamente a cada Link */}
-        <Link to="/" className={`${styles.navLink} ${checkIsActive('/')}`}>Sobre</Link>
+        {/* Adicionei a classe ativa dinamicamente a cada Link */}
+        <Link to="/" className={`${styles.navLink} ${checkIsActive('/')}`}>home</Link>
+        <Link to="/sobre" className={`${styles.navLink} ${checkIsActive('/sobre')}`}>Sobre</Link>
         <Link to="/baixar" className={`${styles.navLink} ${checkIsActive('/baixar')}`}>Baixe</Link>
         <Link to="/contato" className={`${styles.navLink} ${checkIsActive('/contato')}`}>Contato</Link>
         
