@@ -4,8 +4,9 @@ import { FaUser } from "react-icons/fa6";
 import { useForm } from 'react-hook-form'
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
-import { type UsuarioTipo } from '../types/Usuario';
 import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
 type FormValues = {
     email: string
@@ -13,48 +14,35 @@ type FormValues = {
 }
 
 const loginSchema = z.object({
-
     email: z.email({message: 'Informe um e-mail válido.'}),
-
     senha: z.string()
             .min(6, {message: 'A senha deve conter entre 6 a 18 caracteres.'})
             .max(18, {message: 'A senha deve conter entre 6 a 18 caracteres.'})
 })
 
 export function Login(){
-
     const { 
         register, handleSubmit, formState:{errors} 
-    } = useForm<FormValues>(
-        {resolver: zodResolver(loginSchema)}
-    )
-
-    const dadosUsuario: UsuarioTipo = {
-        nome: '',
-        email: '',
-        senha: '',
-        numero: ''
-    }
+    } = useForm<FormValues>({
+        resolver: zodResolver(loginSchema)
+    })
 
     const navegacao = useNavigate()
+    
+    const { autenticar } = useContext(AuthContext);
 
     const autenticarUsuario = (data: FormValues) => {
+        autenticar(data.email);
 
-        dadosUsuario.email = data.email
-        dadosUsuario.senha = data.senha
-
-        navegacao('home')
-
+        navegacao('/');
     }
 
-    const novoUsuario = ()=>{
+    const novoUsuario = () => {
         navegacao('/cadastrar')
     }
 
     return(
-        
         <div className={estilos.conteiner}>
-
             <h1 className={estilos.titulo}>
                 <span>Apex</span> <span className={estilos.hoops}>Hoops</span>
             </h1>
@@ -63,7 +51,6 @@ export function Login(){
                 className={estilos.formulario}
                 onSubmit={handleSubmit(autenticarUsuario)}
             >
-                
                 <input 
                     {...register('email')}
                     className={estilos.campo}
@@ -79,9 +66,7 @@ export function Login(){
                 />
                 { errors.senha && <p className={estilos.mensagem}>{errors.senha.message}</p> }
               
-                <button 
-                    className={estilos.botao}
-                >
+                <button className={estilos.botao}>
                     <TbLogin2 className={estilos.icone}/>
                     Entrar
                 </button> 
@@ -94,7 +79,6 @@ export function Login(){
                     <FaUser className={estilos.icone}/>
                     Cadastre-se
                 </button>
-
             </form>
         </div>
     )
