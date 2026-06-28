@@ -16,13 +16,13 @@ function Header() {
 
       <nav className={styles.navbar}>
         {/* Adicionei a classe ativa dinamicamente a cada Link */}
-        <Link to="/" className={`${styles.navLink} ${checkIsActive('/')}`}>home</Link>
-        <Link to="/sobre" className={`${styles.navLink} ${checkIsActive('/sobre')}`}>Sobre</Link>
-        <Link to="/baixar" className={`${styles.navLink} ${checkIsActive('/baixar')}`}>Baixe</Link>
-        <Link to="/contato" className={`${styles.navLink} ${checkIsActive('/contato')}`}>Contato</Link>
+        <Link to="/" className={`${styles.navLink} ${checkIsActive('/')}`}>HOME</Link>
+        <Link to="/sobre" className={`${styles.navLink} ${checkIsActive('/sobre')}`}>SOBRE</Link>
+        <Link to="/baixar" className={`${styles.navLink} ${checkIsActive('/baixar')}`}>BAIXE</Link>
+        <Link to="/contato" className={`${styles.navLink} ${checkIsActive('/contato')}`}>CONTATO</Link>
         
         <Link to="/login" className={`${styles.loginButton} ${checkIsActive('/login')}`}>
-          Entrar
+          ENTRAR
         </Link>
       </nav>
     </header>

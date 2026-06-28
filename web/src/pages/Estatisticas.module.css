@@ -1,0 +1,220 @@
+.pageContainer {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background-app);
+  color: var(--text-primary);
+  padding: var(--spacing-lg) var(--spacing-g);
+  gap: var(--spacing-lg);
+  box-sizing: border-box;
+}
+
+
+.layout {
+  width: 80%;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--spacing-g);
+  align-items: start;
+  justify-content: center;
+  margin-top: 300px;
+  margin-left: 10%;
+}
+
+
+.leftPanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.radarImg {
+  width: 100%;
+  max-width: 260px;
+}
+
+.focusBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.focusTitle {
+  font-family: var(--font-title);
+  font-size: var(--text-m);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.focusText {
+  font-family: var(--font-primary);
+  font-size: var(--text-p);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.tipCard {
+  background: var(--background-primary);
+  border: 1px solid rgba(255, 106, 19, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.tipLabel {
+  font-family: var(--font-title);
+  font-size: var(--text-pp);
+  font-weight: var(--weight-bold);
+  color: var(--color-primary);
+  letter-spacing: 0.1em;
+}
+
+.tipText {
+  font-family: var(--font-primary);
+  font-size: var(--text-p);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+
+.rightPanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pageTitle {
+  font-family: var(--font-title);
+  font-size: var(--text-xxl);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.pageSubtitle {
+  font-family: var(--font-primary);
+  font-size: var(--text-p);
+  color: var(--text-secondary);
+}
+
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.statCard {
+  background: var(--background-primary);
+  border: 1px solid var(--background-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.3s ease;
+}
+
+.statCard:hover {
+  border-color: var(--color-primary);
+}
+
+.statLabel {
+  font-family: var(--font-title);
+  font-size: var(--text-pp);
+  font-weight: var(--weight-bold);
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+}
+
+.statValue {
+  font-family: var(--font-title);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.statSub {
+  font-family: var(--font-primary);
+  font-size: var(--text-pp);
+  color: var(--text-secondary);
+}
+
+.trendUp {
+  font-family: var(--font-primary);
+  font-size: var(--text-pp);
+  color: #4ade80;
+}
+
+.averageCard {
+  background: var(--background-primary);
+  border: 1px solid var(--background-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  transition: border-color 0.3s ease;
+}
+
+.averageCard:hover {
+  border-color: var(--color-primary);
+}
+
+.averageBody {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.quote {
+  font-family: var(--font-primary);
+  font-size: var(--text-m);
+  font-style: italic;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: var(--spacing-sm);
+}
+
+.quoteMarks {
+  color: var(--color-primary);
+  font-size: var(--text-gg);
+  line-height: 0;
+  vertical-align: -0.3em;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .averageBody {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .pageContainer {
+    padding: var(--spacing-md);
+  }
+}
