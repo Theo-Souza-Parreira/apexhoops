@@ -4,14 +4,14 @@ import MainLayout from '../components/MainLayout'
 import MainLayout2 from '../components/MainLayout2.tsx'
 
 import { AuthProvider } from '../contexts/AuthContext'
-import Home from '../pages/Home'
-import { Login } from '../pages/Login'
-import { Cadastro } from '../pages/Cadastro'
-import { Contato } from '../pages/Contato'
-import { Baixar } from '../pages/Baixar'
-import { Sobre } from '../pages/Sobre'
-import { Perfil } from '../pages/Perfil'
-import { Estatisticas } from '../pages/Estatisticas.tsx'
+import Home from '../pages/public/Home.tsx'
+import { Login } from '../pages/public/Login.tsx'
+import { Cadastro } from '../pages/public/Cadastro.tsx'
+import { Contato } from '../pages/public/Contato.tsx'
+import { Baixar } from '../pages/public/Baixar.tsx'
+import { Sobre } from '../pages/public/Sobre.tsx'
+import { Perfil } from '../pages/authenticated/Perfil.tsx'
+import { Estatisticas } from '../pages/authenticated/Estatisticas.tsx'
 
 function AppRoutes() {
   return (

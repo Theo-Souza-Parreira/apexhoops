@@ -11,7 +11,7 @@ export const AuthContext = createContext<AuthContextoTipo>({
     autenticar: () => {},
     sair: () => {}
 });
-
+""
 export const AuthProvider = ({Children}: {Children: ReactNode}) => {
     const [emailUsuario, setEmailUsuario] = useState('');
 

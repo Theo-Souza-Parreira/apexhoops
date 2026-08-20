@@ -1,5 +1,5 @@
 import estilos from './Perfil.module.css'
-import img from '../assets/img/Perfil.png'
+import img from '../../assets/img/Perfil.png'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'

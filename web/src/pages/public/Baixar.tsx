@@ -1,6 +1,6 @@
 import styles from './Baixar.module.css'
-import Playstore from '../assets/img/Playstore.png'
-import Apple from '../assets/img/Apple.png'
+import Playstore from '../../assets/img/Playstore.png'
+import Apple from '../../assets/img/Apple.png'
 
 export function Baixar() {
     return (

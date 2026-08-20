@@ -1,12 +1,11 @@
 import estilos from "./Estatisticas.module.css";
-import Grafico from "../assets/img/Grafico.png";
 
 export function Estatisticas() {
   return (
     <div className={estilos.pageContainer}>
       <div className={estilos.layout}>
         <aside className={estilos.leftPanel}>
-          <img src={Grafico} />
+          <img  />
 
           <div className={estilos.focusBlock}>
             <h3 className={estilos.focusTitle}>DESEMPENHO EM FOCO</h3>

@@ -39,6 +39,7 @@ a{
   --font-title: "Roboto Mono", monospace;
   --font-primary: 'Inter', sans-serif;
   --font-logo: "Zen Dots", sans-serif;
+  --font-secondary: "Roboto Mono", Bold;
 
   --text-pp: 12px;
   --text-p: 14px;

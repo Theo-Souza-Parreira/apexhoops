@@ -79,7 +79,7 @@
     background: var(--color-primary);
     color: var(--white);
     text-decoration: none;
-    border-radius: 15px;
+    border-radius: 100px;
     font-weight: var(--weight-semibold);
     font-family: var(--font-title);
     font-size: var(--text-g);
