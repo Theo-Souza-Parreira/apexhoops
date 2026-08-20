@@ -1,20 +1,34 @@
 import estilos from './Home.module.css'
-import { useNavigate } from 'react-router-dom'
-import { Banner } from '../components/Banner'
 
 
 function Home() {
 
-      const navegacao = useNavigate()
 
 
   return (
     <div className={estilos.pageContainer}>
       
       {/* PRIMEIRA SEÇÃO (TELA INICIAL) */}
-      <Banner />
 
-      {/* SEGUNDA SEÇÃO (CONTEÚDO PARA BAIXO) */}
+    <div className={estilos.bg}>
+
+      <div className={estilos.name}>
+          <h1><span className={estilos.apex}>Apex</span> Hoops</h1>
+      </div>
+    
+      <div className={estilos.desc}>
+          <h2>Treine com propósito, evolua com consistência e transforme seu jogo.</h2>
+      </div>
+    
+    <div className={estilos.containerBotao}>
+      <button className={estilos.botao}>
+        CONHEÇA
+      </button>
+    </div>
+
+    </div>
+      
+  {/* SEGUNDA SEÇÃO (CONTEÚDO PARA BAIXO) */}
       <section className={estilos.secaoRecursos}>
         <div className={estilos.recursosContent}>
           
