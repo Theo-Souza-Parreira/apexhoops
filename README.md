@@ -67,6 +67,7 @@ Desenvolver uma plataforma digital voltada ao auxílio de treinamentos individua
 ### Em desenvolvimento
 
 O projeto está atualmente em fase de estruturação e desenvolvimento das funcionalidades principais.
+(Conclusão até o fim de 2026)
 
 </div>
 
