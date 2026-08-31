@@ -5,84 +5,183 @@
   flex-direction: column;
 }
 
+/* =========================================
+   PRIMEIRA SEÇÃO (TELA INICIAL) 
+   ========================================= */
 .bg {
-  background-size: contain;
+  background-image: url(../../assets/img/Banner.png);
+  background-size: contain; 
   background-color: var(--black);
   background-repeat: no-repeat;
-  background-position: center;
-  min-height: 100vh;
+  /* Garante que o foco da imagem (o atleta) fique do lado direito */
+  background-position: center right; 
+  min-height: 98vh;
   width: 100%;
-  background-image: url(../../assets/img/Banner.png);
-}
-
-.name {
-  position: relative;
+  
+  /* Flexbox para alinhar o conteúdo à esquerda e ao centro verticalmente */
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  background-image: url(../../assets/img/Effect.png);
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: contain;
+  align-items: center; 
+  justify-content: flex-start;
+  /* O padding esquerdo (10%) alinha o texto com o logo do menu superior. Ajuste se necessário. */
+  padding: 0 10%; 
+  box-sizing: border-box;
 }
 
-.name {
-  margin-top: 380px;
+/* Caixa que segura o texto e o botão do lado esquerdo */
+.conteudoBanner {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction:column;
+  align-items: flex-start;
+  max-width:  700px; /* Controla onde o texto quebra para a próxima linha */
+  gap: 15px; /* Espaço entre o título, a descrição e o botão */
   position: relative;
+  z-index: 2;
 }
 
+/* TÍTULO */
 .name h1 {
   font-family: var(--font-logo);
-  font-size: var(--text-xxl);
+  font-size: var(--text-superg); /* Sugestão de tamanho caso a variável não exista */
   color: var(--color-primary);
   animation: fadeUp 0.8s ease forwards;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  z-index: 1;
+  margin: 0px;
+  line-height: 1.1;
+  padding-bottom: 30px;
 }
 
 .apex {
   color: var(--white);
 }
 
-.name h1::before {
+/* DESCRIÇÃO */
+.desc {
+  color: var(--white);
+  font-family: var(--font-secondary);
+  text-align: left;
+}
+
+.desc h2 {
+  margin: 0 0 15px 0;
+  font-size: var(--text-gg);
+  font-weight: 300; /* Deixa a fonte mais fina, como no design original */
+  line-height: 1.5;
+  color: #e0e0e0;
+}
+
+
+.botao {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  border-radius: 100px;
+  color: var(--white);
+  font-size: var(--text-gg, 1.1rem);
+  font-weight: var(--weight-bold, bold);
+  cursor: pointer;
+  padding: 10px 14px 10px 32px; 
+  
+  /* TRUQUES PREMIUM */
+  /* 1. Isola os elementos internos para a luz não passar por cima do texto */
+  isolation: isolate; 
+  /* 2. Corta o radar de luz para ele ficar no formato de "pílula" do botão */
+  overflow: hidden; 
+  /* 3. Fundo base transparente para a luz aparecer na borda */
+  background: rgba(255, 255, 255, 0.1); 
+  /* 4. Sombra inicial suave */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Efeito ao passar o mouse: o botão levanta e projeta um brilho laranja */
+.botao:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 102, 0, 0.4); 
+}
+
+/* O FUNDO REAL DO BOTÃO (Laranja) */
+.botao::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  /* A mágica da espessura da borda: O fundo fica 2px para dentro */
+  inset: 2px; 
+  border-radius: 100px;
+  background-color: var(--color-primary);
+  /* Um leve degradê branco diagonal para o botão ter volume e não ser chapado */
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
   z-index: -1;
-  width: 1019px;
-  height: 354px;
-  background-image: url(../../assets/img/Effect.png);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-  pointer-events: none;
+}
+
+/* A LUZ QUE GIRA (Borda Animada) */
+.botao::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  /* Degradê cônico: funciona como um varredor de radar. O final dele é branco brilhante */
+  background: conic-gradient(
+    from 0deg,
+    transparent 70%,
+    rgba(255, 255, 255, 0.3) 85%,
+    #ffffff 100%
+  );
+  animation: girarBordaBotao 2.5s linear infinite;
+  z-index: -2;
+}
+
+/* A ANIMAÇÃO DO GIRO */
+@keyframes girarBordaBotao {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.botao:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* Bolinha branca com a seta do botão */
+.iconeSeta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+  color: var(--color-primary); /* A cor da seta fica laranja */
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
 }
 
 .conteudo {
-  width: 40%;
-  height: 500%;
+  width: 100%;
+  max-width: 900px; 
+  height: auto; 
   display: flex;
   flex-direction: column;
-  align-items: left;
-  margin-left: 25px;
+  align-items: flex-start;
+  margin: 0 auto; 
+  padding: 20px;
   gap: 20px;
+  box-sizing: border-box;
 }
 
 .titulo {
   color: var(--white);
   font-size: var(--text-xxl);
   font-family: var(--font-title);
+  margin: 0;
 }
 
 .titulo2 {
-  width: 36%;
+  display: inline-flex;
+  padding: 10px 25px;
   border-radius: 15px 0 15px 0;
   color: var(--color-primary);
   font-size: var(--text-xxl);
@@ -90,131 +189,31 @@
   background-color: var(--white);
   align-items: center;
   justify-content: center;
+  margin: 0;
 }
 
 .texto {
-  width: 70%;
-  height: auto;
+  width: 100%;
   font-family: var(--font-title);
   font-size: var(--text-g);
   color: var(--white);
-  margin-left: 15px;
   text-align: justify;
+  line-height: 1.6;
+  margin: 0;
 }
 
-.desc {
-  color: var(--white);
+/* =========================================
+   Segunda seção
+   ========================================= */
+
+.bg2{
   position: relative;
-  z-index: 1;
-  font-family: var(--font-secondary);
-  display: flex;
-  justify-content: center;
-  padding: 25px;
-  margin-bottom: 20px;
-}
-
-.containerBotao {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.botao {
-  gap: var(--spacing-sm);
-  border: none;
-  border-radius: 100px;
-  background: var(--color-primary);
-  color: var(--white);
-  font-size: var(--text-gg);
-  font-weight: var(--weight-bold);
-  cursor: pointer;
-  transition: 0.2s;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 28px;
-  padding-right: 28px;
-}
-
-.botao:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.05);
-}
-
-/* ==========================================================================
-   SEGUNDA SEÇÃO (NOVA PÁGINA PARA BAIXO)
-   ========================================================================== */
-.secaoRecursos {
+    background-image: url(../../assets/img/Fundo2.png);
+  background-size: cover; 
+  background-position: center; 
+  min-height: 85vh;
   width: 100%;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* Usando seu segundo fundo escuro para criar divisão visual */
-  background: var(--background-app);
-  padding: var(--spacing-supergg) 8%;
-}
-
-.recursosContent {
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-supergg); /* Grande espaço entre o título e os cards */
-  align-items: center;
-}
-
-.secaoTitle {
-  font-family: var(--font-primary);
-  font-size: var(--text-xl);
-  color: var(--text-primary);
-  font-weight: var(--weight-bold);
-  text-align: center;
-}
-
-/* Grid automático que alinha os 3 cards lado a lado */
-.cardsGrid {
-  display: flex;
-  justify-content: center;
-  gap: var(--spacing-lg);
-  width: 100%;
-  flex-wrap: wrap; /* Faz quebrar de linha em telas pequenas */
-}
-
-/* Estilo individual de cada Card */
-.card {
-  background: var(--background-primary); /* Fundo contrastante escuro */
-  padding: var(--spacing-g);
-  border-radius: var(--radius-md);
-  flex: 1;
-  min-width: 280px;
-  max-width: 360px;
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  border-color: var(--color-primary); /* Acende a borda em laranja no hover */
-}
-
-.cardIcon {
-  font-size: var(--text-xl);
-  display: inline-block;
-  margin-bottom: var(--spacing-md);
-}
-
-.card h3 {
-  font-family: var(--font-primary);
-  color: var(--text-primary);
-  font-size: var(--text-g);
-  margin-bottom: var(--spacing-sm);
-}
-
-.card p {
-  font-family: var(--font-primary);
-  color: var(--text-secondary);
-  font-size: var(--text-p);
-  line-height: 1.5;
+  background-color: var(--black);
+  border-top: 2px solid var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
 }
