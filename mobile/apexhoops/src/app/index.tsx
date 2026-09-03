@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Image, Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Color, router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
+import { useState } from "react";
+import { Alert, Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { UsuarioTipo } from "@/types/Usuario";
 import { Cores } from "@/constants/Cores";
 import { Fontes } from "@/constants/Fontes";
+import { UsuarioTipo } from "@/types/Usuario";
 
 export default function Index() {
   const [usuario, setUsuario] = useState<UsuarioTipo>(
@@ -23,9 +23,13 @@ export default function Index() {
       return
     }
 
-    // Por enquanto, apenas para testar a navegação.
-    // Aqui posteriormente entra a validação do usuário.
     Alert.alert("Login", `Tentando entrar com ${usuario.email}`)
+    router.replace("/(tabs)/home")
+  }
+
+
+  const abrirNovoUsuario = () => {
+      router.push('/novoUsuario')
   }
 
   return (
@@ -93,8 +97,9 @@ export default function Index() {
               estilos.botaoNovoUsuario,
               { opacity: pressed ? 0.85 : 1 },
             ]}
+            onPress={abrirNovoUsuario}
           >
-            <Text style={estilos.novoUsuarioTexto}>Cadastra-se</Text>
+            <Text style={estilos.novoUsuarioTexto}>Cadastre-se</Text>
           </Pressable>
         
         </View>
@@ -113,8 +118,8 @@ const estilos = StyleSheet.create({
 
   conteiner: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    paddingTop: 60,
   },
 
   logo: {
@@ -151,7 +156,7 @@ const estilos = StyleSheet.create({
   tituloLogin: {
     color: Cores.branco,
     fontFamily: Fontes.titulo2,
-    fontSize: Fontes.grande2,
+    fontSize: Fontes.grande3,
     marginBottom: 15,
   },
 
@@ -161,7 +166,7 @@ const estilos = StyleSheet.create({
     fontFamily: Fontes.titulo1,
     fontSize: Fontes.medio1,
     height: 50,
-    width: 185, 
+    width: 200, 
     marginVertical: 5,
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -177,7 +182,7 @@ const estilos = StyleSheet.create({
     backgroundColor: Cores.cinza_clara,
     borderColor: Cores.primaria,
     height: 55, 
-    width: 185, 
+    width: 200, 
     borderWidth: 1,
     borderRadius: 30, 
     marginTop: 15, 
@@ -187,7 +192,7 @@ const estilos = StyleSheet.create({
   rotulo: {
     color: Cores.secundaria,
     fontFamily: Fontes.titulo2,
-    fontSize: Fontes.grande1,
+    fontSize: Fontes.grande2,
   },
 
   esquecisenha: {

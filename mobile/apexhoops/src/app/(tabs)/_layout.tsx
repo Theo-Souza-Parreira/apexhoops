@@ -1,5 +1,5 @@
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -27,14 +27,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <StatusBar style="light" />
 
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="index" />
-        <Stack.Screen name="novoUsuario" />
-      </Stack>
+      <Slot />
 
     </SafeAreaProvider>
   );
