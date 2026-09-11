@@ -1,219 +1,872 @@
-/* Container pai que segura todas as seções empilhadas */
 .pageContainer {
+  --altura-nav: 72px;
+
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  background-color: var(--black);
+  color: var(--white);
+}
+
+/* Linhas laranjas globais */
+.pageContainer > section,
+.pageContainer > footer {
+  border-top: 1px solid var(--color-primary);
+}
+
+.container {
+  width: min(1180px, 86%);
+  margin: 0 auto;
 }
 
 /* =========================================
-   PRIMEIRA SEÇÃO (TELA INICIAL) 
+   HERO
    ========================================= */
+
 .bg {
-  background-image: url(../../assets/img/Banner.png);
-  background-size: contain; 
-  background-color: var(--black);
-  background-repeat: no-repeat;
-  /* Garante que o foco da imagem (o atleta) fique do lado direito */
-  background-position: center right; 
-  min-height: 100vh;
+  position: relative;
   width: 100%;
-  
-  /* Flexbox para alinhar o conteúdo à esquerda e ao centro verticalmente */
-  display: flex;
-  align-items: center; 
-  justify-content: flex-start;
-  /* O padding esquerdo (10%) alinha o texto com o logo do menu superior. Ajuste se necessário. */
-  padding: 0 10%; 
+  min-height: 100vh;
+
+  display: grid;
+  padding: 13% 7% 44px;
   box-sizing: border-box;
+  background-color: var(--black);
+  background-image: url("../../assets/img/Banner.png");
+  background-repeat: no-repeat;
+  background-position: center right;
+  background-size: contain;
 }
 
-/* Caixa que segura o texto e o botão do lado esquerdo */
+.bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.96) 24%,
+    rgba(0, 0, 0, 0.72) 48%,
+    rgba(0, 0, 0, 0.18) 72%,
+    rgba(0, 0, 0, 0.03) 100%
+  );
+
+  pointer-events: none;
+}
+
 .conteudoBanner {
-  display: flex;
-  flex-direction:column;
-  align-items: flex-start;
-  max-width:  700px; /* Controla onde o texto quebra para a próxima linha */
-  gap: 15px; /* Espaço entre o título, a descrição e o botão */
   position: relative;
   z-index: 2;
+  align-self: center;
+
+  width: min(640px, 49%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
 }
 
-/* TÍTULO */
+.name {
+  width: 100%;
+}
+
 .name h1 {
-  font-family: var(--font-logo);
-  font-size: var(--text-superg); /* Sugestão de tamanho caso a variável não exista */
+  margin: 0;
   color: var(--color-primary);
+  font-family: var(--font-logo);
+  font-size: clamp(3.8rem, 5.4vw, 5.7rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
   animation: fadeUp 0.8s ease forwards;
-  margin: 0px;
-  line-height: 1.1;
-  padding-bottom: 30px;
 }
 
 .apex {
   color: var(--white);
 }
 
-/* DESCRIÇÃO */
 .desc {
+  max-width: 580px;
   color: var(--white);
   font-family: var(--font-secondary);
   text-align: left;
 }
 
 .desc h2 {
-  margin: 0 0 15px 0;
-  font-size: var(--text-gg);
-  font-weight: 300; /* Deixa a fonte mais fina, como no design original */
-  line-height: 1.5;
-  color: #e0e0e0;
-}
-
-
-.botao {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  border: none;
-  border-radius: 100px;
-  color: var(--white);
-  font-size: var(--text-gg, 1.1rem);
-  font-weight: var(--weight-bold, bold);
-  cursor: pointer;
-  padding: 10px 14px 10px 32px; 
-  
-  /* TRUQUES PREMIUM */
-  /* 1. Isola os elementos internos para a luz não passar por cima do texto */
-  isolation: isolate; 
-  /* 2. Corta o radar de luz para ele ficar no formato de "pílula" do botão */
-  overflow: hidden; 
-  /* 3. Fundo base transparente para a luz aparecer na borda */
-  background: rgba(255, 255, 255, 0.1); 
-  /* 4. Sombra inicial suave */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
-
-/* Efeito ao passar o mouse: o botão levanta e projeta um brilho laranja */
-.botao:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(255, 102, 0, 0.4); 
-}
-
-/* O FUNDO REAL DO BOTÃO (Laranja) */
-.botao::after {
-  content: "";
-  position: absolute;
-  /* A mágica da espessura da borda: O fundo fica 2px para dentro */
-  inset: 2px; 
-  border-radius: 100px;
-  background-color: var(--color-primary);
-  /* Um leve degradê branco diagonal para o botão ter volume e não ser chapado */
-  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
-  z-index: -1;
-}
-
-/* A LUZ QUE GIRA (Borda Animada) */
-.botao::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  /* Degradê cônico: funciona como um varredor de radar. O final dele é branco brilhante */
-  background: conic-gradient(
-    from 0deg,
-    transparent 70%,
-    rgba(255, 255, 255, 0.3) 85%,
-    #ffffff 100%
-  );
-  animation: girarBordaBotao 2.5s linear infinite;
-  z-index: -2;
-}
-
-/* A ANIMAÇÃO DO GIRO */
-@keyframes girarBordaBotao {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.botao:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
-}
-
-/* Bolinha branca com a seta do botão */
-.iconeSeta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--white);
-  color: var(--color-primary); /* A cor da seta fica laranja */
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-}
-
-.conteudo {
-  width: 100%;
-  max-width: 900px; 
-  height: auto; 
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 0 auto; 
-  padding: 20px;
-  gap: 20px;
-  box-sizing: border-box;
-}
-
-.titulo {
-  color: var(--white);
-  font-size: var(--text-xxl);
-  font-family: var(--font-title);
   margin: 0;
-}
-
-.titulo2 {
-  display: inline-flex;
-  padding: 10px 25px;
-  border-radius: 15px 0 15px 0;
-  color: var(--color-primary);
-  font-size: var(--text-xxl);
-  font-family: var(--font-title);
-  background-color: var(--white);
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-}
-
-.texto {
-  width: 100%;
-  font-family: var(--font-title);
-  font-size: var(--text-g);
-  color: var(--white);
-  text-align: justify;
-  line-height: 1.6;
-  margin: 0;
+  color: #e7e7e7;
+  font-size: clamp(1.1rem, 1.55vw, 1.45rem);
+  font-weight: 400;
+  line-height: 1.55;
 }
 
 /* =========================================
-   Segunda seção
+   BOTÕES
    ========================================= */
 
-.bg2{
-  position: relative;
-    background-image: url(../../assets/img/Fundo2.png);
-  background-size: cover; 
-  background-position: center; 
-  min-height: 100vh;
-  width: 100%;
-  background-color: var(--black);
-  border-top: 2px solid var(--color-primary);
-  border-bottom: 2px solid var(--color-primary);
+.botao,
+.botaoCta {
+  display: inline-flex;
+  align-items: center;
+
+  border-radius: 100px;
+  background-color: var(--color-primary);
+  color: var(--white);
+
+  font-family: var(--font-secondary);
+  font-weight: 700;
+  text-decoration: none;
 }
+
+.botao {
+  gap: 12px;
+  margin-top: 8px;
+  padding: 9px 10px 9px 27px;
+  font-size: 0.92rem;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+.botao:hover,
+.botaoCta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.botao:hover {
+  box-shadow: 0 8px 25px rgba(255, 98, 0, 0.3);
+}
+
+.iconeSeta {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background-color: var(--white);
+  color: var(--color-primary);
+}
+
+/* =========================================
+   BENEFÍCIOS
+   ========================================= */
+
+.faixaBeneficios {
+  position: relative;
+  z-index: 3;
+
+  align-self: end;
+  justify-self: center;
+
+  width: min(1180px, 100%);
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  background: rgba(10, 10, 10, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  box-sizing: border-box;
+}
+
+.beneficio {
+  min-height: 108px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  padding: 20px 26px;
+  box-sizing: border-box;
+}
+
+.beneficio:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.beneficioIcone {
+  flex-shrink: 0;
+  color: var(--color-primary);
+  font-size: 2.15rem;
+  line-height: 1;
+}
+
+.beneficio div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.beneficio strong {
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.beneficio div span {
+  color: #b8b8b8;
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+/* =========================================
+   BLOCO INSTITUCIONAL
+   Duas barras laranjas envolvendo
+   "Para quem é o Apex Hoops?" + "Programas"
+   ========================================= */
+
+.blocoInstitucional {
+  border-top: 1px solid var(--color-primary);
+  border-bottom: 1px solid var(--color-primary);
+}
+
+/* =========================================
+   PARA QUEM É
+   ========================================= */
+
+.bg2 {
+  position: relative;
+  width: 100%;
+  min-height: 580px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding: 65px 10%;
+  box-sizing: border-box;
+
+  background-color: var(--black);
+  background-image:
+    linear-gradient(
+      270deg,
+      rgba(0, 0, 0, 0.98) 0%,
+      rgba(0, 0, 0, 0.92) 30%,
+      rgba(0, 0, 0, 0.68) 52%,
+      rgba(0, 0, 0, 0.12) 78%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url("../../assets/img/Fundo2.png");
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center left;
+}
+
+.publicoConteudo {
+  width: min(500px, 44%);
+  margin-left: auto;
+
+  position: relative;
+  z-index: 2;
+}
+
+.publicoConteudo h2 {
+  margin: 0 0 25px;
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.2;
+}
+
+.publicoConteudo h2 span {
+  display: block;
+  color: var(--color-primary);
+}
+
+.publicoConteudo p {
+  max-width: 430px;
+  margin: 0 0 25px;
+
+  color: #d6d6d6;
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.listaPublico,
+.listaSobre {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.listaPublico {
+  gap: 14px;
+  margin: 0 0 32px;
+}
+
+.listaPublico li {
+  position: relative;
+  padding-left: 30px;
+
+  color: #e3e3e3;
+  font-family: var(--font-secondary);
+  font-size: 0.95rem;
+}
+
+.listaPublico li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: -2px;
+
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--color-primary);
+  border-radius: 50%;
+
+  color: var(--color-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.botaoSecundario {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 11px 20px;
+
+  border: 1px solid var(--color-primary);
+  border-radius: 100px;
+
+  background: transparent;
+  color: var(--white);
+
+  font-family: var(--font-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition: background-color 0.25s ease;
+}
+
+.botaoSecundario span {
+  color: var(--color-primary);
+  font-size: 1.2rem;
+}
+
+.botaoSecundario:hover {
+  background-color: var(--color-primary);
+}
+
+.botaoSecundario:hover span {
+  color: var(--white);
+}
+
+/* =========================================
+   PROGRAMAS + SOBRE
+   ========================================= */
+
+.programasSobre {
+  padding: 52px 0 62px;
+  background: linear-gradient(180deg, #050505 0%, #000000 100%);
+}
+
+.tituloSecao {
+  margin: 0 0 28px;
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  text-align: center;
+}
+
+.tituloSecao span,
+.sobreConteudo h2 span,
+.cta h2 span {
+  color: var(--color-primary);
+}
+
+.gradeProgramas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.cardPrograma {
+  min-height: 215px;
+
+  padding: 26px;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(255, 98, 0, 0.35);
+  border-radius: 8px;
+
+  background: linear-gradient(145deg, #141414 0%, #080808 100%);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.cardPrograma:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-primary);
+}
+
+.iconePrograma {
+  margin-bottom: 14px;
+  color: var(--color-primary);
+  font-size: 2rem;
+}
+
+.cardPrograma h3 {
+  margin: 0 0 9px;
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+}
+
+.cardPrograma p {
+  flex: 1;
+  margin: 0 0 15px;
+
+  color: #bdbdbd;
+  font-family: var(--font-secondary);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.linkPrograma {
+  display: inline-flex;
+  gap: 12px;
+
+  color: var(--color-primary);
+  font-family: var(--font-secondary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* =========================================
+   SOBRE INTEGRADO
+   ========================================= */
+
+.sobreIntegrado {
+  margin-top: 42px;
+
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 50px;
+
+  align-items: center;
+}
+
+.sobreImagem {
+  min-height: 350px;
+
+  border: 1px solid rgba(255, 98, 0, 0.2);
+  border-radius: 6px;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.08),
+      rgba(0, 0, 0, 0.4)
+    ),
+    url("../../assets/img/Banner.png");
+
+  background-size: cover;
+  background-position: 72% center;
+  background-repeat: no-repeat;
+}
+
+.rotuloSecao {
+  display: block;
+  margin-bottom: 8px;
+
+  color: var(--color-primary);
+  font-family: var(--font-secondary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.sobreConteudo h2 {
+  margin: 0 0 15px;
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: clamp(1.9rem, 2.8vw, 2.6rem);
+  line-height: 1.2;
+}
+
+.sobreConteudo > p {
+  margin: 0 0 20px;
+
+  color: #c9c9c9;
+  font-family: var(--font-secondary);
+  line-height: 1.55;
+}
+
+.listaSobre {
+  gap: 12px;
+  margin: 0 0 22px;
+}
+
+.listaSobre li {
+  position: relative;
+  padding-left: 30px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.listaSobre li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 2px;
+
+  color: var(--color-primary);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.listaSobre strong {
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: 0.86rem;
+}
+
+.listaSobre span {
+  color: #a8a8a8;
+  font-family: var(--font-secondary);
+  font-size: 0.78rem;
+}
+
+/* =========================================
+   DEPOIMENTOS
+   ========================================= */
+
+.depoimentos {
+  padding: 50px 0 75px;
+  background-color: #020202;
+}
+
+.gradeDepoimentos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.cardDepoimento {
+  min-height: 220px;
+
+  padding: 28px;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(255, 98, 0, 0.35);
+  border-radius: 10px;
+
+  background: linear-gradient(145deg, #101010, #080808);
+}
+
+.estrelas {
+  margin-bottom: 18px;
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
+
+.cardDepoimento blockquote {
+  flex: 1;
+  margin: 0 0 22px;
+
+  color: #d3d3d3;
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.autor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--color-primary);
+  border-radius: 50%;
+
+  background-color: #252525;
+  color: var(--white);
+
+  font-family: var(--font-title);
+}
+
+.autor div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.autor strong {
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: 0.82rem;
+}
+
+.autor div span {
+  color: #999;
+  font-family: var(--font-secondary);
+  font-size: 0.72rem;
+}
+
+/* =========================================
+   CTA
+   ========================================= */
+
+.cta {
+  position: relative;
+  padding: 10px 0;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(5, 5, 5, 0.96),
+      rgba(5, 5, 5, 0.65)
+    ),
+    url("../../assets/img/Bola.png");
+
+  background-position: center;
+  background-size: cover;
+}
+
+.ctaConteudo {
+  width: min(1100px, 84%);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.cta h2 {
+  margin: 0 0 12px;
+
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: clamp(1.5rem, 1vw, 0.8rem);
+  line-height: 1.15;
+}
+
+.cta p {
+  max-width: 430px;
+  margin: 0;
+
+  color: #cfcfcf;
+  font-family: var(--font-secondary);
+  line-height: 1.5;
+}
+
+.botaoCta {
+  gap: 14px;
+  padding: 8px 9px 8px 28px;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+}
+/* =========================================
+   ANIMAÇÃO
+   ========================================= */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 900px) {
+  .bg {
+    min-height: 780px;
+    padding: 60px 7% 36px;
+    row-gap: 50px;
+    background-position: 65% center;
+  }
+
+  .conteudoBanner {
+    width: min(570px, 70%);
+  }
+
+  .faixaBeneficios {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .beneficio:nth-child(2) {
+    border-right: none;
+  }
+
+  .beneficio:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .bg2 {
+    padding-left: 8%;
+    padding-right: 8%;
+  }
+
+  .publicoConteudo {
+    width: min(480px, 52%);
+  }
+
+  .gradeProgramas,
+  .gradeDepoimentos {
+    grid-template-columns: 1fr;
+  }
+
+  .sobreIntegrado {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .sobreImagem {
+    min-height: 380px;
+  }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+  .bg {
+    min-height: 850px;
+    padding: 80px 6% 28px;
+    row-gap: 60px;
+    background-position: 63% center;
+  }
+
+  .bg::before {
+    background: rgba(0, 0, 0, 0.74);
+  }
+
+  .conteudoBanner {
+    width: 100%;
+  }
+
+  .name h1 {
+    font-size: 3rem;
+  }
+
+  .desc {
+    max-width: 100%;
+  }
+
+  .desc h2 {
+    font-size: 1rem;
+  }
+
+  .faixaBeneficios {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .beneficio {
+    min-height: 88px;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .beneficioIcone {
+    font-size: 1.55rem;
+  }
+
+  .beneficio strong {
+    font-size: 0.8rem;
+  }
+
+  .beneficio div span {
+    font-size: 0.7rem;
+  }
+
+  .bg2 {
+    min-height: 610px;
+    padding: 60px 7%;
+    align-items: center;
+    background-position: center left;
+  }
+
+  .publicoConteudo {
+    width: 100%;
+    padding: 25px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .container,
+  .ctaConteudo {
+    width: 88%;
+  }
+
+  .programasSobre {
+    padding: 45px 0 55px;
+  }
+
+  .cardPrograma,
+  .cardDepoimento {
+    padding: 24px;
+  }
+
+  .sobreIntegrado {
+    margin-top: 35px;
+  }
+
+  .sobreImagem {
+    min-height: 330px;
+  }
+
+  .ctaConteudo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
