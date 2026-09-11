@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import Header2 from './Header2';
 import Footer from './Footer';
+import { MenuLateral } from './MenuLateral';
 
 /**
  * MainLayout: Define a estrutura visual global e fixa da aplicação.
@@ -10,7 +10,7 @@ import Footer from './Footer';
 function MainLayout2(){
     return (
         <div>
-            <Header2/>
+            <MenuLateral />
             <main>
                 {/* * Outlet: É um componente do React Router que serve como um "espaço reservado". 
                   * É exatamente aqui que o conteúdo das rotas filhas (as páginas específicas) 

@@ -12,25 +12,32 @@ import { Baixar } from '../pages/public/Baixar.tsx'
 import { Sobre } from '../pages/public/Sobre.tsx'
 import { Perfil } from '../pages/authenticated/Perfil.tsx'
 import { Estatisticas } from '../pages/authenticated/Estatisticas.tsx'
+import { Home2 } from '../pages/authenticated/Home2.tsx'
+import { Treinos } from '../pages/authenticated/Treinos.tsx'
+import { LayoutProvider } from '../contexts/LayoutContexto'
 
 function AppRoutes() {
   return (
     <BrowserRouter>
       <AuthProvider Children={
-        <Routes>
-          <Route element={<MainLayout />}>
-            <Route path='/' element={<Home />} />
-            <Route path='contato' element={<Contato />} />
-            <Route path='login' element={<Login />} />
-            <Route path='cadastrar' element={<Cadastro />} />
-            <Route path='baixar' element={<Baixar />} />
-            <Route path='sobre' element={<Sobre />} />
-          </Route>
-          <Route element={<MainLayout2 />}>
-              <Route path='perfil' element={<Perfil />}/>
-              <Route path='status' element={<Estatisticas />} />
-          </Route>
-        </Routes>
+        <LayoutProvider>
+          <Routes>
+            <Route element={<MainLayout />}>
+              <Route path='/' element={<Home />} />
+              <Route path='contato' element={<Contato />} />
+              <Route path='login' element={<Login />} />
+              <Route path='cadastrar' element={<Cadastro />} />
+              <Route path='baixar' element={<Baixar />} />
+              <Route path='sobre' element={<Sobre />} />
+            </Route>
+            <Route element={<MainLayout2 />}>
+                <Route path='/home2' element={<Home2/>} />
+                <Route path='status' element={<Estatisticas />} />
+                <Route path='treinos' element={<Treinos />} />
+                <Route path='perfil' element={<Perfil />}/>
+            </Route>
+          </Routes>
+        </LayoutProvider>
       } />
     </BrowserRouter >
   )
