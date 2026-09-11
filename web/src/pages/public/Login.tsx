@@ -34,7 +34,7 @@ export function Login(){
     const autenticarUsuario = (data: FormValues) => {
         autenticar(data.email);
 
-        navegacao('/status');
+        navegacao('/home2');
     }
 
     const novoUsuario = () => {

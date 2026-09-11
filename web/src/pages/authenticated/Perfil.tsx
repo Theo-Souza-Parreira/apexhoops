@@ -67,25 +67,9 @@ export function Perfil() {
         console.log(data)
     }
 
-    const sair = () =>{
-        navegacao('/')
-    }
-
-    const voltar = () =>{
-        navegacao('/status')
-    }
 
     return (
         <div className={estilos.conteiner}>
-
-            <button
-                type="button"
-                className={estilos.voltar}
-                onClick={voltar}
-            >
-                <IoArrowBackOutline className={estilos.iconeVoltar} />
-                Voltar
-            </button>
 
             <div className={estilos.imgperfil}>
                 <img src={img} alt="Perfil" />
@@ -165,11 +149,6 @@ export function Perfil() {
 
                 <button className={estilos.botao}>
                     Confirmar
-                </button>
-
-                <button className={estilos.sair} onClick={sair}>
-                <IoLogOutOutline className={estilos.icone} />
-                    Sair
                 </button>
 
             </form>

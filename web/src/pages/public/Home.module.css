@@ -15,7 +15,7 @@
   background-repeat: no-repeat;
   /* Garante que o foco da imagem (o atleta) fique do lado direito */
   background-position: center right; 
-  min-height: 98vh;
+  min-height: 100vh;
   width: 100%;
   
   /* Flexbox para alinhar o conteúdo à esquerda e ao centro verticalmente */
@@ -211,7 +211,7 @@
     background-image: url(../../assets/img/Fundo2.png);
   background-size: cover; 
   background-position: center; 
-  min-height: 85vh;
+  min-height: 100vh;
   width: 100%;
   background-color: var(--black);
   border-top: 2px solid var(--color-primary);
