@@ -3,9 +3,6 @@ import img from '../../assets/img/Perfil.png'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useNavigate } from 'react-router-dom'
-import { IoLogOutOutline } from "react-icons/io5";
-import { IoArrowBackOutline } from "react-icons/io5";
 
 type FormValues = {
     nome: string
@@ -60,8 +57,6 @@ export function Perfil() {
     } = useForm<FormValues>({
         resolver: zodResolver(perfilSchema)
     })
-
-    const navegacao = useNavigate()
 
     const salvarPerfil = (data: FormValues) => {
         console.log(data)
