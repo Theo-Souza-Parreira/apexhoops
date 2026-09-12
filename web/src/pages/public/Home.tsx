@@ -62,26 +62,28 @@ const programas: Programa[] = [
 ];
 
 const depoimentos: Depoimento[] = [
-{
+  {
     nome: "Lucas M.",
     texto:
-        "Uma nova forma de treinar basquete, unindo tecnologia, prática e evolução."
-},
-{
+      "Uma nova forma de treinar basquete, unindo tecnologia, prática e evolução.",
+  },
+  {
     nome: "Gabriel S.",
     texto:
-        "O Apex Hoops nasceu para tornar o treinamento de basquete mais acessível e organizado."
-},
-{
+      "O Apex Hoops nasceu para tornar o treinamento de basquete mais acessível e organizado.",
+  },
+  {
     nome: "Matheus A.",
     texto:
-        "Mais do que um aplicativo, uma proposta para aproximar tecnologia e basquete."
-},];
+      "Mais do que um aplicativo, uma proposta para aproximar tecnologia e basquete.",
+  },
+];
 
 function Home() {
   return (
     <main className={estilos.pageContainer}>
       <section
+        id="home"
         className={estilos.bg}
         aria-labelledby="titulo-home"
       >
@@ -100,16 +102,10 @@ function Home() {
             </h2>
           </div>
 
-          <a
-            href="#publico"
-            className={estilos.botao}
-          >
+          <a href="#publico" className={estilos.botao}>
             CONHEÇA
 
-            <span
-              className={estilos.iconeSeta}
-              aria-hidden="true"
-            >
+            <span className={estilos.iconeSeta} aria-hidden="true">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -205,7 +201,6 @@ function Home() {
                   </span>
 
                   <h3>{programa.titulo}</h3>
-
                   <p>{programa.descricao}</p>
 
                   <a

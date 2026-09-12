@@ -1,3 +1,8 @@
+:global(html) {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
 .pageContainer {
   --altura-nav: 72px;
 
@@ -5,6 +10,7 @@
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  scroll-behavior: smooth;
   background-color: var(--black);
   color: var(--white);
 }
@@ -25,6 +31,7 @@
    ========================================= */
 
 .bg {
+  scroll-margin-top: 72px;
   position: relative;
   width: 100%;
   min-height: 100vh;
@@ -466,13 +473,16 @@
    ========================================= */
 
 .sobreIntegrado {
+  scroll-margin-top: 110px;
   margin-top: 42px;
+  position: relative;
 
   display: grid;
   grid-template-columns: 0.95fr 1.05fr;
   gap: 50px;
 
   align-items: center;
+  border-radius: 12px;
 }
 
 .sobreImagem {
@@ -487,7 +497,7 @@
       rgba(0, 0, 0, 0.08),
       rgba(0, 0, 0, 0.4)
     ),
-    url("../../assets/img/Banner.png");
+    url("../../assets/Pessoa.png");
 
   background-size: cover;
   background-position: 72% center;
@@ -869,4 +879,155 @@
     align-items: flex-start;
   }
 }
+
+
+/* =========================================
+   ANIMAÇÃO DA NAVEGAÇÃO
+   ========================================= */
+
+.sobreIntegrado:global(.animacaoNavegacao) {
+  animation: destaqueSobre 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sobreIntegrado:global(.animacaoNavegacao) .sobreImagem {
+  animation: entradaImagemSobre 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sobreIntegrado:global(.animacaoNavegacao) .sobreConteudo {
+  animation: entradaConteudoSobre 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bg:global(.animacaoNavegacao) .conteudoBanner {
+  animation: entradaHomeConteudo 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bg:global(.animacaoNavegacao) .faixaBeneficios {
+  animation: entradaHomeBeneficios 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes destaqueSobre {
+  0% {
+    transform: translateY(18px);
+    filter: brightness(0.92);
+  }
+
+  55% {
+    transform: translateY(-3px);
+    filter: brightness(1.05);
+  }
+
+  100% {
+    transform: translateY(0);
+    filter: brightness(1);
+  }
+}
+
+@keyframes entradaImagemSobre {
+  from {
+    opacity: 0;
+    transform: translateX(-40px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes entradaConteudoSobre {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes entradaHomeConteudo {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes entradaHomeBeneficios {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageContainer {
+    scroll-behavior: auto;
+  }
+
+  .sobreIntegrado:global(.animacaoNavegacao),
+  .sobreIntegrado:global(.animacaoNavegacao) .sobreImagem,
+  .sobreIntegrado:global(.animacaoNavegacao) .sobreConteudo,
+  .bg:global(.animacaoNavegacao) .conteudoBanner,
+  .bg:global(.animacaoNavegacao) .faixaBeneficios {
+    animation: none;
+  }
+}
+/* =========================================
+   ANIMAÇÕES DA NAVEGAÇÃO
+   ========================================= */
+
+/*
+  SOBRE
+  Quando o Header adiciona data-animando="true",
+  imagem e texto entram de lados opostos.
+*/
+
+.sobreIntegrado[data-animando="true"] .sobreImagem {
+  animation:
+    entradaSobreImagem
+    0.8s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+.sobreIntegrado[data-animando="true"] .sobreConteudo {
+  animation:
+    entradaSobreConteudo
+    0.8s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+
+/*
+  HOME
+*/
+
+.bg[data-animando="true"] .conteudoBanner {
+  animation:
+    entradaHomeConteudo
+    0.75s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+.bg[data-animando="true"] .faixaBeneficios {
+  animation:
+    entradaHomeBeneficios
+    0.8s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
 

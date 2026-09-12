@@ -1,41 +1,87 @@
-import styles from './Baixar.module.css'
-import Playstore from '../../assets/img/Playstore.png'
-import Apple from '../../assets/img/Apple.png'
+import { FiDownload, FiShield } from "react-icons/fi";
+import Cesta from "../../assets/img/Cesta.png";
+import Apple from "../../assets/img/Apple.png";
+import Playstore from "../../assets/img/Playstore.png";
+
+import estilos from "./Baixar.module.css";
 
 export function Baixar() {
-    return (
-        <div className={styles.conteiner}>
-            
-            {/* Efeito de luz ambiente ao fundo */}
-            <div className={styles.glowEffect}></div>
+  return (
+    <main className={estilos.pagina}>
+      <section
+        className={estilos.hero}
+        aria-labelledby="titulo-baixar"
+        style={{ backgroundImage: `url(${Cesta})` }}
+      >
+        <div className={estilos.heroConteudo}>
+          <span className={estilos.rotulo}>
+            SEU TREINO, NA SUA MÃO
+          </span>
 
-            {/* Um "card" de vidro para agrupar o conteúdo */}
-            <div className={styles.card}>
-                
-                <h1 className={styles.titulo}>
-                    Baixe o <span className={styles.brand}>Apex <span className={styles.logo}>Hoops</span></span>
-                </h1>
+          <h1 id="titulo-baixar">
+            Baixe o
+            <span>Apex Hoops</span>
+          </h1>
 
-                {/* Trocado de <h2> para <p>, pois é um texto de parágrafo descritivo */}
-                <p className={styles.content}>
-                    Leve seus treinos para qualquer lugar com o <strong className={styles.destaque}>Apex <span className={styles.logo}>Hoops</span></strong>.
-                    <br /> Acesse exercícios personalizados, acompanhe sua evolução e desenvolva suas habilidades no basquete de forma prática e organizada, diretamente pelo celular.
-                </p>
+          <p className={estilos.descricao}>
+            Transforme seu tempo livre em evolução.
+            <br />
+            O app que te acompanha nos treinos,
+            <br />
+            na quadra e na sua jornada.
+          </p>
 
-                <div className={styles.conteinerDownload}>
-                    {/* Envolvi as imagens em tags <a> para que funcionem como links de clique */}
-                    <a href="#android" className={styles.downloadBtn}>
-                        <img src={Playstore} alt="Ícone de download na Playstore" />
-                    </a>
-                    
-                    <a href="#ios" className={styles.downloadBtn}>
-                        <img src={Apple} alt="Ícone de download na Apple Store" />
-                    </a>
-                </div>
-
+          <div
+            className={estilos.lojas}
+            aria-label="Aplicativo disponível para dispositivos móveis"
+          >
+            <div className={estilos.loja}>
+              <img
+                src={Apple}
+                alt="Disponível na App Store"
+              />
             </div>
-        </div>
-    )
-}
 
-export default Baixar;
+            <div className={estilos.loja}>
+              <img
+                src={Playstore}
+                alt="Disponível no Google Play"
+              />
+            </div>
+          </div>
+
+          <div className={estilos.informacoes}>
+            <div className={estilos.informacao}>
+              <FiDownload
+                className={estilos.iconeInformacao}
+                aria-hidden="true"
+              />
+              <span>Rápido e fácil de instalar</span>
+            </div>
+
+            <div
+              className={estilos.separadorInformacoes}
+              aria-hidden="true"
+            />
+
+            <div className={estilos.informacao}>
+              <FiShield
+                className={estilos.iconeInformacao}
+                aria-hidden="true"
+              />
+              <span>Seguro e confiável</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className={estilos.linhasDecorativas}
+          aria-hidden="true"
+        >
+          <span />
+          <span />
+        </div>
+      </section>
+    </main>
+  );
+}
