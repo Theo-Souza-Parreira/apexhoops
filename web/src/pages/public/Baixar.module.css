@@ -1,111 +1,255 @@
-.conteiner {
+.pagina {
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+
+  padding: 70px 9%;
+  box-sizing: border-box;
+
+  background-color: #020202;
+  background-repeat: no-repeat;
+  background-position: center right;
+  background-size: contain;
+
+  border-bottom: 1px solid var(--color-primary);
+}
+
+.heroConteudo {
+  position: relative;
+  z-index: 2;
+
+  width: min(400px, 48%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  margin-top: 10vh;
+}
+
+.rotulo {
+  margin-bottom: 15px;
+
+  color: var(--color-primary);
+
+  font-family: var(--font-secondary);
+  font-size: 0.5rem;
+  font-weight: 700;
+
+  letter-spacing: 0.18em;
+}
+
+.hero h1 {
+  margin: 0 0 24px;
+
+  color: var(--white);
+
+  font-family: var(--font-title);
+  font-size: clamp(2.2rem, 4.3vw, 4.6rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+
+.hero h1 span {
+  display: block;
+
+  margin-top: 5px;
+
+  color: var(--color-primary);
+}
+
+.descricao {
+  margin: 0 0 32px;
+
+  color: #d1d1d1;
+
+  font-family: var(--font-secondary);
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  line-height: 1.55;
+}
+
+.lojas {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+  margin-bottom: 35px;
+}
+
+.loja {
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 8px;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.loja:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-primary);
+}
+
+.loja img {
+  display: block;
+
+  width: auto;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.informacoes {
+  display: flex;
+  align-items: center;
+
+  gap: 22px;
+}
+
+.informacao {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  color: #c7c7c7;
+
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+}
+
+.iconeInformacao {
+  flex-shrink: 0;
+
+  color: var(--color-primary);
+
+  font-size: 1.4rem;
+}
+
+.separadorInformacoes {
+  width: 1px;
+  height: 26px;
+
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+.linhasDecorativas {
+  position: absolute;
+  right: -35px;
+  bottom: 40px;
+  z-index: 1;
+
+  width: 240px;
+  height: 210px;
+
+  pointer-events: none;
+}
+
+.linhasDecorativas span {
+  position: absolute;
+
+  width: 280px;
+  height: 1px;
+
+  background-color: var(--color-primary);
+
+  transform: rotate(-48deg);
+  transform-origin: center;
+}
+
+.linhasDecorativas span:first-child {
+  top: 58px;
+  left: 0;
+}
+
+.linhasDecorativas span:last-child {
+  top: 125px;
+  left: 18px;
+
+  opacity: 0.7;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 700px;
+
+    padding: 70px 7%;
+
+    background-position: 65% center;
+  }
+
+  .heroConteudo {
+    width: min(560px, 66%);
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 7vw, 4.6rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    min-height: calc(100vh - 72px);
+
+    align-items: flex-end;
+
+    padding: 90px 6% 55px;
+
+    background-position: 60% center;
+  }
+
+  .heroConteudo {
     width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--background-app);
-    position: relative;
-    overflow: hidden; 
-    padding: var(--spacing-gg) 8%;
-}
+  }
 
-.glowEffect {
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(255, 106, 19, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 0;
-    pointer-events: none; 
-}
+  .rotulo {
+    font-size: 0.7rem;
+  }
 
-.card {
-    position: relative;
-    z-index: 1;
-    display: flex;
+  .hero h1 {
+    font-size: clamp(2.8rem, 13vw, 4rem);
+  }
+
+  .descricao br {
+    display: none;
+  }
+
+  .lojas {
+    width: 100%;
+
     flex-direction: column;
-    align-items: center;
-    max-width: 800px;
-    
-    background: rgba(30, 41, 59, 0.3); /* Fundo sutil */
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    
-    padding: var(--spacing-supergg) var(--spacing-gg);
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    
-    animation: fadeUp 0.8s ease-out forwards;
-}
+    align-items: flex-start;
 
-.titulo {
-    font-family: var(--font-primary);
-    font-size: var(--text-xxl); /* Um título maior e imponente */
-    font-weight: var(--weight-bold);
-    text-align: center;
-    color: var(--text-primary);
-    margin-bottom: var(--spacing-lg);
-    line-height: 1.1;
-}
+    gap: 12px;
+  }
 
-.brand {
-    font-family: var(--font-logo);
-}
+  .loja {
+    height: 54px;
+  }
 
-.logo {
-    color: var(--color-primary);
-    text-shadow: 0 0 15px rgba(255, 106, 19, 0.3); /* Um brilho suave no texto laranja */
-}
+  .informacoes {
+    flex-direction: column;
+    align-items: flex-start;
 
-.content {
-    font-family: var(--font-primary);
-    color: var(--text-secondary); /* Cinza para leitura mais confortável */
-    font-size: var(--text-g);
-    text-align: center;
-    line-height: 1.6;
-    margin-bottom: var(--spacing-gg);
-    max-width: 600px;
-}
+    gap: 13px;
+  }
 
-.destaque {
-    color: var(--text-primary); /* Branco para destacar a marca no meio do texto */
-    font-weight: var(--weight-medium);
-}
-
-.conteinerDownload {
-    display: flex;
-    gap: var(--spacing-lg);
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap; /* Em celulares, os botões caem para a próxima linha automaticamente */
-}
-
-.downloadBtn {
-    display: block;
-    transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.downloadBtn img {
-    height: 60px; /* Padroniza a altura das duas lojas para ficarem alinhadas */
-    width: auto;
-}
-
-.downloadBtn:hover {
-    transform: translateY(-5px) scale(1.02);
-    filter: drop-shadow(0 12px 20px rgba(255, 106, 19, 0.25)); 
-}
-
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  .separadorInformacoes,
+  .linhasDecorativas {
+    display: none;
+  }
 }
