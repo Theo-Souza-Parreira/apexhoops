@@ -492,12 +492,7 @@
   border-radius: 6px;
 
   background-image:
-    linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.08),
-      rgba(0, 0, 0, 0.4)
-    ),
-    url("../../assets/Pessoa.png");
+    url("../../assets/img/Pessoa.png");
 
   background-size: cover;
   background-position: 72% center;

@@ -1,5 +1,3 @@
-// src/pages/public/Cadastro.tsx
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -57,17 +55,12 @@ export function Cadastro() {
   });
 
   const cadastrarUsuario = (data: FormValues) => {
-    const usuario = {
+    console.log("Dados do cadastro:", {
       nome: data.nome,
       email: data.email,
-      senha: data.senha,
-    };
-
-    navegacao("/", {
-      state: {
-        usuario,
-      },
     });
+
+    navegacao("/login");
   };
 
   const irParaLogin = () => {
@@ -97,19 +90,17 @@ export function Cadastro() {
             resultados amanhã.
           </p>
         </div>
-
-        <div
-          className={estilos.marcacaoImagem}
-          aria-hidden="true"
-        >
-          IMAGEM
-        </div>
       </section>
 
-      <section className={estilos.areaFormulario}>
+      <section
+        className={estilos.areaFormulario}
+        aria-labelledby="titulo-cadastro"
+      >
         <div className={estilos.cardCadastro}>
           <header className={estilos.cabecalho}>
-            <h2>Criar conta</h2>
+            <h2 id="titulo-cadastro">
+              Criar conta
+            </h2>
 
             <span
               className={estilos.linhaTitulo}
@@ -117,8 +108,7 @@ export function Cadastro() {
             />
 
             <p>
-              Comece sua jornada e evolua com a
-              Apex Hoops.
+              Comece sua jornada e evolua com a Apex Hoops.
             </p>
           </header>
 
@@ -222,7 +212,9 @@ export function Cadastro() {
                   type="button"
                   className={estilos.botaoSenha}
                   onClick={() =>
-                    setMostrarSenha((valorAtual) => !valorAtual)
+                    setMostrarSenha(
+                      (valorAtual) => !valorAtual
+                    )
                   }
                   aria-label={
                     mostrarSenha
@@ -253,13 +245,13 @@ export function Cadastro() {
               className={estilos.botaoCadastrar}
             >
               CADASTRAR
-
-              <span aria-hidden="true">
-                →
-              </span>
+              <span aria-hidden="true">→</span>
             </button>
 
-            <div className={estilos.separador}>
+            <div
+              className={estilos.separador}
+              aria-hidden="true"
+            >
               <span />
               <p>OU</p>
               <span />
