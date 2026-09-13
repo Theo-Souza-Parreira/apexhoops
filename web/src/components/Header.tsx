@@ -1,192 +1,31 @@
-import { useEffect, useRef } from "react";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+// Header.tsx
+
+import { Link, useLocation } from "react-router-dom";
 
 import Logo from "../assets/img/Logo.png";
 import styles from "./Header.module.css";
 
-type SecaoHome = "home" | "sobre";
-
 function Header() {
   const location = useLocation();
-  const navigate = useNavigate();
 
-  const frameRolagemRef = useRef<number | null>(null);
-  const timerAnimacaoRef = useRef<number | null>(null);
-
-  const cancelarAnimacaoPendente = () => {
-    if (frameRolagemRef.current !== null) {
-      window.cancelAnimationFrame(frameRolagemRef.current);
-      frameRolagemRef.current = null;
-    }
-
-    if (timerAnimacaoRef.current !== null) {
-      window.clearTimeout(timerAnimacaoRef.current);
-      timerAnimacaoRef.current = null;
-    }
-  };
-
-  const animarSecao = (secao: HTMLElement) => {
-    secao.removeAttribute("data-animando");
-
-    /*
-      Força o navegador a reconhecer que a animação
-      terminou antes de iniciá-la novamente.
-    */
-    void secao.offsetWidth;
-
-    secao.setAttribute("data-animando", "true");
-
-    timerAnimacaoRef.current = window.setTimeout(() => {
-      secao.removeAttribute("data-animando");
-      timerAnimacaoRef.current = null;
-    }, 1000);
-  };
-
-  const aguardarFimDaRolagem = (
-    secao: HTMLElement,
-    destino: number,
-  ) => {
-    const inicio = performance.now();
-
-    const verificarPosicao = () => {
-      const distancia = Math.abs(window.scrollY - destino);
-      const tempoDecorrido = performance.now() - inicio;
-
-      /*
-        A animação começa quando a página realmente
-        chegou próxima ao destino.
-      */
-      if (distancia <= 5 || tempoDecorrido >= 1500) {
-        frameRolagemRef.current = null;
-        animarSecao(secao);
-        return;
-      }
-
-      frameRolagemRef.current =
-        window.requestAnimationFrame(verificarPosicao);
-    };
-
-    frameRolagemRef.current =
-      window.requestAnimationFrame(verificarPosicao);
-  };
-
-  const rolarParaSecao = (id: SecaoHome) => {
-    const secao = document.getElementById(id);
-
-    if (!secao) {
-      return;
-    }
-
-    cancelarAnimacaoPendente();
-
-    const header = document.querySelector("header");
-
-    const alturaHeader =
-      header?.getBoundingClientRect().height ?? 0;
-
-    const destino =
-      id === "home"
-        ? 0
-        : secao.getBoundingClientRect().top +
-          window.scrollY -
-          alturaHeader -
-          24;
-
-    const destinoSeguro = Math.max(0, destino);
-
-    /*
-      Se já estiver praticamente na seção,
-      apenas reinicia a animação.
-    */
-    if (
-      Math.abs(window.scrollY - destinoSeguro) <= 5
-    ) {
-      animarSecao(secao);
-      return;
-    }
-
+  const rolarParaTopo = () => {
     window.scrollTo({
-      top: destinoSeguro,
-      behavior: "smooth",
+      top: 0,
     });
-
-    aguardarFimDaRolagem(
-      secao,
-      destinoSeguro,
-    );
   };
 
-  const navegarParaSecao = (id: SecaoHome) => {
-    const hashDestino =
-      id === "home" ? "" : "#sobre";
+  const estaAtiva = (path: string) =>
+    location.pathname === path ? styles.active : "";
 
-    const jaEstaNoDestino =
-      location.pathname === "/" &&
-      location.hash === hashDestino;
-
-    /*
-      Se a URL não mudar, fazemos a navegação
-      e a animação manualmente.
-    */
-    if (jaEstaNoDestino) {
-      rolarParaSecao(id);
-      return;
-    }
-
-    const destino =
-      id === "home"
-        ? "/"
-        : "/#sobre";
-
-    navigate(destino);
-  };
+  const homeAtiva = location.pathname === "/";
 
   /*
-    Executado quando React Router altera
-    a URL entre / e /#sobre.
+    O indicador laranja fica em ENTRAR somente
+    na rota /login.
+
+    Nas demais páginas permanece em CRIAR CONTA.
   */
-  useEffect(() => {
-    if (location.pathname !== "/") {
-      return;
-    }
-
-    const id: SecaoHome =
-      location.hash === "#sobre"
-        ? "sobre"
-        : "home";
-
-    const frame = window.requestAnimationFrame(() => {
-      rolarParaSecao(id);
-    });
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-    };
-  }, [location.pathname, location.hash]);
-
-  useEffect(() => {
-    return () => {
-      cancelarAnimacaoPendente();
-    };
-  }, []);
-
-  const homeAtiva =
-    location.pathname === "/" &&
-    location.hash !== "#sobre";
-
-  const sobreAtiva =
-    location.pathname === "/" &&
-    location.hash === "#sobre";
-
-  const checkIsActive = (path: string) => {
-    return location.pathname === path
-      ? styles.active
-      : "";
-  };
+  const entrarAtivo = location.pathname === "/login";
 
   return (
     <header className={styles.header}>
@@ -194,13 +33,17 @@ function Header() {
         to="/"
         className={styles.logo}
         onClick={(event) => {
+          if (location.pathname !== "/") {
+            return;
+          }
+
           event.preventDefault();
-          navegarParaSecao("home");
+          rolarParaTopo();
         }}
       >
         <img
           src={Logo}
-          alt="Logo ApexHoops"
+          alt="Logo Apex Hoops"
         />
       </Link>
 
@@ -208,49 +51,67 @@ function Header() {
         className={styles.navbar}
         aria-label="Navegação principal"
       >
-        <Link
-          to="/"
-          className={`${styles.navLink} ${
-            homeAtiva ? styles.active : ""
+        <div className={styles.linksPrincipais}>
+          <Link
+            to="/"
+            className={`${styles.navLink} ${
+              homeAtiva ? styles.active : ""
+            }`}
+            onClick={(event) => {
+              if (location.pathname !== "/") {
+                return;
+              }
+
+              event.preventDefault();
+              rolarParaTopo();
+            }}
+          >
+            HOME
+          </Link>
+
+          <Link
+            to="/baixar"
+            className={`${styles.navLink} ${estaAtiva("/baixar")}`}
+          >
+            BAIXE
+          </Link>
+        </div>
+
+        <div
+          className={`${styles.acoesConta} ${
+            entrarAtivo
+              ? styles.acoesEntrar
+              : styles.acoesCriar
           }`}
-          onClick={(event) => {
-            event.preventDefault();
-            navegarParaSecao("home");
-          }}
+          aria-label="Acesso à conta"
         >
-          HOME
-        </Link>
+          <span
+            className={styles.indicadorConta}
+            aria-hidden="true"
+          />
 
-        <Link
-          to="/#sobre"
-          className={`${styles.navLink} ${
-            sobreAtiva ? styles.active : ""
-          }`}
-          onClick={(event) => {
-            event.preventDefault();
-            navegarParaSecao("sobre");
-          }}
-        >
-          SOBRE
-        </Link>
+          <Link
+            to="/login"
+            className={styles.botaoConta}
+            aria-current={
+              entrarAtivo ? "page" : undefined
+            }
+          >
+            ENTRAR
+          </Link>
 
-        <Link
-          to="/baixar"
-          className={`${styles.navLink} ${checkIsActive(
-            "/baixar"
-          )}`}
-        >
-          BAIXE
-        </Link>
-
-        <Link
-          to="/cadastrar"
-          className={`${styles.loginButton} ${checkIsActive(
-            "/cadastrar"
-          )}`}
-        >
-          ENTRAR
-        </Link>
+          <Link
+            to="/cadastrar"
+            className={styles.botaoConta}
+            aria-current={
+              location.pathname === "/cadastrar"
+                ? "page"
+                : undefined
+            }
+          >
+            CRIAR CONTA
+          </Link>
+        </div>
       </nav>
     </header>
   );
