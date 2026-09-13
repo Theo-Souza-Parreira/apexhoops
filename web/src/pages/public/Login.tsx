@@ -1,85 +1,244 @@
-import estilos from './Login.module.css'
-import { TbLogin2 } from "react-icons/tb";
-import { FaUser } from "react-icons/fa6";
-import { useForm } from 'react-hook-form'
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useNavigate } from 'react-router-dom'
-import { useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+import {
+  FiEye,
+  FiEyeOff,
+  FiLock,
+  FiMail,
+} from "react-icons/fi";
+
+import { AuthContext } from "../../contexts/AuthContext";
+
+import estilos from "./Login.module.css";
 
 type FormValues = {
-    email: string
-    senha: string
-}
+  email: string;
+  senha: string;
+};
 
 const loginSchema = z.object({
-    email: z.email({message: 'Informe um e-mail válido.'}),
-    senha: z.string()
-            .min(6, {message: 'A senha deve conter entre 6 a 18 caracteres.'})
-            .max(18, {message: 'A senha deve conter entre 6 a 18 caracteres.'})
-})
+  email: z.email({
+    message: "Informe um e-mail válido.",
+  }),
 
-export function Login(){
-    const { 
-        register, handleSubmit, formState:{errors} 
-    } = useForm<FormValues>({
-        resolver: zodResolver(loginSchema)
+  senha: z
+    .string()
+    .min(6, {
+      message: "A senha deve conter entre 6 a 18 caracteres.",
     })
+    .max(18, {
+      message: "A senha deve conter entre 6 a 18 caracteres.",
+    }),
+});
 
-    const navegacao = useNavigate()
-    
-    const { autenticar } = useContext(AuthContext);
+export function Login() {
+  const [mostrarSenha, setMostrarSenha] = useState(false);
 
-    const autenticarUsuario = (data: FormValues) => {
-        autenticar(data.email);
+  const navegacao = useNavigate();
 
-        navegacao('/home2');
-    }
+  const { autenticar } = useContext(AuthContext);
 
-    const novoUsuario = () => {
-        navegacao('/cadastrar')
-    }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(loginSchema),
+  });
 
-    return(
-        <div className={estilos.conteiner}>
-            <h1 className={estilos.titulo}>
-                <span>Apex</span> <span className={estilos.hoops}>Hoops</span>
-            </h1>
+  const autenticarUsuario = (data: FormValues) => {
+    autenticar(data.email);
 
-            <form 
-                className={estilos.formulario}
-                onSubmit={handleSubmit(autenticarUsuario)}
-            >
-                <input 
-                    {...register('email')}
-                    className={estilos.campo}
-                    placeholder='Email'
-                />
-                { errors.email && <p className={estilos.mensagem}>{errors.email.message}</p> }
+    navegacao("/home2");
+  };
 
-                <input 
-                    {...register('senha')}
-                    className={estilos.campo}
-                    placeholder='Senha'      
-                    type='password'      
-                />
-                { errors.senha && <p className={estilos.mensagem}>{errors.senha.message}</p> }
-              
-                <button className={estilos.botao}>
-                    <TbLogin2 className={estilos.icone}/>
-                    Entrar
-                </button> 
+  const novoUsuario = () => {
+    navegacao("/cadastrar");
+  };
 
-                <button 
-                    type='button'
-                    className={estilos.novoUsuario}
-                    onClick={novoUsuario}
-                >
-                    <FaUser className={estilos.icone}/>
-                    Cadastre-se
-                </button>
-            </form>
+  return (
+    <main className={estilos.paginaLogin}>
+      <section
+        className={estilos.painelVisual}
+        aria-label="Apresentação Apex Hoops"
+      >
+        <div className={estilos.conteudoVisual}>
+          <h1>
+            Mais que
+            <br />
+            treinos,
+            <br />
+            <span>jogadores</span>
+            <br />
+            <span>reais.</span>
+          </h1>
+
+          <p>
+            Disciplina hoje,
+            <br />
+            resultados amanhã.
+          </p>
         </div>
-    )
+      </section>
+
+      <section
+        className={estilos.areaFormulario}
+        aria-labelledby="titulo-login"
+      >
+        <div className={estilos.cardLogin}>
+          <header className={estilos.cabecalho}>
+            <h2 id="titulo-login">
+              Entrar
+            </h2>
+
+            <span
+              className={estilos.linhaTitulo}
+              aria-hidden="true"
+            />
+
+            <p>
+              Acesse sua conta e continue evoluindo
+              com a Apex Hoops.
+            </p>
+          </header>
+
+          <form
+            className={estilos.formulario}
+            onSubmit={handleSubmit(autenticarUsuario)}
+            noValidate
+          >
+            <div className={estilos.grupoCampo}>
+              <label htmlFor="email">
+                E-mail
+              </label>
+
+              <div
+                className={`${estilos.campoContainer} ${
+                  errors.email ? estilos.campoComErro : ""
+                }`}
+              >
+                <FiMail
+                  className={estilos.iconeCampo}
+                  aria-hidden="true"
+                />
+
+                <input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="seuemail@exemplo.com"
+                  {...register("email")}
+                />
+              </div>
+
+              {errors.email && (
+                <p
+                  className={estilos.mensagemErro}
+                  role="alert"
+                >
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+
+            <div className={estilos.grupoCampo}>
+              <label htmlFor="senha">
+                Senha
+              </label>
+
+              <div
+                className={`${estilos.campoContainer} ${
+                  errors.senha ? estilos.campoComErro : ""
+                }`}
+              >
+                <FiLock
+                  className={estilos.iconeCampo}
+                  aria-hidden="true"
+                />
+
+                <input
+                  id="senha"
+                  type={mostrarSenha ? "text" : "password"}
+                  autoComplete="current-password"
+                  placeholder="Sua senha"
+                  {...register("senha")}
+                />
+
+                <button
+                  type="button"
+                  className={estilos.botaoSenha}
+                  onClick={() =>
+                    setMostrarSenha(
+                      (valorAtual) => !valorAtual
+                    )
+                  }
+                  aria-label={
+                    mostrarSenha
+                      ? "Ocultar senha"
+                      : "Mostrar senha"
+                  }
+                >
+                  {mostrarSenha ? (
+                    <FiEyeOff aria-hidden="true" />
+                  ) : (
+                    <FiEye aria-hidden="true" />
+                  )}
+                </button>
+              </div>
+
+              {errors.senha && (
+                <p
+                  className={estilos.mensagemErro}
+                  role="alert"
+                >
+                  {errors.senha.message}
+                </p>
+              )}
+            </div>
+
+            <div className={estilos.acoesSenha}>
+              <span>
+                Esqueceu sua senha?
+              </span>
+            </div>
+
+            <button
+              type="submit"
+              className={estilos.botaoEntrar}
+            >
+              ENTRAR
+
+              <span aria-hidden="true">
+                →
+              </span>
+            </button>
+
+            <div
+              className={estilos.separador}
+              aria-hidden="true"
+            >
+              <span />
+              <p>OU</p>
+              <span />
+            </div>
+
+            <p className={estilos.cadastro}>
+              Ainda não tem uma conta?
+
+              <button
+                type="button"
+                onClick={novoUsuario}
+              >
+                Crie agora
+              </button>
+            </p>
+          </form>
+        </div>
+      </section>
+    </main>
+  );
 }

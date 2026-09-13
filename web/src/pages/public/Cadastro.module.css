@@ -143,11 +143,7 @@
    ========================================= */
 
 .areaFormulario {
-  /*
-    Não definimos height: 100%.
-    O Grid já faz esta coluna ocupar
-    exatamente a altura disponível.
-  */
+
 
   min-width: 0;
   min-height: 0;
@@ -322,14 +318,11 @@
 }
 
 .grupoCampo label {
-  color: #f1f1f1;
-
-  font-family:
-    var(--font-secondary);
-
+  color: var(--white);
+  font-family: var(--font-secondary);
   font-size: 0.82rem;
-
   font-weight: 600;
+  margin: 1vh;
 }
 
 
