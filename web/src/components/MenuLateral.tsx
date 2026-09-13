@@ -7,6 +7,14 @@ import { MdMenu, MdMenuOpen, MdBarChart, MdPerson, MdLogout } from 'react-icons/
 import { FaHome } from 'react-icons/fa'
 import { FaDumbbell } from "react-icons/fa6"
 
+import Home from '../assets/icone/Home.svg?react'
+import Estatisticas from '../assets/icone/Estatisticas.svg?react'
+import Treinos from '../assets/icone/Treinos.svg?react'
+import Perfil from '../assets/icone/Perfil.svg?react'
+import Sair from '../assets/icone/Sair.svg?react'
+import MenuAberto from '../assets/icone/MenuAberto.svg?react'
+import MenuFechado from '../assets/icone/MenuFechado.svg?react'
+
 
 export function MenuLateral() {
 
@@ -43,7 +51,7 @@ export function MenuLateral() {
                 className={estilos.botaoMenu}
                 onClick={controlarMenu}
             >
-                { menuAbertoContexto ? <MdMenuOpen size={32} /> : <MdMenu size={32} />}
+                { menuAbertoContexto ? <MenuAberto /> : <MenuFechado />}
             </button>
 
             <nav className={estilos.itemConteiner}>
@@ -56,7 +64,7 @@ export function MenuLateral() {
                     }`}
                     to="/home2"
                 >
-                    <FaHome size={28} />
+                    <Home />
 
                     { menuAbertoContexto && <span className={estilos.rotulo}> Inicial </span> }
                 </Link>
@@ -69,7 +77,7 @@ export function MenuLateral() {
                     }`}
                     to="/status"
                 >
-                    <MdBarChart size={28} />
+                    <Estatisticas />
 
                     { menuAbertoContexto && <span className={estilos.rotulo}> Estatísticas </span> }
                 </Link>
@@ -82,7 +90,7 @@ export function MenuLateral() {
                     }`}
                     to="/treinos"
                 >
-                    <FaDumbbell size={28}/>
+                    <Treinos />
 
                     { menuAbertoContexto && <span className={estilos.rotulo}> Treinos </span> }
                 </Link>
@@ -95,7 +103,7 @@ export function MenuLateral() {
                     }`}
                     to="/perfil"
                 >
-                    <MdPerson size={28} />
+                    <Perfil />
 
                     { menuAbertoContexto && <span className={estilos.rotulo}> Perfil </span> }
                 </Link>
@@ -108,7 +116,7 @@ export function MenuLateral() {
                     className={estilos.item}
                     onClick={sair}
                 >
-                    <MdLogout size={28} />
+                    <Sair />
 
                     { menuAbertoContexto && <span className={estilos.rotulo}> Sair </span> }
                 </button>

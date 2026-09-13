@@ -40,10 +40,12 @@
 
     flex-shrink: 0;
 
+    padding: 0;
+
     border: none;
     background: transparent;
 
-    color: #e5e5e5;
+    color: var(--white);
 
     cursor: pointer;
 
@@ -52,16 +54,25 @@
         transform 0.2s ease;
 }
 
+/* SVG do botão acompanha a cor do botão */
+.botaoMenu svg {
+    width: 24px;
+    height: 24px;
+
+    display: block;
+
+    fill: currentColor;
+    color: currentColor;
+
+    flex-shrink: 0;
+}
+
 .botaoMenu:hover {
     color: var(--color-primary);
 
     transform: scale(1.08);
 }
 
-
-/* =========================
-   LINKS
-========================= */
 
 .itemConteiner {
     width: 100%;
@@ -81,7 +92,6 @@
 /* =========================
    ITEM
 ========================= */
-
 .item {
     position: relative;
 
@@ -103,7 +113,7 @@
 
     background: transparent;
 
-    color: #9ca3af;
+    color: var(--white);
 
     text-decoration: none;
 
@@ -119,22 +129,18 @@
         transform 0.2s ease;
 }
 
-
-/* =========================
-   ÍCONES
-========================= */
-
+/* Faz o SVG acompanhar a cor do item */
 .item svg {
-    width: 27px;
-    height: 27px;
+    width: 24px;
+    height: 24px;
+
+    display: block;
+
+    fill: currentColor;
+    color: currentColor;
 
     flex-shrink: 0;
-
-    transition:
-        transform 0.2s ease,
-        color 0.2s ease;
 }
-
 
 /* =========================
    HOVER
