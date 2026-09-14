@@ -50,7 +50,7 @@
 .subtitulo {
     margin: 0 0 7px;
 
-    color: var(--text-secondary);
+    color: var(--color-primary);
     font-size: var(--text-pp);
     font-weight: var(--weight-medium);
 }

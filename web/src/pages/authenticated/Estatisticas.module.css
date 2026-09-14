@@ -55,32 +55,6 @@
   line-height: 1.6;
 }
 
-.tipCard {
-  background: var(--background-primary);
-  border: 1px solid rgba(255, 106, 19, 0.3);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.tipLabel {
-  font-family: var(--font-title);
-  font-size: var(--text-pp);
-  font-weight: var(--weight-bold);
-  color: var(--color-primary);
-  letter-spacing: 0.1em;
-}
-
-.tipText {
-  font-family: var(--font-primary);
-  font-size: var(--text-p);
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-
 .rightPanel {
   display: flex;
   flex-direction: column;

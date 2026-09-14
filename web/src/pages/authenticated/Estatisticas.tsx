@@ -14,14 +14,6 @@ export function Estatisticas() {
               transformando em consistência.
             </p>
           </div>
-
-          <div className={estilos.tipCard}>
-            <p className={estilos.tipLabel}>🏀 DICA DO DIA</p>
-            <p className={estilos.tipText}>
-              Mantenha o foco no fundamento e na consistência. Pequenos ajustes,
-              grandes resultados.
-            </p>
-          </div>
         </aside>
 
         <section className={estilos.rightPanel}>

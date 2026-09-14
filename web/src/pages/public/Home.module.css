@@ -1,3 +1,7 @@
+/* =========================================================
+   BASE
+========================================================= */
+
 :global(html) {
   scroll-behavior: smooth;
   scroll-padding-top: 88px;
@@ -7,18 +11,17 @@
   --altura-nav: 72px;
 
   width: 100%;
+  min-height: 100vh;
+
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  background-color: var(--black);
-  color: var(--white);
-}
 
-/* Linhas laranjas globais */
-.pageContainer > section,
-.pageContainer > footer {
-  border-top: 1px solid var(--color-primary);
+  overflow-x: hidden;
+
+  background: var(--black);
+  color: var(--white);
+
+  scroll-behavior: smooth;
 }
 
 .container {
@@ -26,46 +29,61 @@
   margin: 0 auto;
 }
 
-/* =========================================
+
+/* =========================================================
    HERO
-   ========================================= */
+========================================================= */
 
 .bg {
-  scroll-margin-top: 72px;
   position: relative;
+
   width: 100%;
   min-height: 100vh;
 
   display: grid;
+
   padding: 13% 7% 44px;
+
   box-sizing: border-box;
+
   background-color: var(--black);
   background-image: url("../../assets/img/Banner.png");
+
   background-repeat: no-repeat;
   background-position: center right;
   background-size: contain;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .bg::before {
   content: "";
+
   position: absolute;
   inset: 0;
 
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.96) 24%,
-    rgba(0, 0, 0, 0.72) 48%,
-    rgba(0, 0, 0, 0.18) 72%,
-    rgba(0, 0, 0, 0.03) 100%
-  );
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.97) 25%,
+      rgba(0, 0, 0, 0.76) 48%,
+      rgba(0, 0, 0, 0.24) 72%,
+      rgba(0, 0, 0, 0.02) 100%
+    );
 
   pointer-events: none;
 }
 
+
+/* =========================================================
+   CONTEÚDO DO HERO
+========================================================= */
+
 .conteudoBanner {
   position: relative;
   z-index: 2;
+
   align-self: center;
 
   width: min(640px, 49%);
@@ -73,7 +91,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 18px;
+
+  gap: 20px;
 }
 
 .name {
@@ -82,11 +101,16 @@
 
 .name h1 {
   margin: 0;
+
   color: var(--color-primary);
+
   font-family: var(--font-logo);
+
   font-size: clamp(3.8rem, 5.4vw, 5.7rem);
   line-height: 0.98;
+
   letter-spacing: -0.02em;
+
   animation: fadeUp 0.8s ease forwards;
 }
 
@@ -96,22 +120,29 @@
 
 .desc {
   max-width: 580px;
+
   color: var(--white);
+
   font-family: var(--font-secondary);
+
   text-align: left;
 }
 
 .desc h2 {
   margin: 0;
-  color: #e7e7e7;
+
+  color: #d8d8d8;
+
   font-size: clamp(1.1rem, 1.55vw, 1.45rem);
   font-weight: 400;
+
   line-height: 1.55;
 }
 
-/* =========================================
+
+/* =========================================================
    BOTÕES
-   ========================================= */
+========================================================= */
 
 .botao,
 .botaoCta {
@@ -119,18 +150,22 @@
   align-items: center;
 
   border-radius: 100px;
-  background-color: var(--color-primary);
+
+  background: var(--color-primary);
   color: var(--white);
 
   font-family: var(--font-secondary);
   font-weight: 700;
+
   text-decoration: none;
 }
 
 .botao {
   gap: 12px;
+
   margin-top: 8px;
   padding: 9px 10px 9px 27px;
+
   font-size: 0.92rem;
 
   transition:
@@ -142,11 +177,12 @@
 .botao:hover,
 .botaoCta:hover {
   transform: translateY(-2px);
+
   filter: brightness(1.08);
 }
 
 .botao:hover {
-  box-shadow: 0 8px 25px rgba(255, 98, 0, 0.3);
+  box-shadow: 0 8px 25px rgba(255, 106, 19, 0.25);
 }
 
 .iconeSeta {
@@ -156,16 +192,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   flex-shrink: 0;
 
   border-radius: 50%;
-  background-color: var(--white);
+
+  background: var(--white);
   color: var(--color-primary);
 }
 
-/* =========================================
+
+/* =========================================================
    BENEFÍCIOS
-   ========================================= */
+========================================================= */
 
 .faixaBeneficios {
   position: relative;
@@ -179,10 +218,16 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
-  background: rgba(10, 10, 10, 0.94);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-
   box-sizing: border-box;
+
+  background: rgba(18, 18, 18, 0.94);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+
+  overflow: hidden;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
 }
 
 .beneficio {
@@ -191,60 +236,70 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   gap: 16px;
 
   padding: 20px 26px;
+
   box-sizing: border-box;
 }
 
 .beneficio:not(:last-child) {
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .beneficioIcone {
   flex-shrink: 0;
+
   color: var(--color-primary);
-  font-size: 2.15rem;
+
+  font-size: 2rem;
   line-height: 1;
 }
 
 .beneficio div {
   display: flex;
   flex-direction: column;
+
   gap: 5px;
 }
 
 .beneficio strong {
   color: var(--white);
+
   font-family: var(--font-title);
-  font-size: 0.95rem;
+
+  font-size: 0.92rem;
   line-height: 1.2;
 }
 
 .beneficio div span {
-  color: #b8b8b8;
+  color: #929292;
+
   font-family: var(--font-secondary);
-  font-size: 0.8rem;
+
+  font-size: 0.78rem;
   line-height: 1.3;
 }
 
-/* =========================================
+
+/* =========================================================
    BLOCO INSTITUCIONAL
-   Duas barras laranjas envolvendo
-   "Para quem é o Apex Hoops?" + "Programas"
-   ========================================= */
+========================================================= */
 
 .blocoInstitucional {
-  border-top: 1px solid var(--color-primary);
-  border-bottom: 1px solid var(--color-primary);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* =========================================
+
+/* =========================================================
    PARA QUEM É
-   ========================================= */
+========================================================= */
 
 .bg2 {
   position: relative;
+
   width: 100%;
   min-height: 580px;
 
@@ -253,16 +308,18 @@
   justify-content: flex-end;
 
   padding: 65px 10%;
+
   box-sizing: border-box;
 
   background-color: var(--black);
+
   background-image:
     linear-gradient(
       270deg,
       rgba(0, 0, 0, 0.98) 0%,
       rgba(0, 0, 0, 0.92) 30%,
-      rgba(0, 0, 0, 0.68) 52%,
-      rgba(0, 0, 0, 0.12) 78%,
+      rgba(0, 0, 0, 0.70) 52%,
+      rgba(0, 0, 0, 0.16) 78%,
       rgba(0, 0, 0, 0) 100%
     ),
     url("../../assets/img/Fundo2.png");
@@ -273,61 +330,81 @@
 }
 
 .publicoConteudo {
-  width: min(500px, 44%);
-  margin-left: auto;
-
   position: relative;
   z-index: 2;
+
+  width: min(500px, 44%);
+
+  margin-left: auto;
 }
 
 .publicoConteudo h2 {
-  margin: 0 0 25px;
+  margin: 0 0 22px;
+
   color: var(--white);
+
   font-family: var(--font-title);
+
   font-size: clamp(2rem, 3.5vw, 3rem);
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .publicoConteudo h2 span {
   display: block;
+
   color: var(--color-primary);
 }
 
 .publicoConteudo p {
   max-width: 430px;
+
   margin: 0 0 25px;
 
-  color: #d6d6d6;
+  color: #c1c1c1;
+
   font-family: var(--font-secondary);
-  font-size: 1rem;
+
+  font-size: 0.95rem;
   line-height: 1.7;
 }
+
+
+/* =========================================================
+   LISTAS
+========================================================= */
 
 .listaPublico,
 .listaSobre {
   padding: 0;
+
   display: flex;
   flex-direction: column;
+
   list-style: none;
 }
 
 .listaPublico {
   gap: 14px;
-  margin: 0 0 32px;
+
+  margin: 0 0 30px;
 }
 
 .listaPublico li {
   position: relative;
+
   padding-left: 30px;
 
-  color: #e3e3e3;
+  color: #d5d5d5;
+
   font-family: var(--font-secondary);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .listaPublico li::before {
   content: "✓";
+
   position: absolute;
+
   left: 0;
   top: -2px;
 
@@ -338,62 +415,92 @@
   align-items: center;
   justify-content: center;
 
-  border: 1px solid var(--color-primary);
+  border: 1px solid rgba(255, 106, 19, 0.8);
   border-radius: 50%;
 
   color: var(--color-primary);
-  font-size: 0.7rem;
+
+  font-size: 0.65rem;
   font-weight: 700;
 }
+
+
+/* =========================================================
+   BOTÃO SECUNDÁRIO
+========================================================= */
 
 .botaoSecundario {
   display: inline-flex;
   align-items: center;
+
   gap: 18px;
 
   padding: 11px 20px;
 
-  border: 1px solid var(--color-primary);
+  border: 1px solid rgba(255, 106, 19, 0.7);
   border-radius: 100px;
 
   background: transparent;
+
   color: var(--white);
 
   font-family: var(--font-secondary);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
+
   text-decoration: none;
 
-  transition: background-color 0.25s ease;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
 }
 
 .botaoSecundario span {
   color: var(--color-primary);
+
   font-size: 1.2rem;
+
+  transition: color 0.25s ease;
 }
 
 .botaoSecundario:hover {
-  background-color: var(--color-primary);
+  background: var(--color-primary);
+
+  border-color: var(--color-primary);
+
+  transform: translateY(-2px);
 }
 
 .botaoSecundario:hover span {
   color: var(--white);
 }
 
-/* =========================================
-   PROGRAMAS + SOBRE
-   ========================================= */
+
+/* =========================================================
+   PROGRAMAS
+========================================================= */
 
 .programasSobre {
-  padding: 52px 0 62px;
-  background: linear-gradient(180deg, #050505 0%, #000000 100%);
+  padding: 70px 0 75px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #070707 0%,
+      #020202 100%
+    );
 }
 
 .tituloSecao {
-  margin: 0 0 28px;
+  margin: 0 0 35px;
+
   color: var(--white);
+
   font-family: var(--font-title);
+
   font-size: clamp(2rem, 3vw, 2.8rem);
+
   text-align: center;
 }
 
@@ -403,93 +510,145 @@
   color: var(--color-primary);
 }
 
+
+/* =========================================================
+   CARDS DOS PROGRAMAS
+========================================================= */
+
 .gradeProgramas {
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+
+  gap: 20px;
 }
 
 .cardPrograma {
   min-height: 215px;
 
-  padding: 26px;
+  padding: 28px;
 
   display: flex;
   flex-direction: column;
 
   box-sizing: border-box;
 
-  border: 1px solid rgba(255, 98, 0, 0.35);
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
 
-  background: linear-gradient(145deg, #141414 0%, #080808 100%);
+  background:
+    linear-gradient(
+      145deg,
+      #161616 0%,
+      #0b0b0b 100%
+    );
 
   transition:
     transform 0.25s ease,
-    border-color 0.25s ease;
+    border-color 0.25s ease,
+    background 0.25s ease;
 }
 
 .cardPrograma:hover {
-  transform: translateY(-5px);
-  border-color: var(--color-primary);
+  transform: translateY(-4px);
+
+  border-color: rgba(255, 106, 19, 0.5);
+
+  background:
+    linear-gradient(
+      145deg,
+      #191919 0%,
+      #0b0b0b 100%
+    );
 }
 
 .iconePrograma {
-  margin-bottom: 14px;
+  margin-bottom: 15px;
+
   color: var(--color-primary);
-  font-size: 2rem;
+
+  font-size: 1.9rem;
 }
 
 .cardPrograma h3 {
   margin: 0 0 9px;
+
   color: var(--white);
+
   font-family: var(--font-title);
-  font-size: 1.1rem;
+
+  font-size: 1.05rem;
 }
 
 .cardPrograma p {
   flex: 1;
-  margin: 0 0 15px;
 
-  color: #bdbdbd;
+  margin: 0 0 18px;
+
+  color: #a9a9a9;
+
   font-family: var(--font-secondary);
-  font-size: 0.86rem;
-  line-height: 1.5;
+
+  font-size: 0.84rem;
+  line-height: 1.55;
 }
 
 .linkPrograma {
   display: inline-flex;
+
   gap: 12px;
 
   color: var(--color-primary);
+
   font-family: var(--font-secondary);
-  font-size: 0.76rem;
+
+  font-size: 0.74rem;
   font-weight: 700;
+
   text-decoration: none;
+
+  transition:
+    gap 0.2s ease,
+    color 0.2s ease;
 }
 
-/* =========================================
+.linkPrograma:hover {
+  gap: 16px;
+
+  color: var(--white);
+}
+
+
+/* =========================================================
    SOBRE INTEGRADO
-   ========================================= */
+========================================================= */
 
 .sobreIntegrado {
   scroll-margin-top: 110px;
-  margin-top: 42px;
+
+  margin-top: 65px;
+
   position: relative;
 
   display: grid;
+
   grid-template-columns: 0.95fr 1.05fr;
-  gap: 50px;
+
+  gap: 55px;
 
   align-items: center;
-  border-radius: 12px;
 }
+
+
+/* =========================================================
+   IMAGEM SOBRE
+========================================================= */
 
 .sobreImagem {
   min-height: 350px;
 
-  border: 1px solid rgba(255, 98, 0, 0.2);
-  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
 
   background-image:
     url("../../assets/img/Pessoa.png");
@@ -497,85 +656,122 @@
   background-size: cover;
   background-position: 72% center;
   background-repeat: no-repeat;
+
+  box-shadow:
+    0 15px 45px rgba(0, 0, 0, 0.25);
 }
+
+
+/* =========================================================
+   CONTEÚDO SOBRE
+========================================================= */
 
 .rotuloSecao {
   display: block;
-  margin-bottom: 8px;
+
+  margin-bottom: 9px;
 
   color: var(--color-primary);
+
   font-family: var(--font-secondary);
-  font-size: 0.76rem;
+
+  font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 1px;
+
+  letter-spacing: 1.5px;
 }
 
 .sobreConteudo h2 {
-  margin: 0 0 15px;
+  margin: 0 0 16px;
+
   color: var(--white);
+
   font-family: var(--font-title);
+
   font-size: clamp(1.9rem, 2.8vw, 2.6rem);
+
   line-height: 1.2;
 }
 
 .sobreConteudo > p {
-  margin: 0 0 20px;
+  margin: 0 0 22px;
 
-  color: #c9c9c9;
+  color: #bcbcbc;
+
   font-family: var(--font-secondary);
-  line-height: 1.55;
+
+  line-height: 1.6;
 }
 
+
+/* =========================================================
+   LISTA SOBRE
+========================================================= */
+
 .listaSobre {
-  gap: 12px;
-  margin: 0 0 22px;
+  gap: 16px;
+
+  margin: 0 0 25px;
 }
 
 .listaSobre li {
   position: relative;
+
   padding-left: 30px;
 
   display: flex;
   flex-direction: column;
-  gap: 2px;
+
+  gap: 3px;
 }
 
 .listaSobre li::before {
   content: "✓";
+
   position: absolute;
+
   left: 0;
   top: 2px;
 
   color: var(--color-primary);
-  font-size: 1rem;
+
+  font-size: 0.95rem;
   font-weight: 700;
 }
 
 .listaSobre strong {
   color: var(--white);
+
   font-family: var(--font-title);
-  font-size: 0.86rem;
+
+  font-size: 0.84rem;
 }
 
 .listaSobre span {
-  color: #a8a8a8;
+  color: #949494;
+
   font-family: var(--font-secondary);
-  font-size: 0.78rem;
+
+  font-size: 0.76rem;
 }
 
-/* =========================================
+
+/* =========================================================
    DEPOIMENTOS
-   ========================================= */
+========================================================= */
 
 .depoimentos {
-  padding: 50px 0 75px;
-  background-color: #020202;
+  padding: 75px 0 90px;
+
+  background: #020202;
 }
 
 .gradeDepoimentos {
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
+
+  gap: 20px;
 }
 
 .cardDepoimento {
@@ -588,32 +784,60 @@
 
   box-sizing: border-box;
 
-  border: 1px solid rgba(255, 98, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
 
-  background: linear-gradient(145deg, #101010, #080808);
+  background:
+    linear-gradient(
+      145deg,
+      #121212 0%,
+      #080808 100%
+    );
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.cardDepoimento:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(255, 106, 19, 0.45);
 }
 
 .estrelas {
   margin-bottom: 18px;
+
   color: var(--color-primary);
-  font-size: 0.9rem;
+
+  font-size: 0.85rem;
+
   letter-spacing: 2px;
 }
 
 .cardDepoimento blockquote {
   flex: 1;
+
   margin: 0 0 22px;
 
-  color: #d3d3d3;
+  color: #c8c8c8;
+
   font-family: var(--font-secondary);
-  font-size: 0.9rem;
-  line-height: 1.6;
+
+  font-size: 0.87rem;
+
+  line-height: 1.65;
 }
+
+
+/* =========================================================
+   AUTOR
+========================================================= */
 
 .autor {
   display: flex;
   align-items: center;
+
   gap: 12px;
 }
 
@@ -625,10 +849,13 @@
   align-items: center;
   justify-content: center;
 
-  border: 1px solid var(--color-primary);
+  flex-shrink: 0;
+
+  border: 1px solid rgba(255, 106, 19, 0.65);
   border-radius: 50%;
 
-  background-color: #252525;
+  background: #1b1b1b;
+
   color: var(--white);
 
   font-family: var(--font-title);
@@ -637,27 +864,35 @@
 .autor div {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+
+  gap: 3px;
 }
 
 .autor strong {
   color: var(--white);
+
   font-family: var(--font-title);
-  font-size: 0.82rem;
+
+  font-size: 0.8rem;
 }
 
 .autor div span {
-  color: #999;
+  color: #777;
+
   font-family: var(--font-secondary);
-  font-size: 0.72rem;
+
+  font-size: 0.68rem;
 }
 
-/* =========================================
+
+/* =========================================================
    CTA
-   ========================================= */
+   Mantido porque já faz parte do CSS existente.
+========================================================= */
 
 .cta {
   position: relative;
+
   padding: 10px 0;
 
   background-image:
@@ -674,10 +909,13 @@
 
 .ctaConteudo {
   width: min(1100px, 84%);
+
   margin: 0 auto;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 40px;
 }
 
@@ -685,55 +923,250 @@
   margin: 0 0 12px;
 
   color: var(--white);
+
   font-family: var(--font-title);
-  font-size: clamp(1.5rem, 1vw, 0.8rem);
+
+  font-size: clamp(1.5rem, 2vw, 2rem);
+
   line-height: 1.15;
 }
 
 .cta p {
   max-width: 430px;
+
   margin: 0;
 
-  color: #cfcfcf;
+  color: #c0c0c0;
+
   font-family: var(--font-secondary);
+
   line-height: 1.5;
 }
 
 .botaoCta {
   gap: 14px;
+
   padding: 8px 9px 8px 28px;
+
   flex-shrink: 0;
+
   font-size: 0.9rem;
 
   transition:
     transform 0.25s ease,
     filter 0.25s ease;
 }
-/* =========================================
+
+
+/* =========================================================
    ANIMAÇÃO
-   ========================================= */
+========================================================= */
 
 @keyframes fadeUp {
   from {
     opacity: 0;
+
     transform: translateY(18px);
   }
 
   to {
     opacity: 1;
+
     transform: translateY(0);
   }
 }
 
-/* =========================================
+@keyframes destaqueSobre {
+  0% {
+    transform: translateY(18px);
+
+    filter: brightness(0.92);
+  }
+
+  55% {
+    transform: translateY(-3px);
+
+    filter: brightness(1.05);
+  }
+
+  100% {
+    transform: translateY(0);
+
+    filter: brightness(1);
+  }
+}
+
+@keyframes entradaImagemSobre {
+  from {
+    opacity: 0;
+
+    transform:
+      translateX(-40px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateX(0)
+      scale(1);
+  }
+}
+
+@keyframes entradaConteudoSobre {
+  from {
+    opacity: 0;
+
+    transform: translateX(40px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateX(0);
+  }
+}
+
+@keyframes entradaHomeConteudo {
+  from {
+    opacity: 0;
+
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+@keyframes entradaHomeBeneficios {
+  from {
+    opacity: 0;
+
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   ANIMAÇÃO DA NAVEGAÇÃO
+========================================================= */
+
+.sobreIntegrado:global(.animacaoNavegacao) {
+  animation:
+    destaqueSobre
+    0.8s
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sobreIntegrado:global(.animacaoNavegacao) .sobreImagem {
+  animation:
+    entradaImagemSobre
+    0.85s
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sobreIntegrado:global(.animacaoNavegacao) .sobreConteudo {
+  animation:
+    entradaConteudoSobre
+    0.85s
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bg:global(.animacaoNavegacao) .conteudoBanner {
+  animation:
+    entradaHomeConteudo
+    0.75s
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bg:global(.animacaoNavegacao) .faixaBeneficios {
+  animation:
+    entradaHomeBeneficios
+    0.8s
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* =========================================================
+   ANIMAÇÃO VIA DATA
+========================================================= */
+
+.sobreIntegrado[data-animando="true"] .sobreImagem {
+  animation:
+    entradaSobreImagem
+    0.8s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+.sobreIntegrado[data-animando="true"] .sobreConteudo {
+  animation:
+    entradaSobreConteudo
+    0.8s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+.bg[data-animando="true"] .conteudoBanner {
+  animation:
+    entradaHomeConteudo
+    0.75s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+.bg[data-animando="true"] .faixaBeneficios {
+  animation:
+    entradaHomeBeneficios
+    0.8s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .pageContainer {
+    scroll-behavior: auto;
+  }
+
+  .sobreIntegrado:global(.animacaoNavegacao),
+  .sobreIntegrado:global(.animacaoNavegacao) .sobreImagem,
+  .sobreIntegrado:global(.animacaoNavegacao) .sobreConteudo,
+  .bg:global(.animacaoNavegacao) .conteudoBanner,
+  .bg:global(.animacaoNavegacao) .faixaBeneficios {
+    animation: none;
+  }
+}
+
+
+/* =========================================================
    TABLET
-   ========================================= */
+========================================================= */
 
 @media (max-width: 900px) {
+
   .bg {
     min-height: 780px;
+
     padding: 60px 7% 36px;
+
     row-gap: 50px;
+
     background-position: 65% center;
   }
 
@@ -750,7 +1183,7 @@
   }
 
   .beneficio:nth-child(-n + 2) {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   }
 
   .bg2 {
@@ -769,6 +1202,7 @@
 
   .sobreIntegrado {
     grid-template-columns: 1fr;
+
     gap: 35px;
   }
 
@@ -777,15 +1211,20 @@
   }
 }
 
-/* =========================================
+
+/* =========================================================
    MOBILE
-   ========================================= */
+========================================================= */
 
 @media (max-width: 600px) {
+
   .bg {
     min-height: 850px;
+
     padding: 80px 6% 28px;
+
     row-gap: 60px;
+
     background-position: 63% center;
   }
 
@@ -815,8 +1254,11 @@
 
   .beneficio {
     min-height: 88px;
+
     justify-content: flex-start;
+
     gap: 10px;
+
     padding: 14px;
   }
 
@@ -834,16 +1276,23 @@
 
   .bg2 {
     min-height: 610px;
+
     padding: 60px 7%;
+
     align-items: center;
+
     background-position: center left;
   }
 
   .publicoConteudo {
     width: 100%;
+
     padding: 25px;
+
     box-sizing: border-box;
+
     border-radius: 8px;
+
     background: rgba(0, 0, 0, 0.7);
   }
 
@@ -853,7 +1302,11 @@
   }
 
   .programasSobre {
-    padding: 45px 0 55px;
+    padding: 55px 0 60px;
+  }
+
+  .tituloSecao {
+    margin-bottom: 28px;
   }
 
   .cardPrograma,
@@ -862,7 +1315,7 @@
   }
 
   .sobreIntegrado {
-    margin-top: 35px;
+    margin-top: 40px;
   }
 
   .sobreImagem {
@@ -871,158 +1324,7 @@
 
   .ctaConteudo {
     flex-direction: column;
+
     align-items: flex-start;
   }
 }
-
-
-/* =========================================
-   ANIMAÇÃO DA NAVEGAÇÃO
-   ========================================= */
-
-.sobreIntegrado:global(.animacaoNavegacao) {
-  animation: destaqueSobre 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.sobreIntegrado:global(.animacaoNavegacao) .sobreImagem {
-  animation: entradaImagemSobre 0.85s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.sobreIntegrado:global(.animacaoNavegacao) .sobreConteudo {
-  animation: entradaConteudoSobre 0.85s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.bg:global(.animacaoNavegacao) .conteudoBanner {
-  animation: entradaHomeConteudo 0.75s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.bg:global(.animacaoNavegacao) .faixaBeneficios {
-  animation: entradaHomeBeneficios 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes destaqueSobre {
-  0% {
-    transform: translateY(18px);
-    filter: brightness(0.92);
-  }
-
-  55% {
-    transform: translateY(-3px);
-    filter: brightness(1.05);
-  }
-
-  100% {
-    transform: translateY(0);
-    filter: brightness(1);
-  }
-}
-
-@keyframes entradaImagemSobre {
-  from {
-    opacity: 0;
-    transform: translateX(-40px) scale(0.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-}
-
-@keyframes entradaConteudoSobre {
-  from {
-    opacity: 0;
-    transform: translateX(40px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes entradaHomeConteudo {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes entradaHomeBeneficios {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pageContainer {
-    scroll-behavior: auto;
-  }
-
-  .sobreIntegrado:global(.animacaoNavegacao),
-  .sobreIntegrado:global(.animacaoNavegacao) .sobreImagem,
-  .sobreIntegrado:global(.animacaoNavegacao) .sobreConteudo,
-  .bg:global(.animacaoNavegacao) .conteudoBanner,
-  .bg:global(.animacaoNavegacao) .faixaBeneficios {
-    animation: none;
-  }
-}
-/* =========================================
-   ANIMAÇÕES DA NAVEGAÇÃO
-   ========================================= */
-
-/*
-  SOBRE
-  Quando o Header adiciona data-animando="true",
-  imagem e texto entram de lados opostos.
-*/
-
-.sobreIntegrado[data-animando="true"] .sobreImagem {
-  animation:
-    entradaSobreImagem
-    0.8s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    both;
-}
-
-.sobreIntegrado[data-animando="true"] .sobreConteudo {
-  animation:
-    entradaSobreConteudo
-    0.8s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    both;
-}
-
-
-/*
-  HOME
-*/
-
-.bg[data-animando="true"] .conteudoBanner {
-  animation:
-    entradaHomeConteudo
-    0.75s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    both;
-}
-
-.bg[data-animando="true"] .faixaBeneficios {
-  animation:
-    entradaHomeBeneficios
-    0.8s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    both;
-}
-
-

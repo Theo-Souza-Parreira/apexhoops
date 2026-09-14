@@ -1,46 +1,68 @@
+/* =========================================================
+   CONTAINER
+========================================================= */
+
 .conteiner {
     width: 100%;
     min-height: 100vh;
 
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+
     box-sizing: border-box;
 
     background: var(--background-app);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
 
-    padding: 50px;
-
+    display: flex;
+    flex-direction: column;
 }
 
-/* ========================================
+
+/* =========================================================
    CABEÇALHO
-======================================== */
+========================================================= */
 
 .cabecalho {
     width: 100%;
-    margin-bottom: var(--spacing-lg);
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: var(--spacing-lg);
+
+    margin-bottom: 30px;
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .cabecalho h1 {
     margin: 0;
 
-    color: var(--text-primary);
-
     font-family: var(--font-title);
-    font-size: var(--text-gg);
+    font-size: var(--text-xl);
+    line-height: 1.1;
     font-weight: var(--weight-bold);
 }
 
 .cabecalho p {
-    margin: var(--spacing-sm) 0 0;
+    margin: 0;
 
     color: var(--text-secondary);
 
     font-size: var(--text-p);
+    line-height: 1.4;
 }
 
 
-/* ========================================
-   CARDS
-======================================== */
+/* =========================================================
+   RESUMO SUPERIOR
+========================================================= */
 
 .resumo {
     width: 100%;
@@ -48,116 +70,153 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 
-    gap: var(--spacing-md);
+    gap: 1px;
 
     margin-bottom: var(--spacing-lg);
+
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    border-radius: var(--radius-md);
 }
+
+
+/* =========================================================
+   CARD DO RESUMO
+========================================================= */
 
 .card {
     min-height: 105px;
-    box-sizing: border-box;
 
     padding: var(--spacing-lg);
 
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
 
-    border: 1px solid rgba(255, 106, 19, 0.14);
-    border-radius: var(--radius-md);
+    gap: 18px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 106, 19, 0.12),
-            rgba(15, 15, 15, 0.55)
-        );
-
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.20);
+    background: rgba(33, 37, 41, 0.90);
 
     transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        background 0.2s ease;
+        background 0.2s ease,
+        transform 0.2s ease;
 }
 
 .card:hover {
-    transform: translateY(-2px);
-
-    border-color: rgba(255, 106, 19, 0.35);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 106, 19, 0.17),
-            rgba(15, 15, 15, 0.65)
-        );
+    background: rgba(38, 42, 46, 0.96);
 }
 
-.card span {
+
+/* =========================================================
+   ÍCONE DOS CARDS
+========================================================= */
+
+.iconeContainer {
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    color: var(--text-secondary);
+}
+
+.iconeContainer svg {
+    width: 22px;
+    height: 22px;
+}
+
+
+/* =========================================================
+   TEXTO DOS CARDS
+========================================================= */
+
+.cardTexto {
+    min-width: 0;
+}
+
+.cardTexto p {
+    margin: 0 0 6px;
+
     color: var(--text-secondary);
 
-    font-size: var(--text-pp);
-    font-weight: var(--weight-medium);
+    font-size: var(--text-p);
 }
 
-.card strong {
-    color: var(--text-primary);
-
+.cardTexto strong {
     font-family: var(--font-title);
     font-size: var(--text-g);
-    font-weight: var(--weight-bold);
+
+    font-variant-numeric: tabular-nums;
 }
 
 
-/* ========================================
+/* =========================================================
    CONTEÚDO PRINCIPAL
-======================================== */
+========================================================= */
 
 .conteudo {
     width: 100%;
 
     display: grid;
-    grid-template-columns: 1.25fr 1fr;
 
-    gap: var(--spacing-md);
+    grid-template-columns:
+        minmax(0, 1.35fr)
+        minmax(320px, 0.85fr);
+
+    gap: var(--spacing-lg);
+
+    /*
+       Ocupa o espaço restante da tela.
+       Evita que calendário e resumo fiquem
+       concentrados apenas no topo.
+    */
+    flex: 1;
+    min-height: 0;
 }
 
 
-/* ========================================
+/* =========================================================
    CALENDÁRIO
-======================================== */
+========================================================= */
 
 .calendario {
-    min-height: 390px;
-    box-sizing: border-box;
+    min-width: 0;
+    min-height: 0;
 
     padding: var(--spacing-lg);
 
-    border: 1px solid rgba(255, 106, 19, 0.12);
-    border-radius: var(--radius-md);
+    box-sizing: border-box;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 106, 19, 0.08),
-            rgba(15, 15, 15, 0.60)
-        );
+    display: flex;
+    flex-direction: column;
 
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.20);
+    background: rgba(33, 37, 41, 0.82);
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
 }
 
 
-/* CABEÇALHO DO CALENDÁRIO */
+/* =========================================================
+   CABEÇALHO DO CALENDÁRIO
+========================================================= */
 
 .cabecalhoCalendario {
-    width: 100%;
-
-    display: grid;
-    grid-template-columns: 40px 1fr 40px;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+
+    gap: var(--spacing-md);
 
     margin-bottom: var(--spacing-lg);
 }
@@ -165,57 +224,66 @@
 .cabecalhoCalendario h2 {
     margin: 0;
 
-    color: var(--text-primary);
-
     font-family: var(--font-title);
-    font-size: var(--text-m);
+    font-size: var(--text-g);
     font-weight: var(--weight-bold);
 
     text-align: center;
 }
 
+
+/* =========================================================
+   BOTÕES DE MÊS
+========================================================= */
+
 .botaoMes {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border: none;
-    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
 
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.035);
 
-    color: var(--text-primary);
+    color: var(--text-secondary);
 
     cursor: pointer;
 
     transition:
         background 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
+        border-color 0.2s ease,
+        color 0.2s ease;
 }
 
 .botaoMes:hover {
-    background: var(--color-primary);
-    color: var(--white);
+    background: rgba(255, 106, 19, 0.08);
 
-    transform: scale(1.05);
+    border-color: rgba(255, 106, 19, 0.28);
+
+    color: var(--color-primary);
 }
 
 .botaoMes svg {
-    font-size: var(--text-pp);
+    width: 17px;
+    height: 17px;
 }
 
 
-/* DIAS DA SEMANA */
+/* =========================================================
+   DIAS DA SEMANA
+========================================================= */
 
 .diasSemana {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
 
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 12px;
 }
 
 .diasSemana span {
@@ -226,83 +294,157 @@
     font-weight: var(--weight-bold);
 
     text-align: center;
+
+    opacity: 0.65;
 }
 
 
-/* DIAS */
+/* =========================================================
+   GRADE DOS DIAS
+========================================================= */
 
 .dias {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    flex: 1;
+    min-height: 0;
 
-    row-gap: var(--spacing-sm);
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+
+    row-gap: 8px;
 }
+
+
+/* =========================================================
+   DIA
+========================================================= */
 
 .dia,
 .diaVazio {
-    width: 34px;
-    height: 34px;
+    width: 42px;
+    height: 42px;
 
     justify-self: center;
+    align-self: center;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
+    box-sizing: border-box;
+
+    border-radius: 8px;
 
     font-family: var(--font-title);
     font-size: var(--text-pp);
-
-    box-sizing: border-box;
 }
 
 .dia {
-    cursor: default;
+    color: rgba(255, 255, 255, 0.62);
+
+    border: 1px solid transparent;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
 }
 
-.treinado {
-    border: 1px solid rgba(255, 106, 19, 0.45);
-
-    background: rgba(255, 106, 19, 0.08);
-
+.dia:hover {
     color: var(--text-primary);
 
-    box-shadow:
-        0 0 14px rgba(255, 106, 19, 0.20);
+    background: rgba(255, 255, 255, 0.045);
+
+    border-color: rgba(255, 255, 255, 0.07);
 }
+
+
+/* =========================================================
+   DIA TREINADO
+========================================================= */
+
+.treinado {
+    position: relative;
+
+    color: var(--white);
+
+    font-weight: var(--weight-bold);
+
+    background: rgba(255, 106, 19, 0.12);
+
+    border: 1px solid rgba(255, 106, 19, 0.38);
+}
+
+.treinado:hover {
+    background: rgba(255, 106, 19, 0.18);
+
+    border-color: rgba(255, 106, 19, 0.60);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   DIA NÃO TREINADO
+========================================================= */
 
 .naoTreinado {
-    color: var(--text-secondary);
+    color: rgba(148, 163, 184, 0.58);
+
+    background: transparent;
+
+    border-color: transparent;
+}
+
+.naoTreinado:hover {
+    color: var(--text-primary);
+
+    background: rgba(255, 255, 255, 0.035);
+
+    border-color: rgba(255, 255, 255, 0.06);
 }
 
 
-/* LEGENDA */
+/* =========================================================
+   LEGENDA
+========================================================= */
 
 .legenda {
     display: flex;
     align-items: center;
 
-    gap: var(--spacing-lg);
+    gap: 22px;
 
     margin-top: var(--spacing-lg);
-    padding-left: var(--spacing-sm);
+    padding-top: 16px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .legenda div {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
+
+    gap: 8px;
 
     color: var(--text-secondary);
 
     font-size: var(--text-pp);
 }
 
+
+/* =========================================================
+   PONTOS DA LEGENDA
+========================================================= */
+
 .pontoTreino,
 .pontoNaoTreino {
     width: 7px;
     height: 7px;
+
+    flex-shrink: 0;
 
     display: block;
 
@@ -311,102 +453,108 @@
 
 .pontoTreino {
     background: var(--color-primary);
-
-    box-shadow:
-        0 0 8px rgba(255, 106, 19, 0.6);
 }
 
 .pontoNaoTreino {
-    background: var(--text-secondary);
+    background: rgba(148, 163, 184, 0.45);
 }
 
 
-/* ========================================
+/* =========================================================
    RESUMO DOS TREINOS
-======================================== */
+========================================================= */
 
 .resumoTreinos {
-    min-height: 390px;
-    box-sizing: border-box;
+    min-width: 0;
+    min-height: 0;
 
     padding: var(--spacing-lg);
+
+    box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
 
-    border: 1px solid rgba(255, 106, 19, 0.12);
-    border-radius: var(--radius-md);
+    background: rgba(33, 37, 41, 0.82);
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.025),
-            rgba(15, 15, 15, 0.70)
-        );
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.20);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
 }
 
 
-/* TÍTULO */
+/* =========================================================
+   TÍTULO DO RESUMO
+========================================================= */
 
 .tituloResumo {
-    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+
+    gap: var(--spacing-md);
+
+    margin-bottom: var(--spacing-lg);
 }
 
 .tituloResumo h2 {
     margin: 0;
 
-    color: var(--text-primary);
-
     font-family: var(--font-title);
-    font-size: var(--text-m);
+    font-size: var(--text-g);
     font-weight: var(--weight-bold);
 }
 
 .tituloResumo p {
-    margin: 5px 0 0;
+    margin: 0;
 
-    color: var(--text-secondary);
+    color: var(--color-primary);
 
     font-size: var(--text-pp);
+    font-weight: var(--weight-medium);
 }
 
 
-/* LISTA */
+/* =========================================================
+   LISTA DE TREINOS
+========================================================= */
 
 .listaResumo {
-    flex: 1;
+    width: 100%;
 
     display: flex;
     flex-direction: column;
+
+    flex: 1;
 }
 
 
-/* ITEM */
+/* =========================================================
+   ITEM DE TREINO
+========================================================= */
 
 .itemResumo {
-    min-height: 67px;
+    min-height: 82px;
 
     display: flex;
     align-items: center;
 
-    gap: var(--spacing-md);
+    gap: 14px;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.itemResumo:last-child {
-    border-bottom: none;
+.itemResumo:first-child {
+    border-top: none;
 }
 
 
-/* ÍCONE */
+/* =========================================================
+   ÍCONE DO TREINO
+========================================================= */
 
 .icone {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
 
     flex-shrink: 0;
 
@@ -414,25 +562,31 @@
     align-items: center;
     justify-content: center;
 
-    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9px;
 
-    background: rgba(255, 106, 19, 0.10);
+    background: rgba(255, 255, 255, 0.035);
 
     color: var(--color-primary);
 }
 
 .icone svg {
-    font-size: var(--text-p);
+    width: 18px;
+    height: 18px;
 }
 
 
-/* INFORMAÇÕES */
+/* =========================================================
+   INFORMAÇÕES
+========================================================= */
 
 .info {
     min-width: 0;
 
     display: flex;
     flex-direction: column;
+
+    flex: 1;
 }
 
 .info span {
@@ -442,43 +596,50 @@
 }
 
 .info strong {
-    margin-top: 2px;
+    margin-top: 3px;
 
     color: var(--text-primary);
 
     font-family: var(--font-title);
     font-size: var(--text-p);
     font-weight: var(--weight-bold);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .info small {
-    margin-top: 1px;
+    margin-top: 3px;
 
-    color: var(--text-secondary);
+    color: rgba(148, 163, 184, 0.65);
 
     font-size: 10px;
 }
 
 
-/* ========================================
+/* =========================================================
    BOTÃO HISTÓRICO
-======================================== */
+========================================================= */
 
 .historico {
     width: 100%;
-    height: 40px;
 
-    margin-top: var(--spacing-md);
-    padding: 0 var(--spacing-md);
+    min-height: 46px;
+
+    margin-top: auto;
+    padding: 0 14px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    border: 1px solid rgba(255, 106, 19, 0.30);
-    border-radius: var(--radius-md);
+    box-sizing: border-box;
 
-    background: rgba(255, 106, 19, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.025);
 
     color: var(--text-primary);
 
@@ -490,30 +651,76 @@
 
     transition:
         background 0.2s ease,
-        border-color 0.2s ease;
+        border-color 0.2s ease,
+        color 0.2s ease;
 }
 
 .historico:hover {
-    background: rgba(255, 106, 19, 0.10);
+    background: rgba(255, 106, 19, 0.07);
 
-    border-color: var(--color-primary);
+    border-color: rgba(255, 106, 19, 0.28);
+
+    color: var(--white);
 }
 
 .historico svg {
     color: var(--color-primary);
 
+    width: 16px;
+    height: 16px;
+}
+
+
+/* =========================================================
+   ESTADO VAZIO
+========================================================= */
+
+.listaVazia {
+    flex: 1;
+
+    min-height: 210px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    color: var(--text-secondary);
+
+    text-align: center;
+}
+
+.listaVazia svg {
+    width: 28px;
+    height: 28px;
+
+    opacity: 0.45;
+}
+
+.listaVazia p {
+    margin: 0;
+
+    font-size: var(--text-p);
+}
+
+.listaVazia small {
+    color: rgba(148, 163, 184, 0.65);
+
     font-size: var(--text-pp);
 }
 
 
-/* ========================================
-   RESPONSIVIDADE
-======================================== */
+/* =========================================================
+   RESPONSIVO — 1100px
+========================================================= */
 
 @media (max-width: 1100px) {
 
     .conteiner {
-        padding: var(--spacing-lg);
+        padding: 30px;
     }
 
     .resumo {
@@ -522,30 +729,112 @@
 
     .conteudo {
         grid-template-columns: 1fr;
+
+        flex: none;
+    }
+
+    .calendario,
+    .resumoTreinos {
+        min-height: 500px;
     }
 }
 
 
+/* =========================================================
+   RESPONSIVO — 700px
+========================================================= */
+
 @media (max-width: 700px) {
 
     .conteiner {
-        padding: var(--spacing-md);
+        padding: var(--spacing-lg);
     }
 
-    .resumo {
-        grid-template-columns: 1fr;
+    .cabecalho {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .cabecalho h1 {
         font-size: var(--text-g);
     }
 
+    .resumo {
+        grid-template-columns: 1fr;
+    }
+
     .calendario,
     .resumoTreinos {
-        min-height: auto;
+        padding: var(--spacing-md);
+        min-height: 450px;
+    }
+
+    .cabecalhoCalendario h2 {
+        font-size: var(--text-m);
+    }
+
+    .dia,
+    .diaVazio {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVO — 500px
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .conteiner {
+        padding: var(--spacing-md);
+    }
+
+    .cabecalho {
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .card {
+        padding: var(--spacing-md);
+    }
+
+    .iconeContainer {
+        width: 40px;
+        height: 40px;
+    }
+
+    .iconeContainer svg {
+        width: 19px;
+        height: 19px;
+    }
+
+    .cardTexto strong {
+        font-size: var(--text-m);
+    }
+
+    .calendario,
+    .resumoTreinos {
+        min-height: 400px;
+    }
+
+    .dia,
+    .diaVazio {
+        width: 30px;
+        height: 30px;
+
+        font-size: 10px;
     }
 
     .dias {
-        row-gap: var(--spacing-md);
+        row-gap: 6px;
+    }
+
+    .diasSemana span {
+        font-size: 9px;
+    }
+
+    .legenda {
+        gap: 14px;
     }
 }

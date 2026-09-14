@@ -1,108 +1,216 @@
 import { useState } from 'react'
-import {
-    FaBasketballBall,
-    FaFire,
-    FaStar,
-    FaCalendarAlt,
-    FaChevronLeft,
-    FaChevronRight,
-    FaArrowRight
-} from 'react-icons/fa'
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 
 import estilos from './Treinos.module.css'
 
 
 export function Treinos() {
 
-    const [dataAtual, setDataAtual] = useState(new Date())
+    const hoje = new Date()
 
-    const ano = dataAtual.getFullYear()
-    const mes = dataAtual.getMonth()
+    const [mesAtual, setMesAtual] = useState(
+        new Date(
+            hoje.getFullYear(),
+            hoje.getMonth(),
+            1
+        )
+    )
 
-    const primeiroDia = new Date(ano, mes, 1).getDay()
-    const ultimoDia = new Date(ano, mes + 1, 0).getDate()
 
-    const meses = [
-        'Janeiro',
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-        'Outubro',
-        'Novembro',
-        'Dezembro'
+    const diasTreinados = [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        15,
+        17,
+        19,
+        22,
+        24,
+        26,
+        29
     ]
 
-    const diasTreinados = [2, 4, 6, 8, 10, 12, 15, 17, 19, 22, 24, 26, 29]
 
-    const voltarMes = () => {
-        setDataAtual(new Date(ano, mes - 1, 1))
+    const ano = mesAtual.getFullYear()
+    const mes = mesAtual.getMonth()
+
+
+    const nomeMes = mesAtual.toLocaleDateString(
+        'pt-BR',
+        {
+            month: 'long',
+            year: 'numeric'
+        }
+    )
+
+
+    const quantidadeDias = new Date(
+        ano,
+        mes + 1,
+        0
+    ).getDate()
+
+
+    const primeiroDia = new Date(
+        ano,
+        mes,
+        1
+    ).getDay()
+
+
+    const mesAnterior = () => {
+
+        setMesAtual(
+            new Date(
+                ano,
+                mes - 1,
+                1
+            )
+        )
     }
 
-    const avancarMes = () => {
-        setDataAtual(new Date(ano, mes + 1, 1))
+
+    const proximoMes = () => {
+
+        setMesAtual(
+            new Date(
+                ano,
+                mes + 1,
+                1
+            )
+        )
     }
 
-    const dias = []
+
+    const diasCalendario = []
+
+
 
     for (let i = 0; i < primeiroDia; i++) {
-        dias.push(null)
+
+        diasCalendario.push(
+            <div
+                key={`vazio-${i}`}
+                className={estilos.diaVazio}
+            />
+        )
     }
 
-    for (let dia = 1; dia <= ultimoDia; dia++) {
-        dias.push(dia)
+
+    for (
+        let dia = 1;
+        dia <= quantidadeDias;
+        dia++
+    ) {
+
+        const foiTreinado =
+            diasTreinados.includes(dia)
+
+
+        diasCalendario.push(
+            <div
+                key={dia}
+                className={`
+                    ${estilos.dia}
+                    ${
+                        foiTreinado
+                            ? estilos.treinado
+                            : estilos.naoTreinado
+                    }
+                `}
+            >
+                {dia}
+            </div>
+        )
     }
 
 
     return (
+
         <div className={estilos.conteiner}>
 
-            {/* CABEÇALHO */}
+            {/* ========================================
+                CABEÇALHO
+            ======================================== */}
 
             <header className={estilos.cabecalho}>
-                <div>
-                    <h1>Meus Treinos</h1>
-                    <p>Acompanhe sua rotina e evolução</p>
-                </div>
+
+                <h1>
+                    Meus Treinos
+                </h1>
+
+                <p className={estilos.subtitulo}>
+                    Acompanhe sua rotina de treinamento
+                </p>
+
             </header>
 
 
-            {/* CARDS */}
+            {/* ========================================
+                RESUMO
+            ======================================== */}
 
             <section className={estilos.resumo}>
 
                 <div className={estilos.card}>
-                    <span>Total de treinos</span>
-                    <strong>37</strong>
+                    <span>
+                        Total de treinos
+                    </span>
+
+                    <strong>
+                        37
+                    </strong>
                 </div>
 
-                <div className={estilos.card}>
-                    <span>Tempo treinado</span>
-                    <strong>24h 18min</strong>
-                </div>
 
                 <div className={estilos.card}>
-                    <span>Pontuação média</span>
-                    <strong>782</strong>
+                    <span>
+                        Tempo total
+                    </span>
+
+                    <strong>
+                        24h 18min
+                    </strong>
                 </div>
 
+
                 <div className={estilos.card}>
-                    <span>Sequência atual</span>
-                    <strong>6 dias</strong>
+                    <span>
+                        Pontuação média
+                    </span>
+
+                    <strong>
+                        782
+                    </strong>
+                </div>
+
+
+                <div className={estilos.card}>
+                    <span>
+                        Sequência atual
+                    </span>
+
+                    <strong>
+                        6 dias
+                    </strong>
                 </div>
 
             </section>
 
 
-            {/* CONTEÚDO PRINCIPAL */}
+            {/* ========================================
+                CONTEÚDO
+            ======================================== */}
 
             <section className={estilos.conteudo}>
 
-                {/* CALENDÁRIO */}
+
+                {/* ========================================
+                    CALENDÁRIO
+                ======================================== */}
 
                 <div className={estilos.calendario}>
 
@@ -110,26 +218,37 @@ export function Treinos() {
 
                         <button
                             className={estilos.botaoMes}
-                            onClick={voltarMes}
+                            onClick={mesAnterior}
+                            type="button"
+                            aria-label="Mês anterior"
                         >
-                            <FaChevronLeft />
+                            <FiChevronLeft />
                         </button>
 
+
                         <h2>
-                            {meses[mes]} {ano}
+                            {nomeMes}
                         </h2>
+
 
                         <button
                             className={estilos.botaoMes}
-                            onClick={avancarMes}
+                            onClick={proximoMes}
+                            type="button"
+                            aria-label="Próximo mês"
                         >
-                            <FaChevronRight />
+                            <FiChevronRight />
                         </button>
 
                     </div>
 
 
+                    {/* ========================================
+                        DIAS DA SEMANA
+                    ======================================== */}
+
                     <div className={estilos.diasSemana}>
+
                         <span>D</span>
                         <span>S</span>
                         <span>T</span>
@@ -137,50 +256,45 @@ export function Treinos() {
                         <span>Q</span>
                         <span>S</span>
                         <span>S</span>
+
                     </div>
 
+
+                    {/* ========================================
+                        DIAS
+                    ======================================== */}
 
                     <div className={estilos.dias}>
 
-                        {dias.map((dia, index) => {
-
-                            if (!dia) {
-                                return (
-                                    <div
-                                        key={`vazio-${index}`}
-                                        className={estilos.diaVazio}
-                                    />
-                                )
-                            }
-
-                            const treinou = diasTreinados.includes(dia)
-
-                            return (
-                                <div
-                                    key={dia}
-                                    className={`${estilos.dia} ${
-                                        treinou
-                                            ? estilos.treinado
-                                            : estilos.naoTreinado
-                                    }`}
-                                >
-                                    {dia}
-                                </div>
-                            )
-                        })}
+                        {diasCalendario}
 
                     </div>
 
+
+                    {/* ========================================
+                        LEGENDA
+                    ======================================== */}
 
                     <div className={estilos.legenda}>
 
                         <div>
-                            <span className={estilos.pontoTreino}></span>
+                            <span
+                                className={
+                                    estilos.pontoTreino
+                                }
+                            />
+
                             Treinou
                         </div>
 
+
                         <div>
-                            <span className={estilos.pontoNaoTreino}></span>
+                            <span
+                                className={
+                                    estilos.pontoNaoTreino
+                                }
+                            />
+
                             Não treinou
                         </div>
 
@@ -189,15 +303,22 @@ export function Treinos() {
                 </div>
 
 
-                {/* RESUMO */}
+                {/* ========================================
+                    RESUMO DOS TREINOS
+                ======================================== */}
 
                 <div className={estilos.resumoTreinos}>
 
                     <div className={estilos.tituloResumo}>
-                        <div>
-                            <h2>Resumo dos treinos</h2>
-                            <p>Seu desempenho</p>
-                        </div>
+
+                        <h2>
+                            Resumo dos treinos
+                        </h2>
+
+                        <p>
+                            Sua rotina de fechamento
+                        </p>
+
                     </div>
 
 
@@ -206,12 +327,19 @@ export function Treinos() {
                         <div className={estilos.itemResumo}>
 
                             <div className={estilos.icone}>
-                                <FaBasketballBall />
+                                🏀
                             </div>
 
                             <div className={estilos.info}>
-                                <span>Treino principal</span>
-                                <strong>Arremesso</strong>
+
+                                <span>
+                                    Treino principal
+                                </span>
+
+                                <strong>
+                                    Arremesso
+                                </strong>
+
                             </div>
 
                         </div>
@@ -220,13 +348,23 @@ export function Treinos() {
                         <div className={estilos.itemResumo}>
 
                             <div className={estilos.icone}>
-                                <FaFire />
+                                🔥
                             </div>
 
                             <div className={estilos.info}>
-                                <span>Treino mais realizado</span>
-                                <strong>Controle de bola</strong>
-                                <small>12 sessões</small>
+
+                                <span>
+                                    Treino mais realizado
+                                </span>
+
+                                <strong>
+                                    Caçador de bola
+                                </strong>
+
+                                <small>
+                                    12 sessões
+                                </small>
+
                             </div>
 
                         </div>
@@ -235,13 +373,23 @@ export function Treinos() {
                         <div className={estilos.itemResumo}>
 
                             <div className={estilos.icone}>
-                                <FaStar />
+                                ⭐
                             </div>
 
                             <div className={estilos.info}>
-                                <span>Melhor desempenho</span>
-                                <strong>Finalização</strong>
-                                <small>94% de aproveitamento</small>
+
+                                <span>
+                                    Melhor desempenho
+                                </span>
+
+                                <strong>
+                                    Finalização
+                                </strong>
+
+                                <small>
+                                    94% de aproveitamento
+                                </small>
+
                             </div>
 
                         </div>
@@ -250,13 +398,23 @@ export function Treinos() {
                         <div className={estilos.itemResumo}>
 
                             <div className={estilos.icone}>
-                                <FaCalendarAlt />
+                                📅
                             </div>
 
                             <div className={estilos.info}>
-                                <span>Último treino</span>
-                                <strong>Arremesso</strong>
-                                <small>12 de setembro</small>
+
+                                <span>
+                                    Último treino
+                                </span>
+
+                                <strong>
+                                    Arremesso
+                                </strong>
+
+                                <small>
+                                    12 de setembro
+                                </small>
+
                             </div>
 
                         </div>
@@ -264,9 +422,16 @@ export function Treinos() {
                     </div>
 
 
-                    <button className={estilos.historico}>
-                        <span>Ver histórico completo</span>
-                        <FaArrowRight />
+                    <button
+                        className={estilos.historico}
+                        type="button"
+                    >
+                        <span>
+                            Ver histórico completo
+                        </span>
+
+                        <FiChevronRight />
+
                     </button>
 
                 </div>
