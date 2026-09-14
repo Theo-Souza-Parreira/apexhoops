@@ -1,12 +1,33 @@
+/* Home2.module.css */
+
+/* =========================================
+   PÁGINA
+   ========================================= */
+
 .conteiner {
     width: 100%;
     min-height: 100vh;
     padding: var(--spacing-g);
     box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+
+  /*
+    O Header2 já cuida das boas-vindas.
+    Por isso a Home2 começa praticamente
+    logo abaixo dele.
+  */
+  padding: 12px 36px 32px;
+
+  box-sizing: border-box;
 
     background: var(--background-app);
     color: var(--text-primary);
     font-family: var(--font-primary);
+  background: var(--background-app);
+  color: var(--text-primary);
+
+  font-family: var(--font-primary);
 }
 
 
@@ -132,373 +153,622 @@
 
 
 /* =========================================================
+/* =========================================
    RESUMO
-========================================================= */
+   ========================================= */
 
 .resumo {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 1px;
 
     margin-bottom: var(--spacing-lg);
     overflow: hidden;
+  margin-bottom: var(--spacing-lg);
+
+  overflow: hidden;
 
     background: rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-md);
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  border-radius:
+    var(--radius-md);
 }
 
 .card {
     min-height: 105px;
     padding: var(--spacing-lg);
+  min-height: 105px;
+
+  padding: var(--spacing-lg);
 
     display: flex;
     align-items: center;
     gap: 18px;
+  display: flex;
+  align-items: center;
 
-    background: rgba(33, 37, 41, 0.9);
+  gap: 18px;
+
+  box-sizing: border-box;
+
+  background:
+    rgba(33, 37, 41, 0.9);
 
     transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease;
 }
 
 .card:hover {
-    background: rgba(38, 42, 46, 0.96);
+  background:
+    rgba(38, 42, 46, 0.96);
 }
 
 .iconeContainer {
     width: 44px;
     height: 44px;
     flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+
+  flex-shrink: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
 
     border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.025);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.1);
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.025);
 }
 
 .iconeContainer svg {
-    width: 22px;
-    height: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.iconeBola {
+  color:
+    var(--color-primary);
+}
+
+.iconeBranco {
+  color:
+    var(--white);
 }
 
 .cardTexto p {
-    margin: 0 0 6px;
+  margin: 0 0 6px;
 
     color: var(--text-secondary);
     font-size: var(--text-p);
+  color:
+    var(--text-secondary);
+
+  font-size:
+    var(--text-p);
 }
 
 .cardTexto strong {
     font-family: var(--font-title);
     font-size: var(--text-g);
     font-variant-numeric: tabular-nums;
+  font-family:
+    var(--font-title);
+
+  font-size:
+    var(--text-g);
+
+  font-variant-numeric:
+    tabular-nums;
 }
 
 
-/* =========================================================
-   CONTEÚDO
-========================================================= */
+/* =========================================
+   CONTEÚDO PRINCIPAL
+   ========================================= */
 
 .conteudo {
-    display: grid;
+  display: grid;
 
-    grid-template-columns:
-        minmax(0, 1.5fr)
-        minmax(300px, 0.8fr);
+  grid-template-columns:
+    minmax(0, 1.5fr)
+    minmax(300px, 0.8fr);
 
-    grid-template-areas:
-        "evolucao ultimo"
-        "recentes dica";
+  grid-template-areas:
+    "evolucao ultimo"
+    "recentes dica";
 
-    gap: var(--spacing-lg);
+  gap:
+    var(--spacing-lg);
 }
 
 
 /* =========================================================
    CARDS
 ========================================================= */
+/* =========================================
+   CARDS PRINCIPAIS
+   ========================================= */
 
 .evolucao,
 .ultimoTreino,
 .recentes,
 .dica {
-    box-sizing: border-box;
+  box-sizing: border-box;
 
     background: rgba(33, 37, 41, 0.82);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 14px;
+  background:
+    rgba(33, 37, 41, 0.82);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+
+  border-radius: 14px;
 }
 
 .evolucao {
     grid-area: evolucao;
     padding: var(--spacing-lg);
+  grid-area: evolucao;
+
+  padding:
+    var(--spacing-lg);
 }
 
 .ultimoTreino {
     grid-area: ultimo;
     padding: var(--spacing-lg);
+  grid-area: ultimo;
+
+  padding:
+    var(--spacing-lg);
 }
 
 .recentes {
     grid-area: recentes;
     padding: var(--spacing-lg);
+  grid-area: recentes;
+
+  padding:
+    var(--spacing-lg);
 }
 
 .dica {
     grid-area: dica;
     padding: var(--spacing-lg);
+  grid-area: dica;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  padding:
+    var(--spacing-lg);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
     background: linear-gradient(
         145deg,
         rgba(255, 106, 19, 0.09),
         rgba(33, 37, 41, 0.85) 58%
     );
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 106, 19, 0.09),
+      rgba(33, 37, 41, 0.85) 58%
+    );
 }
 
 
-/* =========================================================
-   TÍTULOS
-========================================================= */
+/* =========================================
+   TÍTULOS DAS SEÇÕES
+   ========================================= */
 
 .tituloSecao {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 
     gap: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
+  gap: 20px;
+
+  margin-bottom:
+    var(--spacing-lg);
 }
 
 .tituloComIcone {
     display: flex;
     align-items: center;
     gap: 12px;
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
 }
 
 .iconeTitulo {
-    width: 34px;
-    height: 34px;
+  width: 34px;
+  height: 34px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.045);
+  border-radius: 8px;
+
+  background:
+    rgba(255, 255, 255, 0.045);
 }
 
 .iconeTitulo svg {
-    width: 18px;
-    height: 18px;
+  width: 18px;
+  height: 18px;
 }
 
 .tituloSecao p {
-    margin: 0 0 4px;
+  margin: 0 0 4px;
 
     color: var(--color-primary);
     font-size: var(--text-pp);
     font-weight: var(--weight-medium);
+  color:
+    var(--color-primary);
+
+  font-family:
+    var(--font-primary);
+
+  font-size: 11px;
+
+  font-weight:
+    var(--weight-medium);
 }
 
 .tituloSecao h2 {
-    margin: 0;
+  margin: 0;
 
     font-family: var(--font-title);
     font-size: var(--text-g);
+  font-family:
+    var(--font-title);
+
+  font-size:
+    var(--text-g);
+}
+
+.periodo {
+  color:
+    var(--text-primary);
+
+  font-size:
+    var(--text-p);
+
+  white-space: nowrap;
 }
 
 
-/* =========================================================
+/* =========================================
    GRÁFICO
-========================================================= */
+   ========================================= */
 
 .grafico {
-    position: relative;
+  position: relative;
 
     height: 190px;
     padding-left: 35px;
     padding-top: 5px;
+  height: 190px;
 
-    box-sizing: border-box;
+  padding-left: 35px;
+  padding-top: 5px;
+
+  box-sizing: border-box;
 }
 
 .linha {
-    height: 25%;
+  height: 25%;
 
     display: flex;
     align-items: flex-start;
     gap: 10px;
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
 
     color: var(--text-secondary);
     font-size: var(--text-pp);
+  color:
+    var(--text-secondary);
+
+  font-size: 11px;
 }
 
 .linha div {
     flex: 1;
     margin-top: 6px;
+  flex: 1;
 
-    border-top: 1px dashed rgba(255, 255, 255, 0.06);
+  margin-top: 6px;
+
+  border-top:
+    1px dashed
+    rgba(255, 255, 255, 0.06);
 }
 
 .barraContainer {
-    position: absolute;
+  position: absolute;
 
-    left: 48px;
-    right: 10px;
-    bottom: 0;
+  left: 48px;
+  right: 10px;
+  bottom: 0;
 
-    height: 165px;
+  height: 165px;
 
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
 
-    gap: 15px;
+  gap: 15px;
 }
 
 .barra {
     width: 26px;
     min-height: 4px;
+  width: 26px;
 
-    border-radius: 6px 6px 1px 1px;
+  min-height: 4px;
+
+  border-radius:
+    6px 6px 1px 1px;
 
     background: linear-gradient(
         180deg,
         var(--color-primary),
         rgba(255, 106, 19, 0.55)
     );
+  background:
+    linear-gradient(
+      180deg,
+      var(--color-primary),
+      rgba(255, 106, 19, 0.55)
+    );
 
     transition: filter 0.2s ease, transform 0.2s ease;
+  transition:
+    filter 0.2s ease,
+    transform 0.2s ease;
 }
 
 .barra:hover {
     filter: brightness(1.12);
     transform: translateY(-3px);
+  filter:
+    brightness(1.12);
+
+  transform:
+    translateY(-3px);
 }
 
 .graficoLegenda {
-    margin: 8px 0 0 48px;
+  margin:
+    8px
+    0
+    0
+    48px;
 
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 
     color: var(--text-secondary);
     font-size: var(--text-pp);
+  color:
+    var(--text-secondary);
+
+  font-size: 11px;
 }
 
 
-/* =========================================================
+/* =========================================
    ÚLTIMO TREINO
-========================================================= */
+   ========================================= */
 
 .treinoPrincipal {
-    padding: var(--spacing-lg);
+  padding:
+    var(--spacing-lg);
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    gap: 15px;
+  gap: 15px;
 
     background: var(--background-secondary);
     border-left: 3px solid var(--color-primary);
     border-radius: 10px;
+  background:
+    var(--background-secondary);
+
+  border-left:
+    3px solid
+    var(--color-primary);
+
+  border-radius: 10px;
 }
 
 .tag {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+  display: inline-flex;
+  align-items: center;
 
-    margin-bottom: 9px;
+  gap: 6px;
+
+  margin-bottom: 9px;
 
     color: var(--color-primary);
     font-size: var(--text-pp);
     font-weight: var(--weight-bold);
+  color:
+    var(--color-primary);
+
+  font-size: 11px;
+
+  font-weight:
+    var(--weight-bold);
 }
 
 .tag::before {
-    content: "";
+  content: "";
 
-    width: 6px;
-    height: 6px;
+  width: 6px;
+  height: 6px;
 
     border-radius: 50%;
     background: var(--color-primary);
+  border-radius: 50%;
+
+  background:
+    var(--color-primary);
 }
 
 .treinoPrincipal h3 {
-    margin: 0;
+  margin: 0;
 
     font-family: var(--font-title);
     font-size: var(--text-m);
+  font-family:
+    var(--font-title);
+
+  font-size:
+    var(--text-m);
 }
 
 .treinoPrincipal p {
-    margin: 7px 0 0;
+  margin: 7px 0 0;
 
     color: var(--text-secondary);
     font-size: var(--text-pp);
+  color:
+    var(--text-secondary);
+
+  font-size:
+    var(--text-pp);
 }
 
 .treinoPrincipal > strong {
-    color: var(--color-primary);
+  color:
+    var(--color-primary);
 
     font-family: var(--font-title);
     font-size: var(--text-gg);
+  font-family:
+    var(--font-title);
 
-    font-variant-numeric: tabular-nums;
+  font-size:
+    var(--text-gg);
+
+  font-variant-numeric:
+    tabular-nums;
 }
 
 .dadosTreino {
-    margin-top: var(--spacing-md);
+  margin-top:
+    var(--spacing-md);
 
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1px;
+  display: grid;
 
-    overflow: hidden;
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 1px;
+
+  overflow: hidden;
 
     background: rgba(255, 255, 255, 0.06);
     border-radius: 8px;
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  border-radius: 8px;
 }
 
 .dadosTreino div {
-    padding: 12px;
+  padding: 12px;
 
     display: flex;
     flex-direction: column;
     gap: 5px;
+  display: flex;
+  flex-direction: column;
 
-    background: var(--background-secondary);
+  gap: 5px;
+
+  background:
+    var(--background-secondary);
 }
 
 .dadosTreino span {
     color: var(--text-secondary);
     font-size: var(--text-pp);
+  color:
+    var(--text-secondary);
+
+  font-size: 11px;
 }
 
 .dadosTreino strong {
     font-size: var(--text-p);
     font-variant-numeric: tabular-nums;
+  font-size:
+    var(--text-p);
+
+  font-variant-numeric:
+    tabular-nums;
 }
 
 
-/* =========================================================
+/* =========================================
    TABELA
-========================================================= */
+   ========================================= */
 
 .tituloSecao button {
-    padding: 0;
+  padding: 0;
 
     border: none;
     background: transparent;
+  border: none;
+
+  background: transparent;
 
     color: var(--color-primary);
     font-size: var(--text-pp);
@@ -506,176 +776,174 @@
     text-decoration: underline;
     text-decoration-color: rgba(255, 106, 19, 0.4);
     text-underline-offset: 3px;
+  color:
+    var(--color-primary);
+
+  font-family:
+    var(--font-primary);
+
+  font-size: 12px;
 
     cursor: pointer;
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease;
 }
 
 .tituloSecao button:hover {
     color: var(--white);
     text-decoration-color: var(--color-primary);
+  color:
+    var(--white);
 }
 
 .tabelaCabecalho,
 .tabelaLinha {
-    display: grid;
+  display: grid;
 
-    grid-template-columns:
-        1.6fr
-        1fr
-        0.7fr
-        0.6fr;
+  grid-template-columns:
+    1.6fr
+    1fr
+    0.7fr
+    0.6fr;
 
     align-items: center;
     gap: 15px;
+  align-items: center;
+
+  gap: 15px;
 }
 
 .tabelaCabecalho {
-    padding: 0 12px 10px;
+  padding:
+    0 12px 10px;
 
     color: var(--text-secondary);
     font-size: var(--text-pp);
+  color:
+    var(--text-secondary);
+
+  font-size: 11px;
 }
 
 .tabelaLinha {
-    padding: 14px 12px;
+  padding:
+    14px 12px;
 
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.05);
 
     color: var(--text-secondary);
     font-size: var(--text-pp);
+  color:
+    var(--text-secondary);
+
+  font-size: 12px;
 }
 
 .tabelaLinha strong {
     color: var(--text-primary);
     font-weight: var(--weight-medium);
+  color:
+    var(--text-primary);
+
+  font-weight:
+    var(--weight-medium);
 }
 
 .tabelaLinha b {
     color: var(--color-primary);
     font-variant-numeric: tabular-nums;
+  color:
+    var(--color-primary);
+
+  font-variant-numeric:
+    tabular-nums;
 }
 
 
-/* =========================================================
+/* =========================================
    DICA
-========================================================= */
+   ========================================= */
 
 .dicaIcone {
-    width: 42px;
-    height: 42px;
+  width: 42px;
+  height: 42px;
 
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.035);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  border-radius: 10px;
+
+  background:
+    rgba(255, 255, 255, 0.035);
 }
 
 .dicaIcone svg {
-    width: 22px;
-    height: 22px;
+  width: 22px;
+  height: 22px;
 }
 
 .dica p {
-    margin: 0 0 8px;
+  margin: 0 0 8px;
 
     color: var(--color-primary);
     font-size: var(--text-pp);
     font-weight: var(--weight-medium);
+  color:
+    var(--color-primary);
+
+  font-family:
+    var(--font-primary);
+
+  font-size: 12px;
+
+  font-weight:
+    var(--weight-medium);
 }
 
 .dica h3 {
     max-width: 300px;
     margin: 0;
+  max-width: 300px;
+
+  margin: 0;
 
     font-family: var(--font-title);
     font-size: var(--text-g);
     line-height: 1.4;
+  font-family:
+    var(--font-title);
+
+  font-size:
+    var(--text-g);
+
+  line-height: 1.4;
 }
 
 .dicaTexto {
-    margin-top: 10px;
+  margin-top: 10px;
 
     color: var(--text-secondary);
     font-size: var(--text-p);
     line-height: 1.4;
-}
+  color:
+    var(--text-secondary);
 
+  font-size:
+    var(--text-p);
 
-/* =========================================================
-   RESPONSIVO
-========================================================= */
-
-@media (max-width: 1000px) {
-    .conteudo {
-        grid-template-columns: 1fr;
-
-        grid-template-areas:
-            "evolucao"
-            "ultimo"
-            "recentes"
-            "dica";
-    }
-
-    .resumo {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 700px) {
-    .conteiner {
-        padding: var(--spacing-lg);
-    }
-
-    .cabecalho {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .destaque {
-        width: 100%;
-    }
-
-    .cabecalho h1 {
-        font-size: var(--text-g);
-    }
-
-    .tabelaCabecalho,
-    .tabelaLinha {
-        grid-template-columns:
-            1.5fr
-            1fr
-            0.7fr;
-    }
-
-    .tabelaCabecalho span:last-child,
-    .tabelaLinha b {
-        display: none;
-    }
-}
-
-@media (max-width: 500px) {
-    .conteiner {
-        padding: var(--spacing-md);
-    }
-
-    .card,
-    .treinoPrincipal {
-        padding: var(--spacing-md);
-    }
-
-    .treinoPrincipal > strong {
-        font-size: var(--text-g);
-    }
-
-    .tabelaCabecalho,
-    .tabelaLinha {
-        gap: 8px;
-        padding-left: 6px;
-        padding-right: 6px;
-    }
+  line-height: 1.4;
 }
