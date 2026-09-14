@@ -1091,3 +1091,17 @@ select {
     width: 100%;
   }
 }
+
+.mensagemErro,
+.mensagemSucesso {
+  margin-top: var(--spacing-sm);
+  font-size: var(--text-p);
+}
+
+.mensagemErro {
+  color: var(--mensagem);
+}
+
+.mensagemSucesso {
+  color: var(--color-primary);
+}

@@ -1,5 +1,3 @@
-// Header2.tsx
-
 import { Link } from "react-router-dom";
 
 import estilos from "./Header2.module.css";
@@ -7,11 +5,13 @@ import estilos from "./Header2.module.css";
 type Header2Props = {
   nome: string;
   fotoPerfil?: string;
+  frasePerfil?: string;
 };
 
 export function Header2({
   nome,
   fotoPerfil,
+  frasePerfil = "Evoluir um treino de cada vez.",
 }: Header2Props) {
   const primeiroNome =
     nome.trim().split(/\s+/)[0] || "Atleta";
@@ -36,6 +36,16 @@ export function Header2({
         className={estilos.perfilBotao}
         aria-label="Ir para o perfil"
       >
+        <div className={estilos.perfilTexto}>
+          <strong>
+            Atleta Apex Hoops
+          </strong>
+
+          <span>
+            {frasePerfil}
+          </span>
+        </div>
+
         <div className={estilos.avatar}>
           {fotoPerfil ? (
             <img
