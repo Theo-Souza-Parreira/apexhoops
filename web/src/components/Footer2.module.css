@@ -73,16 +73,20 @@
   align-items: center;
 
   gap: 28px;
-}
 
-.links span {
+  text-decoration: none;
   color: var(--text-secondary);
+  transition: 0.2s;
 
   font-family: var(--font-secondary);
 
   font-size: 0.72rem;
 
   white-space: nowrap;
+}
+
+.links a:hover {
+  color: var(--color-primary);
 }
 
 .divisor {

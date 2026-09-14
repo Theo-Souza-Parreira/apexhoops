@@ -29,8 +29,8 @@ const beneficios: Beneficio[] = [
     icone: "▥",
   },
   {
-    titulo: "Comunidade",
-    descricao: "ativa",
+    titulo: "Pesquisado",
+    descricao: "científicamente",
     icone: "◉",
   },
   {
@@ -313,7 +313,7 @@ function Home() {
 
                   <div>
                     <strong>{depoimento.nome}</strong>
-                    <span>Intrevistado do Apex Hoops</span>
+                    <span>Entrevistado do Apex Hoops</span>
                   </div>
                 </div>
               </article>

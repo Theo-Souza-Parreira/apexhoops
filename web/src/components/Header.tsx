@@ -109,7 +109,7 @@ function Header() {
                 : undefined
             }
           >
-            CRIAR CONTA
+            CADASTRAR
           </Link>
         </div>
       </nav>

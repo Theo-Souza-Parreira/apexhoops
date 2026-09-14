@@ -18,15 +18,11 @@ export function Footer2() {
       </div>
 
       <div className={estilos.informacoes}>
-        <nav
-          className={estilos.links}
-          aria-label="Informações institucionais"
-        >
-
-          <span>Termos de Uso</span>
-
-          <span>Privacidade</span>
-        </nav>
+        <div className={estilos.links}>
+          <a href="#">Termos de Uso</a>
+          <span>•</span>
+          <a href="#">Política de Privacidade</a>
+        </div>
 
         <div
           className={estilos.divisor}

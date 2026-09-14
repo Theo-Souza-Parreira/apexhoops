@@ -250,11 +250,18 @@
 .iconeBola {
   color:
     var(--color-primary);
+    fill: var(--color-primary);
 }
 
 .iconeBranco {
   color:
     var(--white);
+}
+
+.iconeEstrela {
+  color:
+    var(--color-tertiary);
+    fill: var(--color-tertiary);
 }
 
 .cardTexto p {

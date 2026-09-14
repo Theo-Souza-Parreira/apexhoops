@@ -39,7 +39,7 @@ export function Home2() {
 
         <div className={estilos.card}>
           <div className={estilos.iconeContainer}>
-            <Estrela className={estilos.iconeBranco} />
+            <Estrela className={estilos.iconeEstrela} />
           </div>
 
           <div className={estilos.cardTexto}>

@@ -14,9 +14,8 @@ function Footer() {
 
         <nav className={estilos.footerNav}>
           <a href="/">Home</a>
-          <a href="/sobre">Sobre</a>
+          <a href="/baixar">Baixe</a>
           <a href="/login">Login</a>
-          <a href="/suporte">Suporte</a>
         </nav>
       </div>
 
@@ -29,9 +28,9 @@ function Footer() {
         </p>
 
         <div className={estilos.linksSecundarios}>
-          <a href="/termos">Termos de Uso</a>
+          <a href="#">Termos de Uso</a>
           <span>•</span>
-          <a href="/privacidade">Política de Privacidade</a>
+          <a href="#">Política de Privacidade</a>
         </div>
       </div>
     </footer>
