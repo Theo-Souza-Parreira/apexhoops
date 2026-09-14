@@ -3,6 +3,11 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 
 import estilos from './Treinos.module.css'
 
+import Bola from "../../assets/icone/Bola.svg?react";
+import Fogo from "../../assets/icone/Fogo.svg?react"
+import Estrela from "../../assets/icone/Estrela.svg?react"
+import Calendario from "../../assets/icone/Calendario.svg?react"
+
 
 export function Treinos() {
 
@@ -327,7 +332,7 @@ export function Treinos() {
                         <div className={estilos.itemResumo}>
 
                             <div className={estilos.icone}>
-                                🏀
+                                <Bola />
                             </div>
 
                             <div className={estilos.info}>
@@ -348,7 +353,7 @@ export function Treinos() {
                         <div className={estilos.itemResumo}>
 
                             <div className={estilos.icone}>
-                                🔥
+                                <Fogo />
                             </div>
 
                             <div className={estilos.info}>
@@ -373,7 +378,7 @@ export function Treinos() {
                         <div className={estilos.itemResumo}>
 
                             <div className={estilos.icone}>
-                                ⭐
+                                <Estrela />
                             </div>
 
                             <div className={estilos.info}>
@@ -398,7 +403,7 @@ export function Treinos() {
                         <div className={estilos.itemResumo}>
 
                             <div className={estilos.icone}>
-                                📅
+                                <Calendario />
                             </div>
 
                             <div className={estilos.info}>

@@ -26,9 +26,9 @@ function MainLayout2() {
             >
 
                     <Header2
-      nome="Paulo"
-        fotoPerfil={Perfil}   
-    />
+                        nome="Paulo"
+                        fotoPerfil={Perfil}   
+                    />
 
                 <Outlet />
            

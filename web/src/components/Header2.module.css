@@ -17,6 +17,7 @@
   background: #120b08;
 
   color: var(--white);
+
 }
 
 
@@ -103,8 +104,8 @@
    ========================================= */
 
 .avatar {
-  width: 12vh;
-  height: 12vh;
+  width: 7vh;
+  height: 7vh;
 
   display: flex;
   align-items: center;
