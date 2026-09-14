@@ -1,14 +1,11 @@
 .conteiner {
     width: 100%;
     min-height: 100vh;
-
     padding: var(--spacing-g);
-
     box-sizing: border-box;
 
     background: var(--background-app);
     color: var(--text-primary);
-
     font-family: var(--font-primary);
 }
 
@@ -23,22 +20,16 @@
     justify-content: space-between;
 
     gap: var(--spacing-lg);
-
     margin-bottom: var(--spacing-g);
     padding-bottom: 18px;
 
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.introducao {
-    min-width: 0;
-}
-
 .subtitulo {
     margin: 0 0 7px;
 
     color: var(--text-secondary);
-
     font-size: var(--text-pp);
     font-weight: var(--weight-medium);
 }
@@ -54,7 +45,6 @@
 
 .cabecalho h1 span {
     position: relative;
-
     color: var(--color-primary);
 }
 
@@ -62,13 +52,11 @@
     content: "";
 
     position: absolute;
-
     left: 0;
     right: 0;
     bottom: 2px;
 
     height: 0.25em;
-
     background: rgba(255, 106, 19, 0.18);
 
     z-index: -1;
@@ -76,58 +64,59 @@
 
 .mensagem {
     max-width: 46ch;
-
     margin: 10px 0 0;
 
     color: var(--text-secondary);
-
     font-size: var(--text-p);
     line-height: 1.4;
 }
 
 
 /* =========================================================
-   DESTAQUE / SEQUÊNCIA
+   DESTAQUE
 ========================================================= */
 
 .destaque {
     min-width: 190px;
-
     padding: 14px 20px;
 
     display: flex;
     align-items: center;
-
     gap: 15px;
 
-    box-sizing: border-box;
-
-    background:
-        linear-gradient(
-            150deg,
-            rgba(255, 106, 19, 0.12),
-            rgba(33, 37, 41, 0.78)
-        );
+    background: linear-gradient(
+        150deg,
+        rgba(255, 106, 19, 0.12),
+        rgba(33, 37, 41, 0.78)
+    );
 
     border-left: 3px solid var(--color-primary);
     border-radius: 5px;
 }
 
-.iconeFogo {
+.iconeLaranja {
+    color: var(--color-primary) !important;
+    fill: var(--color-primary) !important;
+    stroke: var(--color-primary) !important;
+}
+
+.iconeBranco {
+    color: var(--white) !important;
+    fill: var(--white) !important;
+    stroke: var(--white) !important;
+}
+
+.destaque .iconeLaranja {
     width: 32px;
     height: 32px;
-
     flex-shrink: 0;
-
-    color: var(--color-primary);
 }
 
 .destaqueTexto strong {
     display: block;
 
     color: var(--text-secondary);
-
-    font-size: 12px;
+    font-size: var(--text-pp);
     font-weight: var(--weight-medium);
 }
 
@@ -135,7 +124,6 @@
     margin: 4px 0 0;
 
     color: var(--color-primary);
-
     font-size: var(--text-g);
     font-weight: var(--weight-bold);
 
@@ -149,37 +137,27 @@
 
 .resumo {
     display: grid;
-
     grid-template-columns: repeat(3, 1fr);
-
     gap: 1px;
 
     margin-bottom: var(--spacing-lg);
-
     overflow: hidden;
 
     background: rgba(255, 255, 255, 0.06);
-
     border-radius: var(--radius-md);
 }
 
 .card {
     min-height: 105px;
-
     padding: var(--spacing-lg);
 
     display: flex;
     align-items: center;
-
     gap: 18px;
-
-    box-sizing: border-box;
 
     background: rgba(33, 37, 41, 0.9);
 
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .card:hover {
@@ -189,18 +167,14 @@
 .iconeContainer {
     width: 44px;
     height: 44px;
-
     flex-shrink: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    box-sizing: border-box;
-
     border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 50%;
-
     background: rgba(255, 255, 255, 0.025);
 }
 
@@ -209,27 +183,16 @@
     height: 22px;
 }
 
-.iconeBola {
-    color: var(--color-primary);
-}
-
-.iconeBranco {
-    color: #ffffff;
-}
-
 .cardTexto p {
     margin: 0 0 6px;
 
     color: var(--text-secondary);
-
     font-size: var(--text-p);
 }
 
 .cardTexto strong {
     font-family: var(--font-title);
-
     font-size: var(--text-g);
-
     font-variant-numeric: tabular-nums;
 }
 
@@ -254,7 +217,7 @@
 
 
 /* =========================================================
-   CARDS PRINCIPAIS
+   CARDS
 ========================================================= */
 
 .evolucao,
@@ -264,45 +227,38 @@
     box-sizing: border-box;
 
     background: rgba(33, 37, 41, 0.82);
-
     border: 1px solid rgba(255, 255, 255, 0.06);
-
     border-radius: 14px;
 }
 
 .evolucao {
     grid-area: evolucao;
-
     padding: var(--spacing-lg);
 }
 
 .ultimoTreino {
     grid-area: ultimo;
-
     padding: var(--spacing-lg);
 }
 
 .recentes {
     grid-area: recentes;
-
     padding: var(--spacing-lg);
 }
 
 .dica {
     grid-area: dica;
-
     padding: var(--spacing-lg);
 
     display: flex;
     flex-direction: column;
     justify-content: center;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255, 106, 19, 0.09),
-            rgba(33, 37, 41, 0.85) 58%
-        );
+    background: linear-gradient(
+        145deg,
+        rgba(255, 106, 19, 0.09),
+        rgba(33, 37, 41, 0.85) 58%
+    );
 }
 
 
@@ -315,15 +271,13 @@
     align-items: baseline;
     justify-content: space-between;
 
-    gap: 20px;
-
+    gap: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
 }
 
 .tituloComIcone {
     display: flex;
     align-items: center;
-
     gap: 12px;
 }
 
@@ -336,7 +290,6 @@
     justify-content: center;
 
     border-radius: 8px;
-
     background: rgba(255, 255, 255, 0.045);
 }
 
@@ -349,10 +302,7 @@
     margin: 0 0 4px;
 
     color: var(--color-primary);
-
-    font-family: var(--font-primary);
-
-    font-size: 11px;
+    font-size: var(--text-pp);
     font-weight: var(--weight-medium);
 }
 
@@ -360,7 +310,6 @@
     margin: 0;
 
     font-family: var(--font-title);
-
     font-size: var(--text-g);
 }
 
@@ -373,7 +322,6 @@
     position: relative;
 
     height: 190px;
-
     padding-left: 35px;
     padding-top: 5px;
 
@@ -385,17 +333,14 @@
 
     display: flex;
     align-items: flex-start;
-
     gap: 10px;
 
     color: var(--text-secondary);
-
-    font-size: 11px;
+    font-size: var(--text-pp);
 }
 
 .linha div {
     flex: 1;
-
     margin-top: 6px;
 
     border-top: 1px dashed rgba(255, 255, 255, 0.06);
@@ -419,26 +364,21 @@
 
 .barra {
     width: 26px;
-
     min-height: 4px;
 
     border-radius: 6px 6px 1px 1px;
 
-    background:
-        linear-gradient(
-            180deg,
-            var(--color-primary),
-            rgba(255, 106, 19, 0.55)
-        );
+    background: linear-gradient(
+        180deg,
+        var(--color-primary),
+        rgba(255, 106, 19, 0.55)
+    );
 
-    transition:
-        filter 0.2s ease,
-        transform 0.2s ease;
+    transition: filter 0.2s ease, transform 0.2s ease;
 }
 
 .barra:hover {
     filter: brightness(1.12);
-
     transform: translateY(-3px);
 }
 
@@ -449,8 +389,7 @@
     justify-content: space-around;
 
     color: var(--text-secondary);
-
-    font-size: 11px;
+    font-size: var(--text-pp);
 }
 
 
@@ -468,7 +407,6 @@
     gap: 15px;
 
     background: var(--background-secondary);
-
     border-left: 3px solid var(--color-primary);
     border-radius: 10px;
 }
@@ -476,14 +414,12 @@
 .tag {
     display: inline-flex;
     align-items: center;
-
     gap: 6px;
 
     margin-bottom: 9px;
 
     color: var(--color-primary);
-
-    font-size: 11px;
+    font-size: var(--text-pp);
     font-weight: var(--weight-bold);
 }
 
@@ -494,7 +430,6 @@
     height: 6px;
 
     border-radius: 50%;
-
     background: var(--color-primary);
 }
 
@@ -502,7 +437,6 @@
     margin: 0;
 
     font-family: var(--font-title);
-
     font-size: var(--text-m);
 }
 
@@ -510,7 +444,6 @@
     margin: 7px 0 0;
 
     color: var(--text-secondary);
-
     font-size: var(--text-pp);
 }
 
@@ -518,7 +451,6 @@
     color: var(--color-primary);
 
     font-family: var(--font-title);
-
     font-size: var(--text-gg);
 
     font-variant-numeric: tabular-nums;
@@ -528,15 +460,12 @@
     margin-top: var(--spacing-md);
 
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 1px;
 
     overflow: hidden;
 
     background: rgba(255, 255, 255, 0.06);
-
     border-radius: 8px;
 }
 
@@ -545,7 +474,6 @@
 
     display: flex;
     flex-direction: column;
-
     gap: 5px;
 
     background: var(--background-secondary);
@@ -553,13 +481,11 @@
 
 .dadosTreino span {
     color: var(--text-secondary);
-
-    font-size: 11px;
+    font-size: var(--text-pp);
 }
 
 .dadosTreino strong {
     font-size: var(--text-p);
-
     font-variant-numeric: tabular-nums;
 }
 
@@ -572,27 +498,20 @@
     padding: 0;
 
     border: none;
-
     background: transparent;
 
     color: var(--color-primary);
-
-    font-size: 12px;
+    font-size: var(--text-pp);
 
     text-decoration: underline;
     text-decoration-color: rgba(255, 106, 19, 0.4);
     text-underline-offset: 3px;
 
     cursor: pointer;
-
-    transition:
-        color 0.2s ease,
-        text-decoration-color 0.2s ease;
 }
 
 .tituloSecao button:hover {
-    color: #ffffff;
-
+    color: var(--white);
     text-decoration-color: var(--color-primary);
 }
 
@@ -607,7 +526,6 @@
         0.6fr;
 
     align-items: center;
-
     gap: 15px;
 }
 
@@ -615,8 +533,7 @@
     padding: 0 12px 10px;
 
     color: var(--text-secondary);
-
-    font-size: 11px;
+    font-size: var(--text-pp);
 }
 
 .tabelaLinha {
@@ -625,19 +542,16 @@
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 
     color: var(--text-secondary);
-
-    font-size: 12px;
+    font-size: var(--text-pp);
 }
 
 .tabelaLinha strong {
     color: var(--text-primary);
-
     font-weight: var(--weight-medium);
 }
 
 .tabelaLinha b {
     color: var(--color-primary);
-
     font-variant-numeric: tabular-nums;
 }
 
@@ -657,9 +571,7 @@
     justify-content: center;
 
     border: 1px solid rgba(255, 255, 255, 0.08);
-
     border-radius: 10px;
-
     background: rgba(255, 255, 255, 0.035);
 }
 
@@ -672,22 +584,16 @@
     margin: 0 0 8px;
 
     color: var(--color-primary);
-
-    font-family: var(--font-primary);
-
-    font-size: 12px;
+    font-size: var(--text-pp);
     font-weight: var(--weight-medium);
 }
 
 .dica h3 {
     max-width: 300px;
-
     margin: 0;
 
     font-family: var(--font-title);
-
     font-size: var(--text-g);
-
     line-height: 1.4;
 }
 
@@ -695,9 +601,7 @@
     margin-top: 10px;
 
     color: var(--text-secondary);
-
     font-size: var(--text-p);
-
     line-height: 1.4;
 }
 
@@ -707,7 +611,6 @@
 ========================================================= */
 
 @media (max-width: 1000px) {
-
     .conteudo {
         grid-template-columns: 1fr;
 
@@ -721,19 +624,15 @@
     .resumo {
         grid-template-columns: 1fr;
     }
-
 }
 
-
 @media (max-width: 700px) {
-
     .conteiner {
         padding: var(--spacing-lg);
     }
 
     .cabecalho {
         flex-direction: column;
-
         align-items: flex-start;
     }
 
@@ -757,20 +656,14 @@
     .tabelaLinha b {
         display: none;
     }
-
 }
 
-
 @media (max-width: 500px) {
-
     .conteiner {
         padding: var(--spacing-md);
     }
 
-    .card {
-        padding: var(--spacing-md);
-    }
-
+    .card,
     .treinoPrincipal {
         padding: var(--spacing-md);
     }
@@ -782,9 +675,7 @@
     .tabelaCabecalho,
     .tabelaLinha {
         gap: 8px;
-
         padding-left: 6px;
         padding-right: 6px;
     }
-
 }

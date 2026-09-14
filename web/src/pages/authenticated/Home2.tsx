@@ -31,7 +31,7 @@ export function Home2() {
 
                 <div className={estilos.destaque}>
 
-                    <Fogo className={estilos.iconeFogo} />
+                    <Fogo className={estilos.iconeLaranja} />
 
                     <div className={estilos.destaqueTexto}>
                         <strong>
@@ -52,7 +52,7 @@ export function Home2() {
                 <div className={estilos.card}>
 
                     <div className={estilos.iconeContainer}>
-                        <Bola className={estilos.iconeBola} />
+                        <Bola className={estilos.iconeLaranja} />
                     </div>
 
                     <div className={estilos.cardTexto}>
