@@ -1,19 +1,22 @@
-import estilos from './MenuLateral.module.css'
-import { useContext } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { LayoutContexto } from '../contexts/LayoutContexto'
-import { useAutenticacao } from '../hooks/useAutenticacao'
-import { MdMenu, MdMenuOpen, MdBarChart, MdPerson, MdLogout } from 'react-icons/md'
-import { FaHome } from 'react-icons/fa'
-import { FaDumbbell } from "react-icons/fa6"
+import estilos from "./MenuLateral.module.css";
 
-import Home from '../assets/icone/Home.svg?react'
-import Estatisticas from '../assets/icone/Estatisticas.svg?react'
-import Treinos from '../assets/icone/Treinos.svg?react'
-import Perfil from '../assets/icone/Perfil.svg?react'
-import Sair from '../assets/icone/Sair.svg?react'
-import MenuAberto from '../assets/icone/MenuAberto.svg?react'
-import MenuFechado from '../assets/icone/MenuFechado.svg?react'
+import { useContext } from "react";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
+import { LayoutContexto } from "../contexts/LayoutContexto";
+import { useAutenticacao } from "../hooks/useAutenticacao";
+
+import Home from "../assets/icone/Home.svg?react";
+import Estatisticas from "../assets/icone/Estatisticas.svg?react";
+import Treinos from "../assets/icone/Treinos.svg?react";
+import Perfil from "../assets/icone/Perfil.svg?react";
+import Sair from "../assets/icone/Sair.svg?react";
+import MenuAberto from "../assets/icone/MenuAberto.svg?react";
+import MenuFechado from "../assets/icone/MenuFechado.svg?react";
 
 
 export function MenuLateral() {

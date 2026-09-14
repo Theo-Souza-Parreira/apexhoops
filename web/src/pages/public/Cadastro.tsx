@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
 import { FirebaseError } from "firebase/app";
-import { useAutenticacao } from "../../hooks/useAutenticacao";
+import z from "zod";
 
 import {
-  FiEye,
-  FiEyeOff,
   FiLock,
   FiMail,
   FiUser,
 } from "react-icons/fi";
+
+import { useAutenticacao } from "../../hooks/useAutenticacao";
 
 import estilos from "./Cadastro.module.css";
 
@@ -26,33 +26,35 @@ const cadastroSchema = z.object({
   nome: z
     .string()
     .min(2, {
-      message: "O nome deve conter no mínimo 2 caracteres.",
+      message:
+        "O nome deve conter no mínimo 2 caracteres.",
     }),
 
   email: z.email({
-    message: "Informe um e-mail válido.",
+    message:
+      "Informe um e-mail válido.",
   }),
 
   senha: z
     .string()
     .min(6, {
-      message: "A senha deve conter entre 6 a 18 caracteres.",
+      message:
+        "A senha deve conter entre 6 a 18 caracteres.",
     })
     .max(18, {
-      message: "A senha deve conter entre 6 a 18 caracteres.",
+      message:
+        "A senha deve conter entre 6 a 18 caracteres.",
     }),
 });
 
 export function Cadastro() {
-
-
   const [mensagemErro, setMensagemErro] =
     useState("");
 
-  const { cadastrar, status } =
-    useAutenticacao();
-
-  const [mostrarSenha, setMostrarSenha] = useState(false);
+  const {
+    cadastrar,
+    status,
+  } = useAutenticacao();
 
   const navegacao = useNavigate();
 
@@ -135,7 +137,9 @@ export function Cadastro() {
         className={estilos.painelVisual}
         aria-label="Apresentação Apex Hoops"
       >
-        <div className={estilos.conteudoVisual}>
+        <div
+          className={estilos.conteudoVisual}
+        >
           <h1>
             Mais que
             <br />
@@ -158,38 +162,56 @@ export function Cadastro() {
         className={estilos.areaFormulario}
         aria-labelledby="titulo-cadastro"
       >
-        <div className={estilos.cardCadastro}>
-          <header className={estilos.cabecalho}>
+        <div
+          className={estilos.cardCadastro}
+        >
+          <header
+            className={estilos.cabecalho}
+          >
             <h2 id="titulo-cadastro">
               Criar conta
             </h2>
 
             <span
-              className={estilos.linhaTitulo}
+              className={
+                estilos.linhaTitulo
+              }
               aria-hidden="true"
             />
 
             <p>
-              Comece sua jornada e evolua com a Apex Hoops.
+              Comece sua jornada e evolua
+              com a Apex Hoops.
             </p>
           </header>
 
           <form
             className={estilos.formulario}
-            onSubmit={handleSubmit(cadastrarUsuario)}
+            onSubmit={handleSubmit(
+              cadastrarUsuario,
+            )}
             noValidate
           >
-            <div className={estilos.grupoCampo}>
+            <div
+              className={estilos.grupoCampo}
+            >
               <label htmlFor="nome">
                 Nome
               </label>
 
               <div
-                className={`${estilos.campoContainer} ${errors.nome ? estilos.campoComErro : ""
-                  }`}
+                className={`${
+                  estilos.campoContainer
+                } ${
+                  errors.nome
+                    ? estilos.campoComErro
+                    : ""
+                }`}
               >
                 <FiUser
-                  className={estilos.iconeCampo}
+                  className={
+                    estilos.iconeCampo
+                  }
                   aria-hidden="true"
                 />
 
@@ -204,7 +226,9 @@ export function Cadastro() {
 
               {errors.nome && (
                 <p
-                  className={estilos.mensagemErro}
+                  className={
+                    estilos.mensagemErro
+                  }
                   role="alert"
                 >
                   {errors.nome.message}
@@ -212,17 +236,26 @@ export function Cadastro() {
               )}
             </div>
 
-            <div className={estilos.grupoCampo}>
+            <div
+              className={estilos.grupoCampo}
+            >
               <label htmlFor="email">
                 E-mail
               </label>
 
               <div
-                className={`${estilos.campoContainer} ${errors.email ? estilos.campoComErro : ""
-                  }`}
+                className={`${
+                  estilos.campoContainer
+                } ${
+                  errors.email
+                    ? estilos.campoComErro
+                    : ""
+                }`}
               >
                 <FiMail
-                  className={estilos.iconeCampo}
+                  className={
+                    estilos.iconeCampo
+                  }
                   aria-hidden="true"
                 />
 
@@ -237,7 +270,9 @@ export function Cadastro() {
 
               {errors.email && (
                 <p
-                  className={estilos.mensagemErro}
+                  className={
+                    estilos.mensagemErro
+                  }
                   role="alert"
                 >
                   {errors.email.message}
@@ -245,50 +280,43 @@ export function Cadastro() {
               )}
             </div>
 
-            <div className={estilos.grupoCampo}>
+            <div
+              className={estilos.grupoCampo}
+            >
               <label htmlFor="senha">
                 Senha
               </label>
 
               <div
-                className={`${estilos.campoContainer} ${errors.senha ? estilos.campoComErro : ""
-                  }`}
+                className={`${
+                  estilos.campoContainer
+                } ${
+                  errors.senha
+                    ? estilos.campoComErro
+                    : ""
+                }`}
               >
                 <FiLock
-                  className={estilos.iconeCampo}
+                  className={
+                    estilos.iconeCampo
+                  }
                   aria-hidden="true"
                 />
 
                 <input
                   id="senha"
-                  type={mostrarSenha ? "text" : "password"}
+                  type="password"
                   autoComplete="new-password"
                   placeholder="Crie uma senha"
                   {...register("senha")}
                 />
-
-                {mensagemErro && (
-                  <p
-                    className={estilos.mensagemErro}
-                    role="alert"
-                  >
-                    {mensagemErro}
-                  </p>
-                )}
-
-                {mensagemErro && (
-                  <p
-                    className={estilos.mensagemErro}
-                    role="alert"
-                  >
-                    {mensagemErro}
-                  </p>
-                )}
               </div>
 
               {errors.senha && (
                 <p
-                  className={estilos.mensagemErro}
+                  className={
+                    estilos.mensagemErro
+                  }
                   role="alert"
                 >
                   {errors.senha.message}
@@ -296,12 +324,39 @@ export function Cadastro() {
               )}
             </div>
 
+            {mensagemErro && (
+              <p
+                className={
+                  estilos.mensagemErro
+                }
+                role="alert"
+              >
+                {mensagemErro}
+              </p>
+            )}
+
             <button
               type="submit"
-              className={estilos.botaoCadastrar}
+              className={
+                estilos.botaoCadastrar
+              }
+              disabled={
+                status === "loading"
+              }
             >
-              CADASTRAR
-              <span aria-hidden="true">→</span>
+              {status === "loading" ? (
+                "CADASTRANDO..."
+              ) : (
+                <>
+                  CADASTRAR
+
+                  <span
+                    aria-hidden="true"
+                  >
+                    →
+                  </span>
+                </>
+              )}
             </button>
 
             <div
@@ -329,3 +384,5 @@ export function Cadastro() {
     </main>
   );
 }
+
+export default Cadastro;
