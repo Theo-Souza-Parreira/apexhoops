@@ -2,23 +2,16 @@
   width: 100%;
   min-width: 0;
 
-  padding:
-    30px
-    36px
-    40px;
+  padding: 30px 36px 40px;
 
   box-sizing: border-box;
 
-  background:
-    var(--background-app);
+  background: var(--background-app);
 
-  color:
-    var(--text-primary);
+  color: var(--text-primary);
 
-  font-family:
-    var(--font-primary);
+  font-family: var(--font-primary);
 }
-
 
 /* =========================================
    CABEÇALHO DA PÁGINA
@@ -35,36 +28,27 @@
 }
 
 .cabecalhoPagina > div:first-child > p {
-  margin:
-    0
-    0
-    7px;
+  margin: 0 0 7px;
 
-  color:
-    var(--color-primary);
+  color: var(--color-primary);
 
-  font-size:
-    var(--text-pp);
+  font-size: var(--text-pp);
 
-  font-weight:
-    var(--weight-medium);
+  font-weight: var(--weight-medium);
 }
 
 .cabecalhoPagina h1 {
   margin: 0;
 
-  font-family:
-    var(--font-title);
+  font-family: var(--font-title);
 
-  font-size:
-    var(--text-xl);
+  font-size: var(--text-xl);
 
   line-height: 1.1;
 }
 
 .cabecalhoPagina h1 span {
-  color:
-    var(--color-primary);
+  color: var(--color-primary);
 }
 
 .descricaoPagina {
@@ -74,38 +58,28 @@
 
   margin-top: 10px;
 
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
-  font-size:
-    var(--text-p);
+  font-size: var(--text-p);
 
   line-height: 1.5;
 }
 
 .periodo {
-  padding:
-    9px
-    16px;
+  padding: 9px 16px;
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
   border-radius: 8px;
 
-  background:
-    rgba(33, 37, 41, 0.7);
+  background: rgba(33, 37, 41, 0.7);
 
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
-  font-size:
-    var(--text-pp);
+  font-size: var(--text-pp);
 
   white-space: nowrap;
 }
-
 
 /* =========================================
    RESUMO
@@ -114,21 +88,17 @@
 .resumo {
   display: grid;
 
-  grid-template-columns:
-    repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 
   gap: 1px;
 
-  margin-bottom:
-    var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
 
   overflow: hidden;
 
-  background:
-    rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.06);
 
-  border-radius:
-    var(--radius-md);
+  border-radius: var(--radius-md);
 }
 
 .cardResumo {
@@ -139,13 +109,11 @@
 
   gap: 16px;
 
-  padding:
-    var(--spacing-lg);
+  padding: var(--spacing-lg);
 
   box-sizing: border-box;
 
-  background:
-    rgba(33, 37, 41, 0.9);
+  background: rgba(33, 37, 41, 0.9);
 }
 
 .iconeResumo {
@@ -158,17 +126,13 @@
   align-items: center;
   justify-content: center;
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
   border-radius: 50%;
 
-  background:
-    rgba(255, 255, 255, 0.025);
+  background: rgba(255, 255, 255, 0.025);
 
-  color:
-    var(--color-primary);
+  color: var(--color-primary);
 }
 
 .iconeResumo svg {
@@ -176,27 +140,97 @@
   height: 21px;
 }
 
+.iconeBola{
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  color: var(--color-primary);
+}
+
+.iconeBola svg {
+  color: var(--color-primary);
+  fill: var(--color-primary);
+  width: 21px;
+  height: 21px;
+}
+
+.iconeBranco{
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  color: var(--color-primary);
+}
+
+.iconeBranco svg {
+  color: var(--white);
+  fill: var(--white);
+  width: 21px;
+  height: 21px;
+}
+
+.iconeEstrela{
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  color: var(--color-primary);
+}
+
+.iconeEstrela svg {
+  color: var(--color-tertiary);
+  fill: var(--color-tertiary);
+  width: 21px;
+  height: 21px;
+}
+
 .cardResumo p {
-  margin:
-    0
-    0
-    5px;
+  margin: 0 0 5px;
 
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
-  font-size:
-    var(--text-p);
+  font-size: var(--text-p);
 }
 
 .cardResumo strong {
-  font-family:
-    var(--font-title);
+  font-family: var(--font-title);
 
-  font-size:
-    var(--text-g);
+  font-size: var(--text-g);
 }
-
 
 /* =========================================
    GRID PRINCIPAL
@@ -213,25 +247,20 @@
     "distribuicao evolucao"
     "fundamentos consistencia";
 
-  gap:
-    var(--spacing-lg);
+  gap: var(--spacing-lg);
 }
 
 .distribuicao,
 .evolucao,
 .fundamentos,
 .consistencia {
-  padding:
-    var(--spacing-lg);
+  padding: var(--spacing-lg);
 
   box-sizing: border-box;
 
-  background:
-    rgba(33, 37, 41, 0.82);
+  background: rgba(33, 37, 41, 0.82);
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 
   border-radius: 14px;
 }
@@ -252,7 +281,6 @@
   grid-area: consistencia;
 }
 
-
 /* =========================================
    TÍTULOS
    ========================================= */
@@ -266,66 +294,48 @@
 }
 
 .tituloSecao p {
-  margin:
-    0
-    0
-    4px;
+  margin: 0 0 4px;
 
-  color:
-    var(--color-primary);
+  color: var(--color-primary);
 
   font-size: 11px;
 
-  font-weight:
-    var(--weight-medium);
+  font-weight: var(--weight-medium);
 }
 
 .tituloSecao h2 {
   margin: 0;
 
-  font-family:
-    var(--font-title);
+  font-family: var(--font-title);
 
-  font-size:
-    var(--text-g);
+  font-size: var(--text-g);
 }
 
 .tituloSecao > span {
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
-  font-size:
-    var(--text-pp);
+  font-size: var(--text-pp);
 
   white-space: nowrap;
 }
 
 .textoAuxiliar {
-  margin:
-    8px
-    0
-    24px;
+  margin: 8px 0 24px;
 
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
-  font-size:
-    var(--text-pp);
+  font-size: var(--text-pp);
 
   line-height: 1.5;
 }
 
 .valorDestaque {
-  color:
-    var(--color-primary);
+  color: var(--color-primary);
 
-  font-family:
-    var(--font-title);
+  font-family: var(--font-title);
 
-  font-size:
-    var(--text-g);
+  font-size: var(--text-g);
 }
-
 
 /* =========================================
    DISTRIBUIÇÃO DOS TREINOS
@@ -354,22 +364,17 @@
 }
 
 .dadosDistribuicao span {
-  color:
-    var(--text-primary);
+  color: var(--text-primary);
 
-  font-size:
-    var(--text-p);
+  font-size: var(--text-p);
 }
 
 .dadosDistribuicao strong {
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
-  font-size:
-    var(--text-pp);
+  font-size: var(--text-pp);
 
-  font-weight:
-    var(--weight-medium);
+  font-weight: var(--weight-medium);
 }
 
 .trilho {
@@ -380,8 +385,7 @@
 
   border-radius: 999px;
 
-  background:
-    rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .progresso {
@@ -389,14 +393,12 @@
 
   border-radius: inherit;
 
-  background:
-    linear-gradient(
-      90deg,
-      var(--color-primary),
-      rgba(255, 106, 19, 0.55)
-    );
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    rgba(255, 106, 19, 0.55)
+  );
 }
-
 
 /* =========================================
    EVOLUÇÃO
@@ -423,8 +425,7 @@
   flex-direction: column;
   justify-content: space-between;
 
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
   font-size: 10px;
 }
@@ -434,8 +435,7 @@
 
   display: grid;
 
-  grid-template-columns:
-    repeat(6, 1fr);
+  grid-template-columns: repeat(6, 1fr);
 
   gap: 10px;
 }
@@ -454,8 +454,7 @@
 }
 
 .valorGrafico {
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
   font-size: 10px;
 }
@@ -467,31 +466,21 @@
   align-items: flex-end;
   justify-content: center;
 
-  border-bottom:
-    1px solid
-    rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .barraEvolucao {
-  width: min(
-    28px,
-    70%
-  );
+  width: min(28px, 70%);
 
   min-height: 4px;
 
-  border-radius:
-    6px
-    6px
-    1px
-    1px;
+  border-radius: 6px 6px 1px 1px;
 
-  background:
-    linear-gradient(
-      180deg,
-      var(--color-primary),
-      rgba(255, 106, 19, 0.5)
-    );
+  background: linear-gradient(
+    180deg,
+    var(--color-primary),
+    rgba(255, 106, 19, 0.5)
+  );
 
   transition:
     transform 0.2s ease,
@@ -499,20 +488,16 @@
 }
 
 .barraEvolucao:hover {
-  transform:
-    translateY(-3px);
+  transform: translateY(-3px);
 
-  filter:
-    brightness(1.12);
+  filter: brightness(1.12);
 }
 
 .colunaGrafico > span {
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
   font-size: 10px;
 }
-
 
 /* =========================================
    FUNDAMENTOS
@@ -541,22 +526,17 @@
 }
 
 .fundamentoCabecalho span {
-  color:
-    var(--text-primary);
+  color: var(--text-primary);
 
-  font-size:
-    var(--text-p);
+  font-size: var(--text-p);
 }
 
 .fundamentoCabecalho strong {
-  color:
-    var(--color-primary);
+  color: var(--color-primary);
 
-  font-family:
-    var(--font-title);
+  font-family: var(--font-title);
 
-  font-size:
-    var(--text-p);
+  font-size: var(--text-p);
 }
 
 .trilhoFundamento {
@@ -567,8 +547,7 @@
 
   border-radius: 999px;
 
-  background:
-    rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .progressoFundamento {
@@ -576,10 +555,8 @@
 
   border-radius: inherit;
 
-  background:
-    var(--color-primary);
+  background: var(--color-primary);
 }
-
 
 /* =========================================
    CONSISTÊNCIA
@@ -588,8 +565,7 @@
 .semana {
   display: grid;
 
-  grid-template-columns:
-    repeat(7, 1fr);
+  grid-template-columns: repeat(7, 1fr);
 
   gap: 6px;
 
@@ -611,31 +587,23 @@
 }
 
 .diaAtivo {
-  border:
-    1px solid
-    rgba(255, 106, 19, 0.45);
+  border: 1px solid rgba(255, 106, 19, 0.45);
 
-  background:
-    rgba(255, 106, 19, 0.08);
+  background: rgba(255, 106, 19, 0.08);
 }
 
 .diaDescanso {
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 
-  background:
-    var(--background-secondary);
+  background: var(--background-secondary);
 }
 
 .diaAtivo strong {
-  color:
-    var(--color-primary);
+  color: var(--color-primary);
 }
 
 .diaDescanso strong {
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 }
 
 .diaAtivo strong,
@@ -645,8 +613,7 @@
 
 .diaAtivo span,
 .diaDescanso span {
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
   font-size: 9px;
 }
@@ -666,8 +633,7 @@
 
   border-radius: 8px;
 
-  background:
-    rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .resumoConsistencia div {
@@ -678,28 +644,22 @@
 
   padding: 14px;
 
-  background:
-    var(--background-secondary);
+  background: var(--background-secondary);
 }
 
 .resumoConsistencia span {
-  color:
-    var(--text-secondary);
+  color: var(--text-secondary);
 
   font-size: 10px;
 }
 
 .resumoConsistencia strong {
-  color:
-    var(--text-primary);
+  color: var(--text-primary);
 
-  font-family:
-    var(--font-title);
+  font-family: var(--font-title);
 
-  font-size:
-    var(--text-p);
+  font-size: var(--text-p);
 }
-
 
 /* =========================================
    RESPONSIVO
@@ -707,8 +667,7 @@
 
 @media (max-width: 1100px) {
   .resumo {
-    grid-template-columns:
-      repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .gradePrincipal {
@@ -722,13 +681,9 @@
   }
 }
 
-
 @media (max-width: 700px) {
   .conteiner {
-    padding:
-      24px
-      20px
-      30px;
+    padding: 24px 20px 30px;
   }
 
   .cabecalhoPagina {
@@ -743,31 +698,24 @@
   }
 
   .semana {
-    grid-template-columns:
-      repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-
 @media (max-width: 500px) {
   .conteiner {
-    padding:
-      20px
-      16px
-      25px;
+    padding: 20px 16px 25px;
   }
 
   .distribuicao,
   .evolucao,
   .fundamentos,
   .consistencia {
-    padding:
-      var(--spacing-md);
+    padding: var(--spacing-md);
   }
 
   .semana {
-    grid-template-columns:
-      repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .resumoConsistencia {

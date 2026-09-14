@@ -131,7 +131,7 @@ export function Estatisticas() {
         aria-label="Resumo das estatísticas"
       >
         <article className={estilos.cardResumo}>
-          <div className={estilos.iconeResumo}>
+          <div className={estilos.iconeBola}>
             <Bola />
           </div>
 
@@ -142,7 +142,7 @@ export function Estatisticas() {
         </article>
 
         <article className={estilos.cardResumo}>
-          <div className={estilos.iconeResumo}>
+          <div className={estilos.iconeBranco}>
             <Relogio />
           </div>
 
@@ -153,7 +153,7 @@ export function Estatisticas() {
         </article>
 
         <article className={estilos.cardResumo}>
-          <div className={estilos.iconeResumo}>
+          <div className={estilos.iconeEstrela}>
             <Estrela />
           </div>
 
