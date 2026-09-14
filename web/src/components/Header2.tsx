@@ -1,5 +1,3 @@
-// Header2.tsx
-
 import { Link } from "react-router-dom";
 
 import estilos from "./Header2.module.css";

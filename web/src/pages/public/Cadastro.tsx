@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
+import { FirebaseError } from "firebase/app";
+import { useAutenticacao } from "../../hooks/useAutenticacao";
 
 import {
   FiEye,
@@ -42,6 +44,14 @@ const cadastroSchema = z.object({
 });
 
 export function Cadastro() {
+
+
+  const [mensagemErro, setMensagemErro] =
+    useState("");
+
+  const { cadastrar, status } =
+    useAutenticacao();
+
   const [mostrarSenha, setMostrarSenha] = useState(false);
 
   const navegacao = useNavigate();
@@ -54,13 +64,65 @@ export function Cadastro() {
     resolver: zodResolver(cadastroSchema),
   });
 
-  const cadastrarUsuario = (data: FormValues) => {
-    console.log("Dados do cadastro:", {
-      nome: data.nome,
-      email: data.email,
-    });
+  const cadastrarUsuario = async (
+    data: FormValues,
+  ) => {
+    setMensagemErro("");
 
-    navegacao("/login");
+    try {
+      await cadastrar(
+        data.nome.trim(),
+        data.email.trim(),
+        data.senha,
+      );
+
+      navegacao("/home2");
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            setMensagemErro(
+              "Este e-mail já está cadastrado.",
+            );
+            break;
+
+          case "auth/invalid-email":
+            setMensagemErro(
+              "Informe um e-mail válido.",
+            );
+            break;
+
+          case "auth/weak-password":
+            setMensagemErro(
+              "A senha informada é muito fraca.",
+            );
+            break;
+
+          case "auth/network-request-failed":
+            setMensagemErro(
+              "Não foi possível conectar ao servidor. Verifique sua internet.",
+            );
+            break;
+
+          case "auth/operation-not-allowed":
+            setMensagemErro(
+              "O cadastro por e-mail e senha não está habilitado.",
+            );
+            break;
+
+          default:
+            setMensagemErro(
+              "Não foi possível criar sua conta. Tente novamente.",
+            );
+        }
+
+        return;
+      }
+
+      setMensagemErro(
+        "Ocorreu um erro inesperado durante o cadastro.",
+      );
+    }
   };
 
   const irParaLogin = () => {
@@ -123,9 +185,8 @@ export function Cadastro() {
               </label>
 
               <div
-                className={`${estilos.campoContainer} ${
-                  errors.nome ? estilos.campoComErro : ""
-                }`}
+                className={`${estilos.campoContainer} ${errors.nome ? estilos.campoComErro : ""
+                  }`}
               >
                 <FiUser
                   className={estilos.iconeCampo}
@@ -157,9 +218,8 @@ export function Cadastro() {
               </label>
 
               <div
-                className={`${estilos.campoContainer} ${
-                  errors.email ? estilos.campoComErro : ""
-                }`}
+                className={`${estilos.campoContainer} ${errors.email ? estilos.campoComErro : ""
+                  }`}
               >
                 <FiMail
                   className={estilos.iconeCampo}
@@ -191,9 +251,8 @@ export function Cadastro() {
               </label>
 
               <div
-                className={`${estilos.campoContainer} ${
-                  errors.senha ? estilos.campoComErro : ""
-                }`}
+                className={`${estilos.campoContainer} ${errors.senha ? estilos.campoComErro : ""
+                  }`}
               >
                 <FiLock
                   className={estilos.iconeCampo}
@@ -208,26 +267,23 @@ export function Cadastro() {
                   {...register("senha")}
                 />
 
-                <button
-                  type="button"
-                  className={estilos.botaoSenha}
-                  onClick={() =>
-                    setMostrarSenha(
-                      (valorAtual) => !valorAtual
-                    )
-                  }
-                  aria-label={
-                    mostrarSenha
-                      ? "Ocultar senha"
-                      : "Mostrar senha"
-                  }
-                >
-                  {mostrarSenha ? (
-                    <FiEyeOff aria-hidden="true" />
-                  ) : (
-                    <FiEye aria-hidden="true" />
-                  )}
-                </button>
+                {mensagemErro && (
+                  <p
+                    className={estilos.mensagemErro}
+                    role="alert"
+                  >
+                    {mensagemErro}
+                  </p>
+                )}
+
+                {mensagemErro && (
+                  <p
+                    className={estilos.mensagemErro}
+                    role="alert"
+                  >
+                    {mensagemErro}
+                  </p>
+                )}
               </div>
 
               {errors.senha && (
