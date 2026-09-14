@@ -1,0 +1,173 @@
+.footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+
+  padding:
+    18px
+    36px
+    24px;
+
+  box-sizing: border-box;
+
+  background:
+    var(--background-secondary);
+
+  color: var(--text-secondary);
+}
+
+
+/* =========================================
+   MARCA
+   ========================================= */
+
+.marca {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.marca strong {
+  color: var(--white);
+
+  font-family: var(--font-title);
+
+  font-size: 1rem;
+
+  line-height: 1;
+}
+
+.marca strong span {
+  color: var(--color-primary);
+}
+
+.marca p {
+  margin: 0;
+
+  color: var(--text-secondary);
+
+  font-family: var(--font-secondary);
+
+  font-size: 0.72rem;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================
+   INFORMAÇÕES
+   ========================================= */
+
+.informacoes {
+  display: flex;
+  align-items: center;
+
+  gap: 24px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+}
+
+.links span {
+  color: var(--text-secondary);
+
+  font-family: var(--font-secondary);
+
+  font-size: 0.72rem;
+
+  white-space: nowrap;
+}
+
+.divisor {
+  width: 1px;
+  height: 22px;
+
+  background:
+    rgba(255, 255, 255, 0.18);
+}
+
+.direitos {
+  margin: 0;
+
+  color: var(--text-secondary);
+
+  font-family: var(--font-secondary);
+
+  font-size: 0.7rem;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 1000px) {
+  .footer {
+    align-items: flex-start;
+
+    padding:
+      20px
+      28px;
+  }
+
+  .informacoes {
+    align-items: flex-end;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .divisor {
+    display: none;
+  }
+
+  .links {
+    gap: 20px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 700px) {
+  .footer {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 22px;
+
+    padding:
+      24px
+      20px;
+  }
+
+  .informacoes {
+    width: 100%;
+
+    align-items: flex-start;
+  }
+
+  .links {
+    flex-wrap: wrap;
+
+    gap:
+      12px
+      20px;
+  }
+
+  .direitos {
+    white-space: normal;
+  }
+}
