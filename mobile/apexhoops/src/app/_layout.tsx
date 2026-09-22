@@ -21,7 +21,7 @@ SplashScreen.preventAutoHideAsync()
     Implementa proteção de rotas
 */
  
-function Valicacoes() {
+function Validacoes() {
 
   const { usuarioContexto, carregando } = useAutenticacao()
   const segments = useSegments()
@@ -126,11 +126,15 @@ function Valicacoes() {
   // Tudo pronto e validado
   return (
     <SafeAreaProvider>
-      <StatusBar style='light' />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name='index' />
-      </Stack>
-    </SafeAreaProvider>
+    <StatusBar style="light" />
+
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="index" />
+      <Stack.Screen name="novoUsuario" />
+      <Stack.Screen name="(tabs)" />
+    </Stack>
+
+  </SafeAreaProvider>
   )
 }
 
@@ -138,7 +142,7 @@ function Valicacoes() {
 export default function RootLayout() {
   return (
     <AutenticacaoProvider>
-      <Valicacoes />
+      <Validacoes />
     </AutenticacaoProvider>
   )
 }

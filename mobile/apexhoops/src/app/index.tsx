@@ -1,39 +1,106 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Alert, Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Cores } from "@/constants/Cores";
 import { Fontes } from "@/constants/Fontes";
 import { UsuarioTipo } from "@/types/Usuario";
 
+import { FirebaseError } from "firebase/app";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+import { autenticacao } from "@/services/Firebase";
+import { useAutenticacao } from "@/hooks/useAutenticacao";
+
 export default function Index() {
-  const [usuario, setUsuario] = useState<UsuarioTipo>(
-    {codigo: '', nome: '', email: '', senha: '', permissao: "usuario",}
-  )
+  const { logarContexto } = useAutenticacao();
+
+  const [usuario, setUsuario] = useState<UsuarioTipo>({
+    codigo: "",
+    nome: "",
+    email: "",
+    senha: "",
+    permissao: "usuario",
+  });
 
   const verificarUsuario = async () => {
-
     if (!usuario.email || !usuario.senha) {
       Alert.alert(
         "Campos obrigatórios",
-        "Por favor, informe um e-mail e senha."
-      )
-      return
+        "Por favor, informe um e-mail e senha.",
+      );
+      return;
     }
 
-    Alert.alert("Login", `Tentando entrar com ${usuario.email}`)
-    router.replace("/(tabs)/home")
-  }
+    try {
+      const resultado = await signInWithEmailAndPassword(
+        autenticacao,
+        usuario.email,
+        usuario.senha,
+      );
 
+      await logarContexto({
+        ...usuario,
+        codigo: resultado.user.uid,
+      });
+
+      router.replace("/(tabs)/home");
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case "auth/invalid-credential":
+            Alert.alert("Login inválido", "E-mail ou senha incorretos.");
+            break;
+
+          case "auth/user-not-found":
+            Alert.alert(
+              "Usuário não encontrado",
+              "Não existe uma conta com este e-mail.",
+            );
+            break;
+
+          case "auth/wrong-password":
+            Alert.alert(
+              "Senha incorreta",
+              "Verifique sua senha e tente novamente.",
+            );
+            break;
+
+          case "auth/invalid-email":
+            Alert.alert("E-mail inválido", "Digite um e-mail válido.");
+            break;
+
+          case "auth/network-request-failed":
+            Alert.alert(
+              "Erro de conexão",
+              "Verifique sua conexão com a internet.",
+            );
+            break;
+
+          default:
+            Alert.alert("Erro ao entrar", `Código: ${error.code}`);
+        }
+      } else {
+        Alert.alert("Erro", "Não foi possível realizar o login.");
+      }
+    }
+  };
 
   const abrirNovoUsuario = () => {
-      router.push('/novoUsuario')
-  }
+    router.push("/novoUsuario");
+  };
 
   return (
-
     <LinearGradient
       colors={[Cores.primaria, Cores.preto, Cores.musgo]}
       locations={[0, 0.5, 1]}
@@ -41,18 +108,15 @@ export default function Index() {
       end={{ x: 1, y: 1 }}
       style={estilos.fundo}
     >
-    
       <SafeAreaView style={estilos.conteiner}>
-
         <Image
           source={require("../../assets/images/layout/logo.png")}
           style={estilos.logo}
         />
 
         <Text style={estilos.subtitulo}>Treine como a Elite</Text>
-       
-        <View style={estilos.card}>
 
+        <View style={estilos.card}>
           <Text style={estilos.tituloLogin}>Login</Text>
 
           <TextInput
@@ -101,18 +165,13 @@ export default function Index() {
           >
             <Text style={estilos.novoUsuarioTexto}>Cadastre-se</Text>
           </Pressable>
-        
         </View>
-
       </SafeAreaView>
-
     </LinearGradient>
   );
 }
-
 const estilos = StyleSheet.create({
-
- fundo: {
+  fundo: {
     flex: 1,
   },
 
@@ -123,10 +182,10 @@ const estilos = StyleSheet.create({
   },
 
   logo: {
-    height: 110,    
-    width: 330,     
+    height: 110,
+    width: 330,
     resizeMode: "contain",
-    marginTop: 25,  
+    marginTop: 25,
   },
 
   titulo: {
@@ -140,7 +199,7 @@ const estilos = StyleSheet.create({
     fontFamily: Fontes.primaria,
     fontSize: Fontes.medio1,
     color: Cores.cinza_clara,
-    margin: 25, 
+    margin: 25,
   },
 
   card: {
@@ -162,17 +221,17 @@ const estilos = StyleSheet.create({
 
   campo: {
     backgroundColor: `${Cores.cinza_clara}35`,
-    color: Cores.branco, 
+    color: Cores.branco,
     fontFamily: Fontes.titulo1,
     fontSize: Fontes.medio1,
     height: 50,
-    width: 200, 
+    width: 200,
     marginVertical: 5,
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 15,
-    borderWidth: 2, 
-    borderColor: Cores.cinza_escuro, 
+    borderWidth: 2,
+    borderColor: Cores.cinza_escuro,
   },
 
   botao: {
@@ -181,12 +240,12 @@ const estilos = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Cores.cinza_clara,
     borderColor: Cores.primaria,
-    height: 55, 
-    width: 200, 
+    height: 55,
+    width: 200,
     borderWidth: 1,
-    borderRadius: 30, 
-    marginTop: 15, 
-    marginBottom: 10, 
+    borderRadius: 30,
+    marginTop: 15,
+    marginBottom: 10,
   },
 
   rotulo: {
@@ -196,7 +255,7 @@ const estilos = StyleSheet.create({
   },
 
   esquecisenha: {
-    marginTop: 3, 
+    marginTop: 3,
   },
 
   esquecisenhaTexto: {
@@ -206,8 +265,8 @@ const estilos = StyleSheet.create({
   },
 
   botaoNovoUsuario: {
-    marginTop: 2, 
-    padding: 5, 
+    marginTop: 2,
+    padding: 5,
   },
 
   novoUsuarioTexto: {
@@ -215,5 +274,4 @@ const estilos = StyleSheet.create({
     fontFamily: Fontes.secundaria,
     fontSize: Fontes.medio2,
   },
-
 });

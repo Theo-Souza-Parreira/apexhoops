@@ -20,7 +20,7 @@ export function AutenticacaoProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function carregarSessaoSalva() {
       try {
-        const sessaoSalva = await AsyncStorage.getItem('@Cinefilia:usuario')
+        const sessaoSalva = await AsyncStorage.getItem('@ApexHoops:usuario')
         if (sessaoSalva) {
           // Se achou o usuário no dispositivo, salva no estado global
           setUsuarioContexto(JSON.parse(sessaoSalva))
@@ -40,7 +40,7 @@ export function AutenticacaoProvider({ children }: { children: ReactNode }) {
     try {
       setUsuarioContexto(dadosUsuario)
       // Salva a string JSON no dispositivo de forma persistente
-      await AsyncStorage.setItem('@Cinefilia:usuario', JSON.stringify(dadosUsuario))
+      await AsyncStorage.setItem('@ApexHoops:usuario', JSON.stringify(dadosUsuario))
     } catch (error) {
       console.log('Erro ao salvar dados no AsyncStorage:', error)
     }
@@ -50,7 +50,7 @@ export function AutenticacaoProvider({ children }: { children: ReactNode }) {
   const deslogarContexto = async () => {
     try {
       setUsuarioContexto(null)
-      await AsyncStorage.removeItem('@Cinefilia:usuario')
+      await AsyncStorage.removeItem('@ApexHoops:usuario')
     } catch (error) {
       console.log('Erro ao remover dados do AsyncStorage:', error)
     }
