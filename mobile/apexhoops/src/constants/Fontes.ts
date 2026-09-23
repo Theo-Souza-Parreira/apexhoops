@@ -12,6 +12,7 @@ export const Fontes = {
     grande1: 25,
     grande2: 28,
     grande3: 32,
+    grande4: 40,
     extraGrande: 65,
 }
 

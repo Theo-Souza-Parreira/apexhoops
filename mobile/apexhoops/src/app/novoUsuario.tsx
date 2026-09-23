@@ -37,7 +37,7 @@ export default function NovoUsuario() {
         const resultado = await createUserWithEmailAndPassword(
             autenticacao,
             usuario.email,
-            usuario.senha
+            usuario.senha,
         )
 
         // UID gerado pelo Firebase

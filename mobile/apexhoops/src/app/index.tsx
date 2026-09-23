@@ -19,8 +19,10 @@ import { UsuarioTipo } from "@/types/Usuario";
 import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-import { autenticacao } from "@/services/Firebase";
+import { autenticacao, banco } from "@/services/Firebase";
 import { useAutenticacao } from "@/hooks/useAutenticacao";
+
+import { doc, getDoc } from "firebase/firestore";
 
 export default function Index() {
   const { logarContexto } = useAutenticacao();
@@ -49,9 +51,23 @@ export default function Index() {
         usuario.senha,
       );
 
+      const documentoUsuario = await getDoc(
+        doc(banco, "usuarios", resultado.user.uid)
+      );
+
+      if (!documentoUsuario.exists()) {
+        Alert.alert("Erro", "Dados do usuário não encontrados.");
+        return;
+      }
+
+      const dadosUsuario = documentoUsuario.data();
+
       await logarContexto({
-        ...usuario,
         codigo: resultado.user.uid,
+        nome: dadosUsuario.nome,
+        email: dadosUsuario.email,
+        senha: "",
+        permissao: dadosUsuario.permissao,
       });
 
       router.replace("/(tabs)/home");
