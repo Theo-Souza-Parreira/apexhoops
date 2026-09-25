@@ -20,19 +20,27 @@ export default function MenuInferior() {
         },
         {
             nome: "Status",
-            rota: "/(tabs)/home",
+            rota: "/(tabs)/status",
             icone: "show-chart",
         },
         {
             nome: "Treinos",
-            rota: "/(tabs)/home",
+            rota: "/(tabs)/treinos",
             icone: "bar-chart",
         },
         {
-            nome: "Perfil",
-            rota: "/(tabs)/home",
+            nome: "Sobre",
+            rota: "/(tabs)/sobre",
             icone: "person-outline",
         },
+        {
+            nome: "Perfil",
+            rota: "/(tabs)/perfil",
+            icone: "person-outline",
+        },
+
+
+
     ];
 
   return (
@@ -93,7 +101,7 @@ const estilos = StyleSheet.create({
 
     borderWidth: 2,
     borderBottomWidth: 0,
-    borderColor: Cores.cinza_escuro,
+    borderColor: Cores.cinza_clara,
   },
 
   item: {

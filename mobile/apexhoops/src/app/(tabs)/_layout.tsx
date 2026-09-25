@@ -45,6 +45,20 @@ export default function TabsLayout() {
         }}
       />
 
+            <Tabs.Screen
+        name="sobre"
+        options={{
+          title: "Sobre",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons
+              name="info"
+              size={Fontes.grande2}
+              color={color}
+            /> 
+          ),
+        }}
+      />
+
       <Tabs.Screen
         name="status"
         options={{
@@ -54,7 +68,7 @@ export default function TabsLayout() {
               name="show-chart"
               size={Fontes.grande2}
               color={color}
-            />
+            /> 
           ),
         }}
       />
