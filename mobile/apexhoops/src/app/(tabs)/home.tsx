@@ -1,15 +1,15 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Cores } from "@/constants/Cores";
 import { Fontes } from "@/constants/Fontes";
 
-import { Cabecalho } from '@/components/Cabecalho'
 import { useAutenticacao } from '@/hooks/useAutenticacao'
 
-
 import { router } from "expo-router";
+
+import { BarChart } from "react-native-gifted-charts"
 
 export default function Home() {
 
@@ -23,209 +23,244 @@ export default function Home() {
         router.replace("/");
     };
 
+    const data = [
+        {value: 130, label: 'seg'},
+        {value:   0, label: 'ter'},
+        {value:  40, label: 'qua'},
+        {value:  20, label: 'qui'},
+        {value: 120, label: 'sex'},
+        {value: 240, label: 'sab'},
+        {value:  50, label: 'dom'},
+    ]
+
+    const totalMinutos = data.reduce(
+    (total, item) => total + item.value,
+        0
+    );
+
+    const horas = Math.floor(totalMinutos / 60);
+    const minutos = totalMinutos % 60;
+
+    const diasTreinados = data.filter(
+        (item) => item.value > 0
+    ).length;
+
+
+    const treinosRealizados = 12;
+    const metaTreinos = 12;
+
+    const porcentagem = Math.min(
+        (treinosRealizados / metaTreinos) * 100,
+        100
+    );
+
     return (
 
-        
-        <LinearGradient
-            colors={[Cores.primaria, Cores.preto, Cores.musgo]}
-            locations={[0, 0.5, 1]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={estilos.fundo}
-        >
-            <SafeAreaView style={estilos.container}>
+        <ScrollView showsVerticalScrollIndicator={false}>
 
+            <LinearGradient
+                colors={[Cores.primaria, Cores.preto, Cores.musgo]}
+                locations={[0, 0.5, 1]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={estilos.fundo}
+            >
+                <SafeAreaView style={estilos.container}>
+
+                    
+
+                    {/* =========================
+                        CABEÇALHO
+                    ========================= */}
+
+                    <View style={estilos.cabecalho}>
+
+                        <View>
+                            <Text style={estilos.ola}>
+                                Bem-vindo,
+                            </Text>
+
+                            <Text style={estilos.nome}>
+                                {usuarioContexto?.nome}
+                            </Text>
+                        </View>
+
+                        <View style={estilos.perfilIcone}>
+                            <View style={estilos.perfilCabeca} />
+                            <View style={estilos.perfilCorpo} />
+                        </View>
+
+                    </View>
+
+                    {/* =========================
+                        RESUMO
+                    ========================= */}
+
+                    <View style={estilos.card}>
+
+                        <View style={estilos.cardCabecalho}>
+                            <Text style={estilos.cardTitulo}>
+                                Última semana
+                            </Text>
+
+                            <Text style={estilos.cardPeriodo}>
+                                7 dias
+                            </Text>
+                        </View>
                 
+                        {/* GRÁFICO */}
 
-                {/* =========================
-                    CABEÇALHO
-                ========================= */}
+                        <View style={estilos.grafico}>
 
-                <View style={estilos.cabecalho}>
+                            <BarChart
+                                data={data}
+                                barWidth={16}
+                                barBorderRadius={3.5}
 
-                    <View>
-                        <Text style={estilos.ola}>
-                            Bem-vindo,
-                        </Text>
+                                height={175}
+                                spacing={15}
 
-                        <Text style={estilos.nome}>
-                            {usuarioContexto?.nome}
-                        </Text>
-                    </View>
+                                frontColor={Cores.laranja}
 
-                    <View style={estilos.perfilIcone}>
-                        <View style={estilos.perfilCabeca} />
-                        <View style={estilos.perfilCorpo} />
-                    </View>
+                                xAxisThickness={1}
+                                xAxisColor={Cores.cinza_clara}
+                                yAxisThickness={0}
 
-                </View>
+                                yAxisTextStyle={{
+                                    color: Cores.cinza_clara,
+                                    fontFamily: Fontes.primaria,
+                                    fontSize: 10,
+                                }}
 
-                {/* =========================
-                    RESUMO
-                ========================= */}
+                                xAxisLabelTextStyle={{
+                                    color: Cores.cinza_clara,
+                                    fontFamily: Fontes.titulo1,
+                                    fontSize: 10,
+                                }}
 
-                <View style={estilos.card}>
+                                rulesColor={Cores.cinza_clara}
+                                rulesType="dashed"
+                                noOfSections={6}
 
-                    <View style={estilos.cardCabecalho}>
-                        <Text style={estilos.cardTitulo}>
-                            Última semana
-                        </Text>
+                                isAnimated
+                                animationDuration={800}
+                            />
 
-                        <Text style={estilos.cardPeriodo}>
-                            7 dias
-                        </Text>
-                    </View>
-
-
-                    <View style={estilos.estatisticas}>
-
-                        {/* ARREMESSOS */}
-                        <View style={estilos.estatistica}>
-                            <View
-                                style={[
-                                    estilos.iconeContainer,
-                                    { backgroundColor: Cores.laranja },
-                                ]}
-                            >
-                                <Text style={estilos.icone}>
-                                    ●
-                                </Text>
-                            </View>
-
-                            <Text style={estilos.valor}>
-                                X
-                            </Text>
-
-                            <Text style={estilos.label}>
-                                arremessos
-                            </Text>
                         </View>
 
+                        {/* RESUMO */}
 
-                        {/* TEMPO */}
-                        <View style={estilos.estatistica}>
-                            <View
-                                style={[
-                                    estilos.iconeContainer,
-                                    { backgroundColor: Cores.azul },
-                                ]}
-                            >
-                                <Text style={estilos.icone}>
-                                    ◉
+                        <View style={estilos.estatisticas}>
+
+                            <View style={estilos.estatistica}>
+
+                                <Text style={estilos.estatisticaTitulo}>
+                                    Dias treinados
                                 </Text>
+
+                                <Text style={estilos.valor}>
+                                    {diasTreinados}
+                                </Text>
+
                             </View>
 
-                            <Text style={estilos.valor}>
-                                X
-                            </Text>
+                            <View style={estilos.estatistica}>
 
-                            <Text style={estilos.label}>
-                                min
-                            </Text>
-                        </View>
-
-
-                        {/* SEQUÊNCIA */}
-                        <View style={estilos.estatistica}>
-                            <View
-                                style={[
-                                    estilos.iconeContainer,
-                                    { backgroundColor: Cores.musgo },
-                                ]}
-                            >
-                                <Text style={estilos.icone}>
-                                    ♨
+                                <Text style={estilos.estatisticaTitulo}>
+                                    Total de horas
                                 </Text>
+
+                                <Text style={estilos.valor}>
+                                    {horas}h {minutos}min
+                                </Text>
+
                             </View>
 
-                            <Text style={estilos.valor}>
-                                X
-                            </Text>
-
-                            <Text style={estilos.label}>
-                                dias
-                            </Text>
                         </View>
 
                     </View>
 
-                </View>
+                    {/* =========================
+                        META
+                    ========================= */}
 
+                    <View style={estilos.card}>
 
-                {/* =========================
-                    META
-                ========================= */}
+                        <View style={estilos.cardCabecalho}>
 
-                <View style={estilos.card}>
+                            <Text style={estilos.cardTitulo}>
+                                Meta de treinos
+                            </Text>
 
-                    <View style={estilos.cardCabecalho}>
-                        <Text style={estilos.cardTitulo}>
-                            Meta de treinos
+                            <Text style={estilos.porcentagem}>
+                                {Math.round(porcentagem)}%
+                            </Text>
+
+                        </View>
+
+                        <Text style={estilos.metaDescricao}>
+                            Você está indo bem! Continue mantendo o ritmo.
                         </Text>
 
-                        <Text style={estilos.porcentagem}>
-                            58%
-                        </Text>
+                        <View style={estilos.linha}>
+                            <View
+                                style={[
+                                    estilos.progresso,
+                                    { width: `${porcentagem}%` }
+                                ]}
+                            />
+                        </View>
+
+                        <View style={estilos.metaRodape}>
+
+                            <Text style={estilos.metaTexto}>
+                                {treinosRealizados} de {metaTreinos} treinos
+                            </Text>
+
+                            <Text style={estilos.metaTexto}>
+                                {Math.round(porcentagem)}%
+                            </Text>
+
+                        </View>
+
                     </View>
 
 
-                    <Text style={estilos.metaDescricao}>
-                        Você está indo bem! Continue mantendo o ritmo.
-                    </Text>
+                    {/* =========================
+                        PRÓXIMO TREINO
+                    ========================= */}
 
+                    <View style={estilos.proximoTreino}>
 
-                    <View style={estilos.linha}>
-                        <View style={estilos.progresso} />
+                        <View>
+                            <Text style={estilos.proximoLabel}>
+                                PRÓXIMO TREINO
+                            </Text>
+
+                            <Text style={estilos.proximoTitulo}>
+                                Arremessos
+                            </Text>
+
+                            <Text style={estilos.proximoDescricao}>
+                                25 minutos • Intermediário
+                            </Text>
+                        </View>
+
+                        <View style={estilos.seta}>
+                            <Text style={estilos.setaTexto}>
+                                →
+                            </Text>
+                        </View>
+
                     </View>
 
+                    <Pressable onPress={sair}>
+                        <Text style={estilos.valor}>Sair</Text>
+                    </Pressable>
 
-                    <View style={estilos.metaRodape}>
-                        <Text style={estilos.metaTexto}>
-                            7 de 12 treinos
-                        </Text>
-
-                        <Text style={estilos.metaTexto}>
-                            58%
-                        </Text>
-                    </View>
-
-                </View>
-
-
-                {/* =========================
-                    PRÓXIMO TREINO
-                ========================= */}
-
-                <View style={estilos.proximoTreino}>
-
-                    <View>
-                        <Text style={estilos.proximoLabel}>
-                            PRÓXIMO TREINO
-                        </Text>
-
-                        <Text style={estilos.proximoTitulo}>
-                            Arremessos
-                        </Text>
-
-                        <Text style={estilos.proximoDescricao}>
-                            25 minutos • Intermediário
-                        </Text>
-                    </View>
-
-                    <View style={estilos.seta}>
-                        <Text style={estilos.setaTexto}>
-                            →
-                        </Text>
-                    </View>
-
-                </View>
-
-                <Pressable onPress={sair}>
-                    <Text style={estilos.valor}>Sair</Text>
-                </Pressable>
-
-            </SafeAreaView>
-        </LinearGradient>
+                </SafeAreaView>
+            </LinearGradient>
+        </ScrollView>
     );
 }
 
@@ -237,15 +272,15 @@ const estilos = StyleSheet.create({
     // =========================
 
     fundo: {
-        flex: 1,
-        height: "100%",
+        flexGrow: 1,
     },
 
     container: {
-        flex: 1,
+        flexGrow: 1,
 
         paddingHorizontal: 24,
         paddingTop: 25,
+        paddingBottom: 30,
     },
 
 
@@ -376,35 +411,6 @@ const estilos = StyleSheet.create({
         justifyContent: "space-between",
     },
 
-    estatistica: {
-        flex: 1,
-
-        alignItems: "center",
-
-        borderRightWidth: 1,
-        borderRightColor: `${Cores.branco}15`,
-    },
-
-
-    iconeContainer: {
-        width: 38,
-        height: 38,
-
-        borderRadius: 50,
-
-        alignItems: "center",
-        justifyContent: "center",
-
-        marginBottom: 7,
-    },
-
-    icone: {
-        color: Cores.branco,
-
-        fontSize: Fontes.medio1,
-        fontFamily: Fontes.titulo1,
-    },
-
     valor: {
         color: Cores.branco,
 
@@ -419,6 +425,24 @@ const estilos = StyleSheet.create({
         fontSize: Fontes.pequeno,
 
         marginTop: 2,
+    },
+
+    estatistica: {
+        flex: 1,
+    },
+
+    estatisticaTitulo: {
+        color: Cores.textoSecundaria,
+
+        fontFamily: Fontes.secundaria,
+        fontSize: Fontes.pequeno,
+
+        marginBottom: 4,
+    },
+
+    grafico: {
+        marginTop: 20,
+        marginBottom: 20,
     },
 
 
@@ -454,11 +478,8 @@ const estilos = StyleSheet.create({
     },
 
     progresso: {
-        width: "58%",
         height: "100%",
-
         backgroundColor: Cores.laranja,
-
         borderRadius: 20,
     },
 

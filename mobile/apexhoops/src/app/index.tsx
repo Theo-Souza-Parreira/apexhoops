@@ -33,6 +33,14 @@ export default function Index() {
     email: "",
     senha: "",
     permissao: "usuario",
+    dataNascimento: "",
+    altura: "",
+    peso: "",
+
+    posicao: "",
+    mao: "",
+    nivel: "",
+    experiencia: "",
   });
 
   const verificarUsuario = async () => {
@@ -68,6 +76,16 @@ export default function Index() {
         email: dadosUsuario.email,
         senha: "",
         permissao: dadosUsuario.permissao,
+
+        dataNascimento: "",
+        altura: "",
+        peso: "",
+
+        posicao: "",
+        mao: "",
+        nivel: "",
+        experiencia: "",
+
       });
 
       router.replace("/(tabs)/home");
