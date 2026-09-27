@@ -1,9 +1,68 @@
 import { Tabs } from "expo-router";
+
+import {
+  View,
+  StyleSheet,
+  type ColorValue,
+} from "react-native";
+
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 import { Cores } from "@/constants/Cores";
 import { Fontes } from "@/constants/Fontes";
+
+const ALTURA_MENU = 105;
+const TAMANHO_ICONE = 22;
+
+type IconeMenuProps = {
+  nome: keyof typeof MaterialIcons.glyphMap;
+  cor: ColorValue;
+};
+
+type FundoMenuProps = {
+  alturaHud: number;
+};
+
+function IconeMenu({
+  nome,
+  cor,
+}: IconeMenuProps) {
+  return (
+    <View style={estilos.caixaIcone}>
+      <MaterialIcons
+        name={nome}
+        size={TAMANHO_ICONE}
+        color={cor}
+      />
+    </View>
+  );
+}
+
+function FundoMenu({
+  alturaHud,
+}: FundoMenuProps) {
+  return (
+    <View
+      style={estilos.containerFundo}
+      pointerEvents="none"
+    >
+      <View style={estilos.fundoMenu} />
+
+      {alturaHud > 0 && (
+        <View
+          style={[
+            estilos.fundoHud,
+            {
+              height: alturaHud,
+            },
+          ]}
+        />
+      )}
+    </View>
+  );
+}
 
 export default function TabsLayout() {
   const insets = useSafeAreaInsets();
@@ -12,22 +71,61 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarShowLabel: true,
 
-        tabBarActiveTintColor: Cores.laranja,
-        tabBarInactiveTintColor: Cores.branco,
+        tabBarActiveTintColor:
+          Cores.laranja,
 
+        tabBarInactiveTintColor:
+          Cores.branco,
+
+        /*
+         * A barra fica absoluta para que a tela
+         * continue existindo atrás dos cantos
+         * arredondados.
+         */
         tabBarStyle: {
-          backgroundColor: Cores.musgo,
-          paddingBottom: insets.bottom || 10,
-          height: 70 + (insets.bottom || 0),
+          position: "absolute",
+
+          left: 0,
+          right: 0,
+          bottom: 0,
+
+          height: ALTURA_MENU + insets.bottom,
+
+          paddingTop: 18,
+          paddingBottom: insets.bottom,
+          backgroundColor: "transparent",
+
           borderTopWidth: 0,
-          paddingTop: 8,
+          borderLeftWidth: 0,
+          borderRightWidth: 0,
+          borderBottomWidth: 0,
+
+          elevation: 0,
+
+          shadowOpacity: 0,
+        },
+
+
+        tabBarBackground: () => (
+          <FundoMenu
+            alturaHud={
+              insets.bottom
+            }
+          />
+        ),
+
+        tabBarItemStyle: {
+          paddingVertical: 5,
         },
 
         tabBarLabelStyle: {
-          fontFamily: Fontes.secundaria,
-          fontSize: 11,
+          fontFamily:
+            Fontes.titulo2,
+
+          fontSize: 13,
+
+          marginTop: 20,
         },
       }}
     >
@@ -35,26 +133,30 @@ export default function TabsLayout() {
         name="home"
         options={{
           title: "Início",
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons
-              name="home"
-              size={Fontes.grande2}
-              color={color}
+
+          tabBarIcon: ({
+            color,
+          }) => (
+            <IconeMenu
+              nome="home"
+              cor={color}
             />
           ),
         }}
       />
 
-            <Tabs.Screen
+      <Tabs.Screen
         name="sobre"
         options={{
           title: "Sobre",
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons
-              name="info"
-              size={Fontes.grande2}
-              color={color}
-            /> 
+
+          tabBarIcon: ({
+            color,
+          }) => (
+            <IconeMenu
+              nome="info-outline"
+              cor={color}
+            />
           ),
         }}
       />
@@ -63,12 +165,14 @@ export default function TabsLayout() {
         name="status"
         options={{
           title: "Status",
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons
-              name="show-chart"
-              size={Fontes.grande2}
-              color={color}
-            /> 
+
+          tabBarIcon: ({
+            color,
+          }) => (
+            <IconeMenu
+              nome="show-chart"
+              cor={color}
+            />
           ),
         }}
       />
@@ -77,11 +181,13 @@ export default function TabsLayout() {
         name="treinos"
         options={{
           title: "Treinos",
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons
-              name="fitness-center"
-              size={Fontes.grande2}
-              color={color}
+
+          tabBarIcon: ({
+            color,
+          }) => (
+            <IconeMenu
+              nome="bar-chart"
+              cor={color}
             />
           ),
         }}
@@ -91,15 +197,66 @@ export default function TabsLayout() {
         name="perfil"
         options={{
           title: "Perfil",
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons
-              name="person-outline"
-              size={Fontes.grande2}
-              color={color}
+
+          tabBarIcon: ({
+            color,
+          }) => (
+            <IconeMenu
+              nome="person-outline"
+              cor={color}
             />
           ),
         }}
       />
+
     </Tabs>
   );
 }
+
+const estilos =
+  StyleSheet.create({
+    containerFundo: {
+      ...StyleSheet.absoluteFill,
+
+      justifyContent:
+        "flex-end",
+    },
+
+    fundoMenu: {
+      height: ALTURA_MENU,
+
+      backgroundColor:
+        Cores.musgo,
+
+      borderTopLeftRadius: 24,
+      borderTopRightRadius: 24,
+
+      borderTopWidth: 2,
+      borderTopColor:
+        Cores.cinza_escuro,
+    },
+
+    fundoHud: {
+      width: "100%",
+
+      backgroundColor:
+        Cores.fundoHud,
+    },
+
+    caixaIcone: {
+      width: 58,
+      height: 58,
+
+      alignItems: "center",
+      justifyContent: "center",
+
+      backgroundColor:
+        `${Cores.cinza_clara}15`,
+
+      borderRadius: 20,
+
+      borderWidth: 2,
+      borderColor:
+        Cores.cinza_escuro,
+    },
+  });
