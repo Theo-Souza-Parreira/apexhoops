@@ -56,15 +56,8 @@ export default function Home() {
 
     return (
 
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} >
 
-            <LinearGradient
-                colors={[Cores.primaria, Cores.preto, Cores.musgo]}
-                locations={[0, 0.5, 1]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={estilos.fundo}
-            >
                 <SafeAreaView style={estilos.container}>
 
                     
@@ -259,7 +252,6 @@ export default function Home() {
                     </Pressable>
 
                 </SafeAreaView>
-            </LinearGradient>
         </ScrollView>
     );
 }
@@ -270,10 +262,6 @@ const estilos = StyleSheet.create({
     // =========================
     // FUNDO
     // =========================
-
-    fundo: {
-        flexGrow: 1,
-    },
 
     container: {
         flexGrow: 1,
