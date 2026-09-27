@@ -6,6 +6,8 @@ import {
   type ColorValue,
 } from "react-native";
 
+import { LinearGradient } from "expo-linear-gradient";
+
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -48,8 +50,10 @@ function FundoMenu({
       style={estilos.containerFundo}
       pointerEvents="none"
     >
+      {/* Fundo do menu */}
       <View style={estilos.fundoMenu} />
 
+      {/* Área da navegação do sistema */}
       {alturaHud > 0 && (
         <View
           style={[
@@ -68,158 +72,177 @@ export default function TabsLayout() {
   const insets = useSafeAreaInsets();
 
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-
-        tabBarActiveTintColor:
-          Cores.laranja,
-
-        tabBarInactiveTintColor:
-          Cores.branco,
-
-        /*
-         * A barra fica absoluta para que a tela
-         * continue existindo atrás dos cantos
-         * arredondados.
-         */
-        tabBarStyle: {
-          position: "absolute",
-
-          left: 0,
-          right: 0,
-          bottom: 0,
-
-          height: ALTURA_MENU + insets.bottom,
-
-          paddingTop: 18,
-          paddingBottom: insets.bottom,
-          backgroundColor: "transparent",
-
-          borderTopWidth: 0,
-          borderLeftWidth: 0,
-          borderRightWidth: 0,
-          borderBottomWidth: 0,
-
-          elevation: 0,
-
-          shadowOpacity: 0,
-        },
-
-
-        tabBarBackground: () => (
-          <FundoMenu
-            alturaHud={
-              insets.bottom
-            }
-          />
-        ),
-
-        tabBarItemStyle: {
-          paddingVertical: 5,
-        },
-
-        tabBarLabelStyle: {
-          fontFamily:
-            Fontes.titulo2,
-
-          fontSize: 13,
-
-          marginTop: 20,
-        },
-      }}
+    <LinearGradient
+      colors={[
+        Cores.primaria,
+        Cores.preto,
+        Cores.musgo,
+      ]}
+      locations={[0, 0.5, 1]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={estilos.fundo}
     >
-      <Tabs.Screen
-        name="home"
-        options={{
-          title: "Início",
+      <Tabs
+        screenOptions={{
+          headerShown: false,
 
-          tabBarIcon: ({
-            color,
-          }) => (
-            <IconeMenu
-              nome="home"
-              cor={color}
+          sceneStyle: {
+            paddingBottom:
+              ALTURA_MENU + insets.bottom,
+
+            backgroundColor:
+              "transparent",
+          },
+
+          tabBarActiveTintColor:
+            Cores.laranja,
+
+          tabBarInactiveTintColor:
+            Cores.branco,
+
+          tabBarStyle: {
+            position: "absolute",
+
+            left: 0,
+            right: 0,
+            bottom: 0,
+
+            height:
+              ALTURA_MENU + insets.bottom,
+
+            paddingTop: 18,
+            paddingBottom:
+              insets.bottom,
+
+            backgroundColor:
+              "transparent",
+
+            borderTopWidth: 0,
+            borderLeftWidth: 0,
+            borderRightWidth: 0,
+            borderBottomWidth: 0,
+
+            elevation: 0,
+
+            shadowOpacity: 0,
+          },
+
+          tabBarBackground: () => (
+            <FundoMenu
+              alturaHud={
+                insets.bottom
+              }
             />
           ),
+
+          tabBarItemStyle: {
+            paddingVertical: 5,
+          },
+
+          tabBarLabelStyle: {
+            fontFamily:
+              Fontes.titulo2,
+
+            fontSize: 13,
+
+            marginTop: 20,
+          },
         }}
-      />
+      >
+        <Tabs.Screen
+          name="home"
+          options={{
+            title: "Início",
 
-      <Tabs.Screen
-        name="sobre"
-        options={{
-          title: "Sobre",
+            tabBarIcon: ({
+              color,
+            }) => (
+              <IconeMenu
+                nome="home"
+                cor={color}
+              />
+            ),
+          }}
+        />
 
-          tabBarIcon: ({
-            color,
-          }) => (
-            <IconeMenu
-              nome="info-outline"
-              cor={color}
-            />
-          ),
-        }}
-      />
+        <Tabs.Screen
+          name="sobre"
+          options={{
+            title: "Sobre",
 
-      <Tabs.Screen
-        name="status"
-        options={{
-          title: "Status",
+            tabBarIcon: ({
+              color,
+            }) => (
+              <IconeMenu
+                nome="info-outline"
+                cor={color}
+              />
+            ),
+          }}
+        />
 
-          tabBarIcon: ({
-            color,
-          }) => (
-            <IconeMenu
-              nome="show-chart"
-              cor={color}
-            />
-          ),
-        }}
-      />
+        <Tabs.Screen
+          name="status"
+          options={{
+            title: "Status",
 
-      <Tabs.Screen
-        name="treinos"
-        options={{
-          title: "Treinos",
+            tabBarIcon: ({
+              color,
+            }) => (
+              <IconeMenu
+                nome="show-chart"
+                cor={color}
+              />
+            ),
+          }}
+        />
 
-          tabBarIcon: ({
-            color,
-          }) => (
-            <IconeMenu
-              nome="bar-chart"
-              cor={color}
-            />
-          ),
-        }}
-      />
+        <Tabs.Screen
+          name="treinos"
+          options={{
+            title: "Treinos",
 
-      <Tabs.Screen
-        name="perfil"
-        options={{
-          title: "Perfil",
+            tabBarIcon: ({
+              color,
+            }) => (
+              <IconeMenu
+                nome="bar-chart"
+                cor={color}
+              />
+            ),
+          }}
+        />
 
-          tabBarIcon: ({
-            color,
-          }) => (
-            <IconeMenu
-              nome="person-outline"
-              cor={color}
-            />
-          ),
-        }}
-      />
+        <Tabs.Screen
+          name="perfil"
+          options={{
+            title: "Perfil",
 
-    </Tabs>
+            tabBarIcon: ({
+              color,
+            }) => (
+              <IconeMenu
+                nome="person-outline"
+                cor={color}
+              />
+            ),
+          }}
+        />
+      </Tabs>
+    </LinearGradient>
   );
 }
 
 const estilos =
   StyleSheet.create({
+    fundo: {
+      flex: 1,
+    },
+
     containerFundo: {
       ...StyleSheet.absoluteFill,
-
-      justifyContent:
-        "flex-end",
+      justifyContent: "flex-end",
     },
 
     fundoMenu: {

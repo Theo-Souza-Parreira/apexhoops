@@ -1,35 +1,42 @@
-import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import { useState } from "react";
 
 import { Cores } from "@/constants/Cores";
 import { Fontes } from "@/constants/Fontes";
 
+import GraficoRadar from "@/components/GraficoRadar";
+import PainelAtributo from "@/components/PainelAtributo";
+
+
 export default function Status() {
+
+    const [atributoSelecionado, setAtributoSelecionado] =
+    useState<string | null>(null);
 
     return (
 
-        <LinearGradient
-            colors={[Cores.primaria, Cores.preto, Cores.musgo]}
-            locations={[0, 0.5, 1]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={estilos.fundo}
-        >
             <SafeAreaView style={estilos.container}>
 
                 <View style={estilos.cabecalho}>
                     <Text style={estilos.titulo}>
-                        Status
-                    </Text>
-
-                    <Text style={estilos.subtitulo}>
-                        Em construção
+                        Estatísticas
                     </Text>
                 </View>
 
+                <GraficoRadar
+                    onSelecionarAtributo={setAtributoSelecionado}
+                    tamanho={270}
+                />
+
+                {atributoSelecionado && (
+                    <PainelAtributo
+                        atributo={atributoSelecionado}
+                        onFechar={() => setAtributoSelecionado(null)}
+                    />
+                )}
             </SafeAreaView>
-        </LinearGradient>
     );
 }
 
@@ -41,29 +48,26 @@ const estilos = StyleSheet.create({
 
     container: {
         flex: 1,
-
         paddingHorizontal: 24,
-        paddingTop: 25,
+        paddingTop: 10,
     },
 
     cabecalho: {
-        marginBottom: 25,
+        marginBottom: 30,
+        marginTop: 15,
+        alignItems: "center",
     },
 
     titulo: {
-        color: Cores.laranja,
-
-        fontFamily: Fontes.titulo1,
+        color: Cores.branco,
+        fontFamily: Fontes.titulo2,
         fontSize: Fontes.grande4,
     },
 
-    subtitulo: {
-        color: Cores.textoSecundaria,
-
-        fontFamily: Fontes.secundaria,
-        fontSize: Fontes.medio1,
-
-        marginTop: 4,
+    radarContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
     },
 
 });
