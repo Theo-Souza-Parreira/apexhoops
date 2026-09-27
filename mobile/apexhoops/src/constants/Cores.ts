@@ -12,4 +12,5 @@ export const Cores = {
         fundoSecundaria: '#0F0F0F',
         textoPrimaria: '#ffffff',
         textoSecundaria: '#94a3b8',
+        fundoHud: "#0F1719",
 }
