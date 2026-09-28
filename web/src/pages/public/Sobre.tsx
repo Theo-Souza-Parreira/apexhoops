@@ -72,6 +72,13 @@ export function Sobre() {
       </section>
 
       <section className={estilos.section}>
+        <h2>Integrantes</h2>
+        <p>
+          Théo Souza Parreira, Miguel Vincenzzo Pierri Rubinho e Nicolas Cunha Ribeiro.
+        </p>
+      </section>
+
+      <section className={estilos.section}>
         <h2>Tecnologias</h2>
 
         <div className={estilos.techGrid}>
