@@ -10,11 +10,17 @@ type DadoHistorico = {
 
 type GraficoHistoricoProps = {
     dados: DadoHistorico[];
-    largura?: number;
+    largura: number;
+    altura: number;
 };
+
+const LARGURA_BASE = 400;
+const ALTURA_BASE = 180;
 
 export default function GraficoHistorico({
     dados,
+    largura,
+    altura,
 }: GraficoHistoricoProps) {
 
     const dadosGrafico = dados.map((item) => ({
@@ -22,47 +28,83 @@ export default function GraficoHistorico({
         label: item.periodo,
     }));
 
+    const escalaX = largura / LARGURA_BASE;
+    const escalaY = altura / ALTURA_BASE;
+
     return (
-        <View style={estilos.container}>
+        <View
+            style={[
+                estilos.container,
+                {
+                    width: largura,
+                    height: altura,
+                },
+            ]}
+        >
 
-            <LineChart
-                data={dadosGrafico}
+            <View
+                style={[
+                    estilos.grafico,
+                    {
+                        transform: [
+                            { scaleX: escalaX },
+                            { scaleY: escalaY },
+                        ],
+                    },
+                ]}
+            >
 
-                width={200}
-                height={180}
+                <LineChart
+                    data={dadosGrafico}
 
-                color={Cores.laranja}
-                thickness={3}
-                curved
+                    width={LARGURA_BASE}
+                    height={ALTURA_BASE}
 
-                hideDataPoints={false}
-                dataPointsColor={Cores.laranja}
-                dataPointsRadius={4}
+                    color={Cores.laranja}
+                    thickness={3}
+                    curved
 
-                yAxisTextStyle={{
-                    color: Cores.branco,
-                }}
+                    hideDataPoints={false}
+                    dataPointsColor={Cores.laranja}
+                    dataPointsRadius={4}
 
-                xAxisLabelTextStyle={{
-                    color: Cores.branco,
-                }}
+                    yAxisTextStyle={{
+                        color: Cores.branco,
+                    }}
 
-                yAxisColor={Cores.laranja}
-                xAxisColor={Cores.laranja}
-                rulesColor={Cores.laranja}
-                rulesType="dashed"
+                    xAxisLabelTextStyle={{
+                        color: Cores.branco,
+                        fontSize: 11,
+                    }}
 
-                noOfSections={4}
-                yAxisLabelSuffix=" min"
-            />
+                    yAxisColor={Cores.laranja}
+                    xAxisColor={Cores.laranja}
+
+                    rulesColor={`${Cores.laranja}40`}
+                    rulesType="dashed"
+
+                    noOfSections={4}
+                    yAxisLabelSuffix=" min"
+
+                    xAxisLabelsHeight={25}
+                />
+
+            </View>
 
         </View>
     );
 }
 
 const estilos = StyleSheet.create({
+
     container: {
         alignItems: "center",
         justifyContent: "center",
     },
+
+    grafico: {
+        width: LARGURA_BASE,
+        height: ALTURA_BASE,
+    },
+
 });

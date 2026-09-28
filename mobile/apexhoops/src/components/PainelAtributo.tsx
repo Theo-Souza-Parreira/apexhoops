@@ -5,9 +5,22 @@ import GraficoHistorico from "@/components/GraficoHistorico";
 import { Cores } from "@/constants/Cores";
 import { Fontes } from "@/constants/Fontes";
 
-type PainelAtributoProps = { atributo: string; onFechar: () => void; };
+type DadoHistorico = {
+    periodo: string;
+    minutos: number;
+};
 
-export default function PainelAtributo({ atributo, onFechar } : PainelAtributoProps) {
+type PainelAtributoProps = {
+    atributo: string;
+    dadosHistorico: DadoHistorico[];
+    onFechar: () => void;
+};
+
+export default function PainelAtributo({
+    atributo,
+    dadosHistorico,
+    onFechar
+}: PainelAtributoProps) {
 
 const dadosHistorico: { periodo: string; minutos: number }[] = [];
 
@@ -49,7 +62,6 @@ const dadosHistorico: { periodo: string; minutos: number }[] = [];
 
             </View>
 
-
         </View>
     );
 }
@@ -58,7 +70,15 @@ const estilos = StyleSheet.create({
 
     container: {
         width: "100%",
-        paddingTop: 40,
+        alignItems: "center",
+        paddingTop: 25,
+    },
+
+    cabecalho: {
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
     },
 
     titulo: {
@@ -70,27 +90,30 @@ const estilos = StyleSheet.create({
     conteudo: {
         flexDirection: "row",
         width: "100%",
-        alignItems: "center",
+        height: 200,
+        marginTop: 10,
+        padding: 10,
+
+        borderRadius: 10,
+        borderWidth: 2,
+        backgroundColor: `${Cores.laranja}25`,
+        borderColor: Cores.laranja_escuro,
     },
 
     graficoContainer: {
-        flex: 3,
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
     },
 
     descricaoContainer: {
-        flex: 2,
+        height: "100%",
     },
 
     texto: {
         color: Cores.branco,
         fontFamily: Fontes.secundaria,
         fontSize: 14,
-    },
-
-    cabecalho: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
     },
 
     botaoFechar: {

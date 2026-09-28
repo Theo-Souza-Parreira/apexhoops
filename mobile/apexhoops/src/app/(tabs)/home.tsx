@@ -1,554 +1,456 @@
-import { LinearGradient } from "expo-linear-gradient";
-import { ScrollView, StyleSheet, Text, View, Pressable } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Cores } from "@/constants/Cores";
 import { Fontes } from "@/constants/Fontes";
 
-import { useAutenticacao } from '@/hooks/useAutenticacao'
+import { useAutenticacao } from "@/hooks/useAutenticacao";
 
-import { router } from "expo-router";
 
-import { BarChart } from "react-native-gifted-charts"
+import { BarChart } from "react-native-gifted-charts";
 
 export default function Home() {
+  const { usuarioContexto } = useAutenticacao();
 
-    const { usuarioContexto } = useAutenticacao()
+  const data = [
+    { value: 130, label: "seg" },
+    { value: 0, label: "ter" },
+    { value: 40, label: "qua" },
+    { value: 20, label: "qui" },
+    { value: 120, label: "sex" },
+    { value: 240, label: "sab" },
+    { value: 50, label: "dom" },
+  ];
 
-    const { deslogar, deslogarContexto } = useAutenticacao();
+  const totalMinutos = data.reduce((total, item) => total + item.value, 0);
 
-    const sair = async () => {
-        await deslogar();
-        await deslogarContexto();
-        router.replace("/");
-    };
+  const horas = Math.floor(totalMinutos / 60);
+  const minutos = totalMinutos % 60;
 
-    const data = [
-        {value: 130, label: 'seg'},
-        {value:   0, label: 'ter'},
-        {value:  40, label: 'qua'},
-        {value:  20, label: 'qui'},
-        {value: 120, label: 'sex'},
-        {value: 240, label: 'sab'},
-        {value:  50, label: 'dom'},
-    ]
+  const diasTreinados = data.filter((item) => item.value > 0).length;
 
-    const totalMinutos = data.reduce(
-    (total, item) => total + item.value,
-        0
-    );
+  const treinosRealizados = 12;
+  const metaTreinos = 12;
 
-    const horas = Math.floor(totalMinutos / 60);
-    const minutos = totalMinutos % 60;
+  const porcentagem = Math.min((treinosRealizados / metaTreinos) * 100, 100);
 
-    const diasTreinados = data.filter(
-        (item) => item.value > 0
-    ).length;
-
-
-    const treinosRealizados = 12;
-    const metaTreinos = 12;
-
-    const porcentagem = Math.min(
-        (treinosRealizados / metaTreinos) * 100,
-        100
-    );
-
-    return (
-
-        <ScrollView showsVerticalScrollIndicator={false} >
-
-                <SafeAreaView style={estilos.container}>
-
-                    
-
-                    {/* =========================
+  return (
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <SafeAreaView style={estilos.container}>
+        {/* =========================
                         CABEÇALHO
                     ========================= */}
 
-                    <View style={estilos.cabecalho}>
+        <View style={estilos.cabecalho}>
+          <View>
+            <Text style={estilos.ola}>Bem-vindo,</Text>
 
-                        <View>
-                            <Text style={estilos.ola}>
-                                Bem-vindo,
-                            </Text>
+            <Text style={estilos.nome}>{usuarioContexto?.nome}</Text>
+          </View>
 
-                            <Text style={estilos.nome}>
-                                {usuarioContexto?.nome}
-                            </Text>
-                        </View>
+          <View style={estilos.perfilIcone}>
+            <View style={estilos.perfilCabeca} />
+            <View style={estilos.perfilCorpo} />
+          </View>
+        </View>
 
-                        <View style={estilos.perfilIcone}>
-                            <View style={estilos.perfilCabeca} />
-                            <View style={estilos.perfilCorpo} />
-                        </View>
-
-                    </View>
-
-                    {/* =========================
+        {/* =========================
                         RESUMO
                     ========================= */}
 
-                    <View style={estilos.card}>
+        <View style={estilos.card}>
+          <View style={estilos.cardCabecalho}>
+            <Text style={estilos.cardTitulo}>Última semana</Text>
 
-                        <View style={estilos.cardCabecalho}>
-                            <Text style={estilos.cardTitulo}>
-                                Última semana
-                            </Text>
+            <Text style={estilos.cardPeriodo}>7 dias</Text>
+          </View>
 
-                            <Text style={estilos.cardPeriodo}>
-                                7 dias
-                            </Text>
-                        </View>
-                
-                        {/* GRÁFICO */}
+          {/* GRÁFICO */}
 
-                        <View style={estilos.grafico}>
+          <View style={estilos.grafico}>
+            <BarChart
+              data={data}
+              barWidth={16}
+              barBorderRadius={3.5}
+              height={175}
+              spacing={15}
+              frontColor={Cores.laranja}
+              xAxisThickness={1}
+              xAxisColor={Cores.cinza_clara}
+              yAxisThickness={0}
+              yAxisTextStyle={{
+                color: Cores.cinza_clara,
+                fontFamily: Fontes.primaria,
+                fontSize: 10,
+              }}
+              xAxisLabelTextStyle={{
+                color: Cores.cinza_clara,
+                fontFamily: Fontes.titulo1,
+                fontSize: 10,
+              }}
+              rulesColor={Cores.cinza_clara}
+              rulesType="dashed"
+              noOfSections={6}
+              isAnimated
+              animationDuration={800}
+            />
+          </View>
 
-                            <BarChart
-                                data={data}
-                                barWidth={16}
-                                barBorderRadius={3.5}
+          {/* RESUMO */}
 
-                                height={175}
-                                spacing={15}
+          <View style={estilos.estatisticas}>
+            <View style={estilos.estatistica}>
+              <Text style={estilos.estatisticaTitulo}>Dias treinados</Text>
 
-                                frontColor={Cores.laranja}
+              <Text style={estilos.valor}>{diasTreinados}</Text>
+            </View>
 
-                                xAxisThickness={1}
-                                xAxisColor={Cores.cinza_clara}
-                                yAxisThickness={0}
+            <View style={estilos.estatistica}>
+              <Text style={estilos.estatisticaTitulo}>Total de horas</Text>
 
-                                yAxisTextStyle={{
-                                    color: Cores.cinza_clara,
-                                    fontFamily: Fontes.primaria,
-                                    fontSize: 10,
-                                }}
+              <Text style={estilos.valor}>
+                {horas}h {minutos}min
+              </Text>
+            </View>
+          </View>
+        </View>
 
-                                xAxisLabelTextStyle={{
-                                    color: Cores.cinza_clara,
-                                    fontFamily: Fontes.titulo1,
-                                    fontSize: 10,
-                                }}
-
-                                rulesColor={Cores.cinza_clara}
-                                rulesType="dashed"
-                                noOfSections={6}
-
-                                isAnimated
-                                animationDuration={800}
-                            />
-
-                        </View>
-
-                        {/* RESUMO */}
-
-                        <View style={estilos.estatisticas}>
-
-                            <View style={estilos.estatistica}>
-
-                                <Text style={estilos.estatisticaTitulo}>
-                                    Dias treinados
-                                </Text>
-
-                                <Text style={estilos.valor}>
-                                    {diasTreinados}
-                                </Text>
-
-                            </View>
-
-                            <View style={estilos.estatistica}>
-
-                                <Text style={estilos.estatisticaTitulo}>
-                                    Total de horas
-                                </Text>
-
-                                <Text style={estilos.valor}>
-                                    {horas}h {minutos}min
-                                </Text>
-
-                            </View>
-
-                        </View>
-
-                    </View>
-
-                    {/* =========================
+        {/* =========================
                         META
                     ========================= */}
 
-                    <View style={estilos.card}>
+        <View style={estilos.card}>
+          <View style={estilos.cardCabecalho}>
+            <Text style={estilos.cardTitulo}>Meta de treinos</Text>
 
-                        <View style={estilos.cardCabecalho}>
+            <Text style={estilos.porcentagem}>{Math.round(porcentagem)}%</Text>
+          </View>
 
-                            <Text style={estilos.cardTitulo}>
-                                Meta de treinos
-                            </Text>
+          <Text style={estilos.metaDescricao}>
+            Você está indo bem! Continue mantendo o ritmo.
+          </Text>
 
-                            <Text style={estilos.porcentagem}>
-                                {Math.round(porcentagem)}%
-                            </Text>
+          <View style={estilos.linha}>
+            <View style={[estilos.progresso, { width: `${porcentagem}%` }]} />
+          </View>
 
-                        </View>
+          <View style={estilos.metaRodape}>
+            <Text style={estilos.metaTexto}>
+              {treinosRealizados} de {metaTreinos} treinos
+            </Text>
 
-                        <Text style={estilos.metaDescricao}>
-                            Você está indo bem! Continue mantendo o ritmo.
-                        </Text>
+            <Text style={estilos.metaTexto}>{Math.round(porcentagem)}%</Text>
+          </View>
+        </View>
 
-                        <View style={estilos.linha}>
-                            <View
-                                style={[
-                                    estilos.progresso,
-                                    { width: `${porcentagem}%` }
-                                ]}
-                            />
-                        </View>
-
-                        <View style={estilos.metaRodape}>
-
-                            <Text style={estilos.metaTexto}>
-                                {treinosRealizados} de {metaTreinos} treinos
-                            </Text>
-
-                            <Text style={estilos.metaTexto}>
-                                {Math.round(porcentagem)}%
-                            </Text>
-
-                        </View>
-
-                    </View>
-
-
-                    {/* =========================
+        {/* =========================
                         PRÓXIMO TREINO
                     ========================= */}
 
-                    <View style={estilos.proximoTreino}>
+        <View style={estilos.proximoTreino}>
+          <View>
+            <Text style={estilos.proximoLabel}>PRÓXIMO TREINO</Text>
 
-                        <View>
-                            <Text style={estilos.proximoLabel}>
-                                PRÓXIMO TREINO
-                            </Text>
+            <Text style={estilos.proximoTitulo}>Arremessos</Text>
 
-                            <Text style={estilos.proximoTitulo}>
-                                Arremessos
-                            </Text>
+            <Text style={estilos.proximoDescricao}>
+              25 minutos • Intermediário
+            </Text>
+          </View>
 
-                            <Text style={estilos.proximoDescricao}>
-                                25 minutos • Intermediário
-                            </Text>
-                        </View>
-
-                        <View style={estilos.seta}>
-                            <Text style={estilos.setaTexto}>
-                                →
-                            </Text>
-                        </View>
-
-                    </View>
-
-                    <Pressable onPress={sair}>
-                        <Text style={estilos.valor}>Sair</Text>
-                    </Pressable>
-
-                </SafeAreaView>
-        </ScrollView>
-    );
+          <View style={estilos.seta}>
+            <Text style={estilos.setaTexto}>→</Text>
+          </View>
+        </View>
+      </SafeAreaView>
+    </ScrollView>
+  );
 }
 
-
 const estilos = StyleSheet.create({
+  // =========================
+  // FUNDO
+  // =========================
 
-    // =========================
-    // FUNDO
-    // =========================
+  container: {
+    flexGrow: 1,
 
-    container: {
-        flexGrow: 1,
+    paddingHorizontal: 24,
+    paddingTop: 25,
+    paddingBottom: 30,
+  },
 
-        paddingHorizontal: 24,
-        paddingTop: 25,
-        paddingBottom: 30,
-    },
+  // =========================
+  // CABEÇALHO
+  // =========================
 
+  cabecalho: {
+    width: "100%",
 
-    // =========================
-    // CABEÇALHO
-    // =========================
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
 
-    cabecalho: {
-        width: "100%",
+    marginBottom: 35,
+  },
 
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
+  ola: {
+    color: Cores.textoSecundaria,
 
-        marginBottom: 35,
-    },
+    fontFamily: Fontes.titulo1,
+    fontSize: Fontes.grande3,
+  },
 
-    ola: {
-        color: Cores.textoSecundaria,
+  nome: {
+    color: Cores.laranja,
 
-        fontFamily: Fontes.titulo1,
-        fontSize: Fontes.grande3,
-    },
+    fontFamily: Fontes.titulo1,
+    fontSize: Fontes.grande4,
 
-    nome: {
-        color: Cores.laranja,
+    marginTop: 2,
+  },
 
-        fontFamily: Fontes.titulo1,
-        fontSize: Fontes.grande4,
+  // =========================
+  // PERFIL
+  // =========================
 
-        marginTop: 2,
-    },
+  perfilIcone: {
+    width: 80,
+    height: 80,
 
+    borderWidth: 2,
+    borderColor: Cores.laranja,
 
-    // =========================
-    // PERFIL
-    // =========================
+    borderRadius: 50,
 
-    perfilIcone: {
-        width: 80,
-        height: 80,
+    justifyContent: "center",
+    alignItems: "center",
 
-        borderWidth: 2,
-        borderColor: Cores.laranja,
+    backgroundColor: `${Cores.primaria}60`,
+  },
 
-        borderRadius: 50,
+  perfilCabeca: {
+    width: 20,
+    height: 20,
 
-        justifyContent: "center",
-        alignItems: "center",
+    borderWidth: 2.5,
+    borderColor: Cores.laranja,
 
-        backgroundColor: `${Cores.primaria}60`,
-    },
+    borderRadius: 20,
 
-    perfilCabeca: {
-        width: 20,
-        height: 20,
+    marginBottom: 3,
+  },
 
-        borderWidth: 2.5,
-        borderColor: Cores.laranja,
+  perfilCorpo: {
+    width: 40,
+    height: 22,
 
-        borderRadius: 20,
+    borderWidth: 2.5,
+    borderColor: Cores.laranja,
 
-        marginBottom: 3,
-    },
+    borderBottomWidth: 0,
 
-    perfilCorpo: {
-        width: 40,
-        height: 22,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+  },
 
-        borderWidth: 2.5,
-        borderColor: Cores.laranja,
+  // =========================
+  // CARDS
+  // =========================
 
-        borderBottomWidth: 0,
+  card: {
+    width: "100%",
 
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
-    },
+    backgroundColor: `${Cores.primaria}50`,
 
+    borderWidth: 1,
+    borderColor: `${Cores.laranja}55`,
 
-    // =========================
-    // CARDS
-    // =========================
+    borderRadius: 16,
 
-    card: {
-        width: "100%",
+    padding: 20,
 
-        backgroundColor: `${Cores.primaria}50`,
+    marginBottom: 18,
+  },
 
-        borderWidth: 1,
-        borderColor: `${Cores.laranja}55`,
+  cardCabecalho: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
 
-        borderRadius: 16,
+    marginBottom: 18,
+  },
 
-        padding: 20,
+  cardTitulo: {
+    color: Cores.branco,
 
-        marginBottom: 18,
-    },
+    fontFamily: Fontes.titulo2,
+    fontSize: Fontes.grande1,
+  },
 
-    cardCabecalho: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
+  cardPeriodo: {
+    color: Cores.textoSecundaria,
 
-        marginBottom: 18,
-    },
+    fontFamily: Fontes.secundaria,
+    fontSize: Fontes.pequeno,
+  },
 
-    cardTitulo: {
-        color: Cores.branco,
+  // =========================
+  // ESTATÍSTICAS
+  // =========================
 
-        fontFamily: Fontes.titulo2,
-        fontSize: Fontes.grande1,
-    },
+  estatisticas: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
 
-    cardPeriodo: {
-        color: Cores.textoSecundaria,
+  valor: {
+    color: Cores.branco,
 
-        fontFamily: Fontes.secundaria,
-        fontSize: Fontes.pequeno,
-    },
+    fontFamily: Fontes.titulo1,
+    fontSize: Fontes.medio2,
+  },
 
+  label: {
+    color: Cores.textoSecundaria,
 
-    // =========================
-    // ESTATÍSTICAS
-    // =========================
+    fontFamily: Fontes.secundaria,
+    fontSize: Fontes.pequeno,
 
-    estatisticas: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
+    marginTop: 2,
+  },
 
-    valor: {
-        color: Cores.branco,
+  estatistica: {
+    flex: 1,
+  },
 
-        fontFamily: Fontes.titulo1,
-        fontSize: Fontes.medio2,
-    },
+  estatisticaTitulo: {
+    color: Cores.textoSecundaria,
 
-    label: {
-        color: Cores.textoSecundaria,
+    fontFamily: Fontes.secundaria,
+    fontSize: Fontes.pequeno,
 
-        fontFamily: Fontes.secundaria,
-        fontSize: Fontes.pequeno,
+    marginBottom: 4,
+  },
 
-        marginTop: 2,
-    },
+  grafico: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
 
-    estatistica: {
-        flex: 1,
-    },
+  // =========================
+  // META
+  // =========================
 
-    estatisticaTitulo: {
-        color: Cores.textoSecundaria,
+  porcentagem: {
+    color: Cores.laranja,
 
-        fontFamily: Fontes.secundaria,
-        fontSize: Fontes.pequeno,
+    fontFamily: Fontes.titulo1,
+    fontSize: Fontes.medio2,
+  },
 
-        marginBottom: 4,
-    },
+  metaDescricao: {
+    color: Cores.textoSecundaria,
 
-    grafico: {
-        marginTop: 20,
-        marginBottom: 20,
-    },
+    fontFamily: Fontes.secundaria,
+    fontSize: Fontes.pequeno,
 
+    marginBottom: 14,
+  },
 
-    // =========================
-    // META
-    // =========================
+  linha: {
+    width: "100%",
+    height: 13,
 
-    porcentagem: {
-        color: Cores.laranja,
+    backgroundColor: `${Cores.preto}80`,
 
-        fontFamily: Fontes.titulo1,
-        fontSize: Fontes.medio2,
-    },
+    borderRadius: 20,
 
-    metaDescricao: {
-        color: Cores.textoSecundaria,
+    overflow: "hidden",
+  },
 
-        fontFamily: Fontes.secundaria,
-        fontSize: Fontes.pequeno,
+  progresso: {
+    height: "100%",
+    backgroundColor: Cores.laranja,
+    borderRadius: 20,
+  },
 
-        marginBottom: 14,
-    },
+  metaRodape: {
+    flexDirection: "row",
+    justifyContent: "space-between",
 
-    linha: {
-        width: "100%",
-        height: 13,
+    marginTop: 10,
+  },
 
-        backgroundColor: `${Cores.preto}80`,
+  metaTexto: {
+    color: Cores.textoSecundaria,
 
-        borderRadius: 20,
+    fontFamily: Fontes.secundaria,
+    fontSize: Fontes.pequeno,
+  },
 
-        overflow: "hidden",
-    },
+  // =========================
+  // PRÓXIMO TREINO
+  // =========================
 
-    progresso: {
-        height: "100%",
-        backgroundColor: Cores.laranja,
-        borderRadius: 20,
-    },
+  proximoTreino: {
+    width: "100%",
 
-    metaRodape: {
-        flexDirection: "row",
-        justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
 
-        marginTop: 10,
-    },
+    backgroundColor: Cores.laranja,
 
-    metaTexto: {
-        color: Cores.textoSecundaria,
+    borderRadius: 16,
 
-        fontFamily: Fontes.secundaria,
-        fontSize: Fontes.pequeno,
-    },
+    padding: 20,
+  },
 
+  proximoLabel: {
+    color: `${Cores.branco}B0`,
 
-    // =========================
-    // PRÓXIMO TREINO
-    // =========================
+    fontFamily: Fontes.titulo1,
+    fontSize: 10,
 
-    proximoTreino: {
-        width: "100%",
+    letterSpacing: 1,
+  },
 
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
+  proximoTitulo: {
+    color: Cores.branco,
 
-        backgroundColor: Cores.laranja,
+    fontFamily: Fontes.titulo2,
+    fontSize: Fontes.grande1,
 
-        borderRadius: 16,
+    marginTop: 4,
+  },
 
-        padding: 20,
-    },
+  proximoDescricao: {
+    color: `${Cores.branco}CC`,
 
-    proximoLabel: {
-        color: `${Cores.branco}B0`,
+    fontFamily: Fontes.secundaria,
+    fontSize: Fontes.pequeno,
 
-        fontFamily: Fontes.titulo1,
-        fontSize: 10,
+    marginTop: 3,
+  },
 
-        letterSpacing: 1,
-    },
+  seta: {
+    width: 42,
+    height: 42,
 
-    proximoTitulo: {
-        color: Cores.branco,
+    borderRadius: 50,
 
-        fontFamily: Fontes.titulo2,
-        fontSize: Fontes.grande1,
+    backgroundColor: `${Cores.preto}30`,
 
-        marginTop: 4,
-    },
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
-    proximoDescricao: {
-        color: `${Cores.branco}CC`,
+  setaTexto: {
+    color: Cores.branco,
 
-        fontFamily: Fontes.secundaria,
-        fontSize: Fontes.pequeno,
+    fontSize: 24,
 
-        marginTop: 3,
-    },
-
-    seta: {
-        width: 42,
-        height: 42,
-
-        borderRadius: 50,
-
-        backgroundColor: `${Cores.preto}30`,
-
-        justifyContent: "center",
-        alignItems: "center",
-    },
-
-    setaTexto: {
-        color: Cores.branco,
-
-        fontSize: 24,
-
-        fontFamily: Fontes.titulo1,
-    },
-
+    fontFamily: Fontes.titulo1,
+  },
 });
