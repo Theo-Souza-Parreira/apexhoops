@@ -22,6 +22,8 @@ export default function PainelAtributo({
     onFechar
 }: PainelAtributoProps) {
 
+const dadosHistorico: { periodo: string; minutos: number }[] = [];
+
     return (
         <View style={estilos.container}>
 
@@ -44,15 +46,15 @@ export default function PainelAtributo({
 
             <View style={estilos.conteudo}>
 
-                <View style={estilos.graficoContainer}>
-
-                    <GraficoHistorico
-                        dados={dadosHistorico}
-                        largura={270}
-                        altura={150}
-                    />
-
-                </View>
+<View style={estilos.graficoContainer}>
+    {dadosHistorico.length > 0 ? (
+        <GraficoHistorico dados={dadosHistorico} />
+    ) : (
+        <Text style={estilos.texto}>
+            Sem histórico disponível.
+        </Text>
+    )}
+</View>
 
                 <View style={estilos.descricaoContainer}>
                     {/* descrição do atributo */}

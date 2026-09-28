@@ -328,14 +328,12 @@ const estilos = StyleSheet.create({
 
     titulo: {
         color: Cores.laranja,
-
         fontFamily: Fontes.titulo1,
         fontSize: Fontes.grande4,
     },
 
     subtitulo: {
         color: Cores.textoSecundaria,
-
         fontFamily: Fontes.secundaria,
         fontSize: Fontes.medio1,
 

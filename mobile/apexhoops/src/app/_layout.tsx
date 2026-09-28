@@ -98,13 +98,16 @@ function Validacoes() {
   useEffect(() => {
     if (!conectadoFirebase || !fontesCarregadas || carregando) return
 
-    const grupoProtegido = segments[0] === '(tabs)'
+const rotasAutenticadasForaDasTabs = ['treino-iniciar', 'treino-criar', 'treino-categoria'];
 
-    if (!usuarioContexto && grupoProtegido) {
-      router.replace('/'); // Redireciona para login (usuário não logado)
-    } else if (usuarioContexto && !grupoProtegido) {
-      router.replace('/(tabs)/home'); // Redireciona para tela Inicial (se já estiver logado)
-    }
+const grupoProtegido = segments[0] === '(tabs)'
+const areaAutenticada = grupoProtegido || rotasAutenticadasForaDasTabs.includes(segments[0]);
+
+if (!usuarioContexto && areaAutenticada) {
+  router.replace('/'); // Redireciona para login (usuário não logado)
+} else if (usuarioContexto && !areaAutenticada) {
+  router.replace('/(tabs)/home'); // Redireciona para tela Inicial (se já estiver logado)
+}
   }, [usuarioContexto, conectadoFirebase, fontesCarregadas, carregando, segments]);
 
   // Se houver erro de conexão
@@ -131,6 +134,8 @@ function Validacoes() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="novoUsuario" />
+      <Stack.Screen name="treino-iniciar" />
+      <Stack.Screen name="treino-criar" />
       <Stack.Screen name="(tabs)" />
     </Stack>
 
