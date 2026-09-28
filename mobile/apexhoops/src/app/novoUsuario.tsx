@@ -749,7 +749,7 @@ const estilos = StyleSheet.create({
   campo: {
     backgroundColor: `${Cores.cinza_clara}35`,
     color: Cores.branco,
-    fontFamily: Fontes.primaria,
+    fontFamily: Fontes.titulo1,
     fontSize: Fontes.medio1,
     height: 50,
     width: 200,
