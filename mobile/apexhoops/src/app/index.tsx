@@ -77,18 +77,16 @@ export default function Index() {
         senha: "",
         permissao: dadosUsuario.permissao,
 
-        dataNascimento: "",
-        altura: "",
-        peso: "",
+        dataNascimento: dadosUsuario.dataNascimento ?? "",
+        altura: dadosUsuario.altura ?? "",
+        peso: dadosUsuario.peso ?? "",
 
-        posicao: "",
-        mao: "",
-        nivel: "",
-        experiencia: "",
-
+        posicao: dadosUsuario.posicao ?? "",
+        mao: dadosUsuario.mao ?? "",
+        nivel: dadosUsuario.nivel ?? "",
+        experiencia: dadosUsuario.experiencia ?? "",
       });
-
-      router.replace("/(tabs)/home");
+       router.replace("/(tabs)/home");
     } catch (error) {
       if (error instanceof FirebaseError) {
         switch (error.code) {

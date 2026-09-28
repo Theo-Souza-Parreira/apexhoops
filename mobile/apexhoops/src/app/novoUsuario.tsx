@@ -24,8 +24,12 @@ import { doc, setDoc } from "firebase/firestore";
 import { autenticacao, banco } from "@/services/Firebase";
 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useAutenticacao } from "@/hooks/useAutenticacao";
 
 export default function Cadastro() {
+
+const { logarContexto } = useAutenticacao();
+
 
   const [usuario, setUsuario] = useState<UsuarioTipo>({
     codigo: "",
@@ -90,6 +94,21 @@ export default function Cadastro() {
         mao: usuario.mao,
         nivel: usuario.nivel,
       });
+
+      await logarContexto({
+  codigo: uid,
+  nome: usuario.nome,
+  email: usuario.email,
+  senha: "",
+  permissao: usuario.permissao,
+  dataNascimento: usuario.dataNascimento,
+  altura: usuario.altura,
+  peso: usuario.peso,
+  posicao: usuario.posicao,
+  mao: usuario.mao,
+  nivel: usuario.nivel,
+  experiencia: usuario.experiencia,
+});
 
       Alert.alert(
         "Cadastro realizado!",

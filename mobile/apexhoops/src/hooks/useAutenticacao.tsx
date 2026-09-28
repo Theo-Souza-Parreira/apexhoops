@@ -10,11 +10,13 @@ export function useAutenticacao(){
   // Esse hook depende do contexto AutenticacaoContexto para ser executado
   // Por segurança é recomendável testá-lo antes
 
-  const autenticacaoContexto = useContext(AutenticacaoContexto)
+const autenticacaoContexto = useContext(AutenticacaoContexto)
 
-  if (autenticacaoContexto === undefined) {
-    throw new Error('Falta o <AutenticacaoProvider> na aplicação!')
-  }
+console.log("CONTEXTO AUTENTICAÇÃO:", autenticacaoContexto)
+
+if (autenticacaoContexto === undefined) {
+  throw new Error('Falta o <AutenticacaoProvider> na aplicação!')
+}
 
   // Garantida sua existencia, recupera os dados gerados  
   const { usuarioContexto, carregando, logarContexto, deslogarContexto } = autenticacaoContexto
