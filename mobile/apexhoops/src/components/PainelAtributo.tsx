@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import GraficoHistorico from "@/components/GraficoHistorico";
 
 import { Cores } from "@/constants/Cores";
 import { Fontes } from "@/constants/Fontes";
@@ -18,11 +17,9 @@ type PainelAtributoProps = {
 
 export default function PainelAtributo({
     atributo,
-    dadosHistorico,
     onFechar
 }: PainelAtributoProps) {
 
-const dadosHistorico: { periodo: string; minutos: number }[] = [];
 
     return (
         <View style={estilos.container}>
@@ -47,9 +44,7 @@ const dadosHistorico: { periodo: string; minutos: number }[] = [];
             <View style={estilos.conteudo}>
 
 <View style={estilos.graficoContainer}>
-    {dadosHistorico.length > 0 ? (
-        <GraficoHistorico dados={dadosHistorico} />
-    ) : (
+{ (
         <Text style={estilos.texto}>
             Sem histórico disponível.
         </Text>
