@@ -1,0 +1,34 @@
+.conteiner {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--cor-secundaria-escura);
+}
+
+.titulo {
+    font-family: var(--fonte-logo);
+    font-size: var(--tamanho-logo2);
+    color: var(--cor-primaria-clara);
+    position: absolute;
+    top: 50px;
+    transform: scaleY(1.2);
+    z-index: 1;
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: var(--cor-primaria-escura);
+}
+
+.icone {
+    margin-bottom: 20px;
+    font-size: var(--tamanho-logo1);
+    color: var(--cor-terciaria-erro); 
+}
+
+.mensagem {
+    color: var(--cor-terciaria-erro);
+    font-size: var(--tamanho-base2);
+}

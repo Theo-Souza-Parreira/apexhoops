@@ -1,0 +1,22 @@
+.conteiner {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.principal {
+    min-height: 100vh;
+
+    transition:
+        margin-left 0.3s ease,
+        width 0.3s ease;
+}
+
+.menuFechado {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+}
+
+.menuAberto {
+    margin-left: 175px;
+    width: calc(100% - 175px);
+}
