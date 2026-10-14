@@ -1,7 +1,9 @@
-import { StyleSheet, View } from "react-native";
+
+import { StyleSheet, View, Text } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
 
 import { Cores } from "@/constants/Cores";
+import { Fontes } from "@/constants/Fontes";
 
 type DadoHistorico = {
     periodo: string;
@@ -10,17 +12,10 @@ type DadoHistorico = {
 
 type GraficoHistoricoProps = {
     dados: DadoHistorico[];
-    largura: number;
-    altura: number;
 };
-
-const LARGURA_BASE = 400;
-const ALTURA_BASE = 180;
 
 export default function GraficoHistorico({
     dados,
-    largura,
-    altura,
 }: GraficoHistoricoProps) {
 
     const dadosGrafico = dados.map((item) => ({
@@ -28,83 +23,61 @@ export default function GraficoHistorico({
         label: item.periodo,
     }));
 
-    const escalaX = largura / LARGURA_BASE;
-    const escalaY = altura / ALTURA_BASE;
-
     return (
-        <View
-            style={[
-                estilos.container,
-                {
-                    width: largura,
-                    height: altura,
-                },
-            ]}
-        >
+        <View style={estilos.container}>
 
-            <View
-                style={[
-                    estilos.grafico,
-                    {
-                        transform: [
-                            { scaleX: escalaX },
-                            { scaleY: escalaY },
-                        ],
-                    },
-                ]}
-            >
+            <Text style={estilos.rotuloEixo}>
+                Tempo (min)
+            </Text>
 
-                <LineChart
-                    data={dadosGrafico}
-
-                    width={LARGURA_BASE}
-                    height={ALTURA_BASE}
-
-                    color={Cores.laranja}
-                    thickness={3}
-                    curved
-
-                    hideDataPoints={false}
-                    dataPointsColor={Cores.laranja}
-                    dataPointsRadius={4}
-
-                    yAxisTextStyle={{
-                        color: Cores.branco,
-                    }}
-
-                    xAxisLabelTextStyle={{
-                        color: Cores.branco,
-                        fontSize: 11,
-                    }}
-
-                    yAxisColor={Cores.laranja}
-                    xAxisColor={Cores.laranja}
-
-                    rulesColor={`${Cores.laranja}40`}
-                    rulesType="dashed"
-
-                    noOfSections={4}
-                    yAxisLabelSuffix=" min"
-
-                    xAxisLabelsHeight={25}
-                />
-
-            </View>
-
+            <LineChart
+                data={dadosGrafico}
+                areaChart
+                startFillColor={Cores.laranja}
+                endFillColor={Cores.laranja}
+                startOpacity={0.25}
+                endOpacity={0.25}
+                height={130}
+                thickness={2}
+                color={Cores.laranja}
+                dataPointsColor={Cores.laranja}
+                dataPointsRadius={3}
+                spacing={28}
+                initialSpacing={10}
+                endSpacing={10}
+                xAxisThickness={1}
+                xAxisColor={Cores.cinza_clara}
+                yAxisThickness={0}
+                yAxisTextStyle={{
+                    color: Cores.cinza_clara,
+                    fontFamily: Fontes.primaria,
+                    fontSize: 9,
+                }}
+                xAxisLabelTextStyle={{
+                    color: Cores.cinza_clara,
+                    fontFamily: Fontes.titulo1,
+                    fontSize: 9,
+                }}
+                rulesColor={Cores.cinza_clara}
+                rulesType="dashed"
+                noOfSections={4}
+                isAnimated
+                animationDuration={800}
+            />
         </View>
     );
 }
 
 const estilos = StyleSheet.create({
-
     container: {
-        alignItems: "center",
+        flex: 1,
         justifyContent: "center",
     },
 
-    grafico: {
-        width: LARGURA_BASE,
-        height: ALTURA_BASE,
+    rotuloEixo: {
+        color: Cores.cinza_clara,
+        fontFamily: Fontes.primaria,
+        fontSize: 10,
+        marginBottom: 4,
     },
-
 });

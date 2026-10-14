@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useState } from "react";
@@ -12,6 +12,16 @@ import PainelAtributo from "@/components/PainelAtributo";
 type DadoHistorico = {
     periodo: string;
     minutos: number;
+};
+
+type DadoDesempenhoMensal = {
+    periodo: string;
+    acertos: number;
+    erros: number;
+};
+
+type DadosEficiencia = {
+    mensal: DadoDesempenhoMensal[];
 };
 
 
@@ -88,29 +98,77 @@ export default function Status() {
             { periodo: "AGO", minutos: 340 },
         ],
     };
+    
+    
+    const eficienciaPorAtributo: Record<string, DadosEficiencia> = {
+        "Arremesso": {
+            mensal: [
+                { periodo: "JAN", acertos: 12, erros: 8 },
+                { periodo: "FEV", acertos: 15, erros: 5 },
+                { periodo: "MAR", acertos: 18, erros: 7 },
+                { periodo: "ABR", acertos: 16, erros: 9 },
+                { periodo: "MAI", acertos: 20, erros: 10 },
+                { periodo: "JUN", acertos: 17, erros: 13 },
+                { periodo: "JUL", acertos: 18, erros: 12 },
+                { periodo: "AGO", acertos: 14, erros: 6 },
+            ],
+        },
+
+        "Finalização": {
+            mensal: [
+                { periodo: "JAN", acertos: 8, erros: 5 },
+                { periodo: "FEV", acertos: 10, erros: 4 },
+                { periodo: "MAR", acertos: 12, erros: 6 },
+                { periodo: "ABR", acertos: 9, erros: 5 },
+                { periodo: "MAI", acertos: 11, erros: 3 },
+                { periodo: "JUN", acertos: 13, erros: 4 },
+                { periodo: "JUL", acertos: 12, erros: 5 },
+                { periodo: "AGO", acertos: 10, erros: 3 },
+            ],
+        },
+
+        "Mão Fraca": {
+            mensal: [
+                { periodo: "JAN", acertos: 3, erros: 7 },
+                { periodo: "FEV", acertos: 4, erros: 6 },
+                { periodo: "MAR", acertos: 5, erros: 5 },
+                { periodo: "ABR", acertos: 6, erros: 4 },
+                { periodo: "MAI", acertos: 5, erros: 5 },
+                { periodo: "JUN", acertos: 7, erros: 3 },
+                { periodo: "JUL", acertos: 6, erros: 4 },
+                { periodo: "AGO", acertos: 6, erros: 4 },
+            ],
+        },
+    };
 
     return (
 
             <SafeAreaView style={estilos.container}>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={estilos.conteudoRolavel}
+                >
 
-                <View style={estilos.cabecalho}>
-                    <Text style={estilos.titulo}>
-                        Estatísticas
-                    </Text>
-                </View>
+                    <View style={estilos.cabecalho}>
+                        <Text style={estilos.titulo}>
+                            Estatísticas
+                        </Text>
+                    </View>
 
-                <GraficoRadar
-                    onSelecionarAtributo={setAtributoSelecionado}
-                    tamanho={260}
-                />
-
-                {atributoSelecionado && (
-                    <PainelAtributo
-                        atributo={atributoSelecionado}
-                        dadosHistorico={historicoPorAtributo[atributoSelecionado]}
-                        onFechar={() => setAtributoSelecionado(null)}
+                    <GraficoRadar
+                        onSelecionarAtributo={setAtributoSelecionado}
+                        tamanho={260}
                     />
-                )}
+
+                    {atributoSelecionado && (
+                        <PainelAtributo
+                            atributo={atributoSelecionado}
+                            dadosHistorico={historicoPorAtributo[atributoSelecionado]}
+                            dadosEficiencia={eficienciaPorAtributo[atributoSelecionado]}
+                            onFechar={() => setAtributoSelecionado(null)}
+                        />
+                    )}
+                </ScrollView>
             </SafeAreaView>
     );
 }
@@ -144,5 +202,12 @@ const estilos = StyleSheet.create({
         justifyContent: "center",
         flex: 1,
     },
+
+    
+    conteudoRolavel: {
+        paddingBottom: 30,
+    },
+
+
 
 });
