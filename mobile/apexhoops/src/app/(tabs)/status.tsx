@@ -1,13 +1,16 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Cores } from "@/constants/Cores";
 import { Fontes } from "@/constants/Fontes";
 
 import GraficoRadar from "@/components/GraficoRadar";
 import PainelAtributo from "@/components/PainelAtributo";
+
+import { chamarApi } from "@/services/Api";
+import { useAutenticacao } from "@/hooks/useAutenticacao";
 
 type DadoHistorico = {
     periodo: string;
@@ -27,8 +30,47 @@ type DadosEficiencia = {
 
 export default function Status() {
 
+    const { usuarioContexto, carregando } = useAutenticacao();
+
     const [atributoSelecionado, setAtributoSelecionado] =
-    useState<string | null>(null);
+        useState<string | null>(null);
+
+    const [carregandoApi, setCarregandoApi] = useState(false);
+    const [erroApi, setErroApi] = useState<string | null>(null);
+
+    // --------------------------------------------------
+    // Busca os atributos só quando a sessão estiver pronta
+    // --------------------------------------------------
+    useEffect(() => {
+        if (carregando || !usuarioContexto) return;
+
+        let cancelado = false;
+
+        async function buscarAtributos() {
+            setCarregandoApi(true);
+            setErroApi(null);
+
+            try {
+                const dados = await chamarApi("/v1/atributos");
+                if (!cancelado) {
+                    console.log("ATRIBUTOS:", JSON.stringify(dados));
+                }
+            } catch (erro: any) {
+                if (!cancelado) {
+                    console.log("ERRO API:", erro.message);
+                    setErroApi(erro.message);
+                }
+            } finally {
+                if (!cancelado) setCarregandoApi(false);
+            }
+        }
+
+        buscarAtributos();
+
+        return () => {
+            cancelado = true;
+        };
+    }, [carregando, usuarioContexto]);
 
     const historicoPorAtributo: Record<string, DadoHistorico[]> = {
 
@@ -144,31 +186,25 @@ export default function Status() {
     return (
 
             <SafeAreaView style={estilos.container}>
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={estilos.conteudoRolavel}
-                >
 
-                    <View style={estilos.cabecalho}>
-                        <Text style={estilos.titulo}>
-                            Estatísticas
-                        </Text>
-                    </View>
+                <View style={estilos.cabecalho}>
+                    <Text style={estilos.titulo}>
+                        Estatísticas
+                    </Text>
+                </View>
 
-                    <GraficoRadar
-                        onSelecionarAtributo={setAtributoSelecionado}
-                        tamanho={260}
+                <GraficoRadar
+                    onSelecionarAtributo={setAtributoSelecionado}
+                    tamanho={260}
+                />
+
+                {atributoSelecionado && (
+                    <PainelAtributo
+                        atributo={atributoSelecionado}
+                        dadosHistorico={historicoPorAtributo[atributoSelecionado]}
+                        onFechar={() => setAtributoSelecionado(null)}
                     />
-
-                    {atributoSelecionado && (
-                        <PainelAtributo
-                            atributo={atributoSelecionado}
-                            dadosHistorico={historicoPorAtributo[atributoSelecionado]}
-                            dadosEficiencia={eficienciaPorAtributo[atributoSelecionado]}
-                            onFechar={() => setAtributoSelecionado(null)}
-                        />
-                    )}
-                </ScrollView>
+                )}
             </SafeAreaView>
     );
 }
@@ -202,12 +238,5 @@ const estilos = StyleSheet.create({
         justifyContent: "center",
         flex: 1,
     },
-
-    
-    conteudoRolavel: {
-        paddingBottom: 30,
-    },
-
-
 
 });

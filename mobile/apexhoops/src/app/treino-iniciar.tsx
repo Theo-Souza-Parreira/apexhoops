@@ -7,62 +7,122 @@ import {
     ScrollView,
     StyleSheet,
     Text,
-    TextInput,
     View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { addDoc, collection } from "firebase/firestore";
 
+import CampoResultado from "@/components/CampoResultado";
 import { Cores } from "@/constants/Cores";
 import { Fontes } from "@/constants/Fontes";
-import { ExercicioTreino } from "@/types/Treino";
+import { textoMeta, textoResultado } from "@/constants/Medicoes";
+import { useAutenticacao } from "@/hooks/useAutenticacao";
+import { banco } from "@/services/Firebase";
+import { ExercicioTreino, RegistroTreino } from "@/types/Treino";
+import ExecucaoExercicio, { EstadoExercicio } from "@/components/ExecucaoExercicio";
 
 // Treino fictício de demonstração.
-// No futuro isso virá da API, já com o treino recomendado.
+// Na fase da API, isso virá do endpoint de treino recomendado.
 const treinoDemo = {
+    id: "demo-arremesso",
     nome: "Treino de Arremesso",
     descricao: "Treino de demonstração — dados fictícios enquanto a recomendação automática não está pronta.",
 
     exercicios: [
         {
-            id: "1",
+            id: "arremesso-media-distancia",
             nome: "Arremesso de média distância",
             tipo: "bola",
-            meta: 10,
+            atributo: "Arremesso",
+            medicao: "acertos",
+            meta: 10, //unidade
         },
         {
-            id: "2",
+            id: "agilidade-lateral",
             nome: "Agilidade lateral",
             tipo: "fisico",
-            meta: 15,
+            atributo: "Condicionamento",
+            medicao: "tempo",
+            meta: 15, // minutos
         },
     ] as ExercicioTreino[],
 };
 
 export default function TreinoIniciar() {
 
+    const { usuarioContexto } = useAutenticacao();
+    const [estados, setEstados] = useState<Record<string, EstadoExercicio>>({});
     const [iniciado, setIniciado] = useState(false);
+    const [passo, setPasso] = useState(0);
     const [resultados, setResultados] = useState<Record<string, string>>({});
+    const [salvando, setSalvando] = useState(false);
+
+    const exercicios = treinoDemo.exercicios;
+    const emResumo = passo === exercicios.length;
+    const exercicio = exercicios[passo]; // undefined quando está no resumo
+
+        const estado: EstadoExercicio = exercicio ? estados[exercicio.id] ?? "pronto" : "pronto";
+
+    const iniciarExercicio = () =>
+        setEstados({ ...estados, [exercicio.id]: "executando" });
+
+    // Nos exercícios de tempo, o cronômetro já devolve os minutos feitos
+    const finalizarExercicio = (minutos?: number) => {
+        setEstados({ ...estados, [exercicio.id]: "finalizado" });
+        if (minutos !== undefined) {
+            atualizarResultado(exercicio.id, String(minutos));
+        }
+    };
 
     const atualizarResultado = (id: string, valor: string) => {
         setResultados({ ...resultados, [id]: valor });
     };
 
-    const concluirTreino = () => {
-        // Futuramente: salvar em usuarios/{uid}/registros
-        Alert.alert(
-            "Treino concluído (demonstração)",
-            "Em breve isso será salvo no seu histórico."
-        );
+    // Só avança se o campo do exercício atual foi respondido
+    const podeAvancar = !!exercicio && (resultados[exercicio.id] ?? "") !== "";
 
-        router.back();
+    const concluirTreino = async () => {
+        if (!usuarioContexto || salvando) return;
+
+        const registro: RegistroTreino = {
+            treinoId: treinoDemo.id,
+            nomeTreino: treinoDemo.nome,
+            data: new Date().toISOString(),
+            exercicios: exercicios.map((e) => ({
+                exercicioId: e.id,
+                nome: e.nome,
+                tipo: e.tipo,
+                atributo: e.atributo,
+                medicao: e.medicao,
+                meta: e.meta,
+                realizado: Number(resultados[e.id]) || 0,
+            })),
+        };
+
+        setSalvando(true);
+
+        try {
+            await addDoc(
+                collection(banco, "usuarios", usuarioContexto.codigo, "registros"),
+                registro
+            );
+
+            Alert.alert("Treino concluído", "Salvo no seu histórico.", [
+                { text: "OK", onPress: () => router.back() },
+            ]);
+        } catch (error) {
+            Alert.alert("Erro", "Não foi possível salvar o treino. Tente novamente.");
+        } finally {
+            setSalvando(false);
+        }
     };
 
     return (
 
-        <ScrollView showsVerticalScrollIndicator={false} 
-    contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ flexGrow: 1 }}>
 
             <LinearGradient
                 colors={[Cores.primaria, Cores.preto, Cores.musgo]}
@@ -84,11 +144,14 @@ export default function TreinoIniciar() {
                             {treinoDemo.nome}
                         </Text>
 
-                        <Text style={estilos.subtitulo}>
-                            {treinoDemo.descricao}
-                        </Text>
+                        {!iniciado && (
+                            <Text style={estilos.subtitulo}>
+                                {treinoDemo.descricao}
+                            </Text>
+                        )}
                     </View>
 
+                    {/* ===== ANTES DE INICIAR ===== */}
                     {!iniciado && (
                         <Pressable
                             style={({ pressed }) => [
@@ -97,92 +160,112 @@ export default function TreinoIniciar() {
                             ]}
                             onPress={() => setIniciado(true)}
                         >
-                            <MaterialIcons
-                                name="play-arrow"
-                                size={24}
-                                color={Cores.branco}
-                            />
-
-                            <Text style={estilos.botaoIniciarTexto}>
-                                Iniciar treino
-                            </Text>
+                            <MaterialIcons name="play-arrow" size={24} color={Cores.branco} />
+                            <Text style={estilos.botaoIniciarTexto}>Iniciar treino</Text>
                         </Pressable>
                     )}
 
-                    {iniciado && (
+                    {/* ===== UM EXERCÍCIO POR VEZ ===== */}
+                    {iniciado && !emResumo && (
                         <>
+                            <Text style={estilos.progresso}>
+                                Exercício {passo + 1} de {exercicios.length}
+                            </Text>
 
-                            {treinoDemo.exercicios.map((exercicio) => (
-                                <View
-                                    key={exercicio.id}
-                                    style={estilos.card}
-                                >
+                            <View style={estilos.card}>
 
-                                    <View style={estilos.videoPlaceholder}>
-                                        <MaterialIcons
-                                            name="videocam-off"
-                                            size={28}
-                                            color={Cores.cinza_clara}
-                                        />
-
-                                        <Text style={estilos.videoTexto}>
-                                            Vídeo em breve
-                                        </Text>
-                                    </View>
-
-                                    <Text style={estilos.exercicioNome}>
-                                        {exercicio.nome}
-                                    </Text>
-
-                                    <Text style={estilos.exercicioMeta}>
-                                        Meta: {exercicio.meta}{" "}
-                                        {exercicio.tipo === "bola"
-                                            ? "acertos"
-                                            : "repetições"}
-                                    </Text>
-
-                                    <View style={estilos.linhaCampo}>
-
-                                        <Text style={estilos.campoLabel}>
-                                            {exercicio.tipo === "bola"
-                                                ? "Acertos"
-                                                : "Repetições"}
-                                        </Text>
-
-                                        <TextInput
-                                            style={estilos.campo}
-                                            keyboardType="numeric"
-                                            placeholder="0"
-                                            placeholderTextColor={Cores.cinza_clara}
-                                            value={resultados[exercicio.id] ?? ""}
-                                            onChangeText={(valor) =>
-                                                atualizarResultado(exercicio.id, valor)
-                                            }
-                                        />
-
-                                    </View>
-
+                                <View style={estilos.videoPlaceholder}>
+                                    <MaterialIcons
+                                        name="videocam-off"
+                                        size={28}
+                                        color={Cores.cinza_clara}
+                                    />
+                                    <Text style={estilos.videoTexto}>Vídeo em breve</Text>
                                 </View>
-                            ))}
+
+                                <Text style={estilos.exercicioNome}>
+                                    {exercicio.nome}
+                                </Text>
+
+                                <Text style={estilos.exercicioMeta}>
+                                    {textoMeta(exercicio.medicao, exercicio.meta)}
+                                </Text>
+
+                                {estado === "finalizado" ? (
+                                    <CampoResultado
+                                        medicao={exercicio.medicao}
+                                        valor={resultados[exercicio.id] ?? ""}
+                                        onChange={(valor) => atualizarResultado(exercicio.id, valor)}
+                                    />
+                                ) : (
+                                    <ExecucaoExercicio
+                                        key={exercicio.id}
+                                        exercicio={exercicio}
+                                        estado={estado}
+                                        onIniciar={iniciarExercicio}
+                                        onFinalizar={finalizarExercicio}
+                                    />
+                                )}
+
+                            </View>
 
                             <Pressable
+                                disabled={!podeAvancar}
                                 style={({ pressed }) => [
                                     estilos.botaoIniciar,
-                                    { opacity: pressed ? 0.9 : 1 },
+                                    { opacity: !podeAvancar ? 0.4 : pressed ? 0.9 : 1 },
+                                ]}
+                                onPress={() => setPasso(passo + 1)}
+                            >
+                                <Text style={estilos.botaoIniciarTexto}>
+                                    {passo === exercicios.length - 1
+                                        ? "Ver resumo"
+                                        : "Próximo exercício"}
+                                </Text>
+                                <MaterialIcons name="arrow-forward" size={22} color={Cores.branco} />
+                            </Pressable>
+
+                              {passo > 0 && estado !== "executando" && (
+                                <Pressable onPress={() => setPasso(passo - 1)}>
+                                    <Text style={estilos.voltar}>Exercício anterior</Text>
+                                </Pressable>
+                            )}
+                        </>
+                    )}
+
+                    {/* ===== RESUMO FINAL ===== */}
+                    {iniciado && emResumo && (
+                        <>
+                            <View style={estilos.card}>
+                                <Text style={estilos.resumoTitulo}>Resumo do treino</Text>
+
+                                {exercicios.map((e) => (
+                                    <View key={e.id} style={estilos.linhaResumo}>
+                                        <Text style={estilos.resumoNome}>{e.nome}</Text>
+                                        <Text style={estilos.resumoValor}>
+                                            {textoResultado(e.medicao, e.meta, resultados[e.id] ?? "")}
+                                        </Text>
+                                    </View>
+                                ))}
+                            </View>
+
+                            <Pressable
+                                disabled={salvando}
+                                style={({ pressed }) => [
+                                    estilos.botaoIniciar,
+                                    { opacity: salvando ? 0.5 : pressed ? 0.9 : 1 },
                                 ]}
                                 onPress={concluirTreino}
                             >
-                                <MaterialIcons
-                                    name="check"
-                                    size={22}
-                                    color={Cores.branco}
-                                />
-
+                                <MaterialIcons name="check" size={22} color={Cores.branco} />
                                 <Text style={estilos.botaoIniciarTexto}>
-                                    Concluir treino
+                                    {salvando ? "Salvando..." : "Concluir treino"}
                                 </Text>
                             </Pressable>
 
+                            <Pressable onPress={() => setPasso(exercicios.length - 1)}>
+                                <Text style={estilos.voltar}>Editar respostas</Text>
+                            </Pressable>
                         </>
                     )}
 
@@ -315,35 +398,41 @@ const estilos = StyleSheet.create({
         marginBottom: 14,
     },
 
-    linhaCampo: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
+
+        progresso: {
+        color: Cores.textoSecundaria,
+        fontFamily: Fontes.secundaria,
+        fontSize: Fontes.pequeno,
+        marginBottom: 10,
     },
 
-    campoLabel: {
-        color: Cores.textoSecundaria,
+    resumoTitulo: {
+        color: Cores.branco,
+        fontFamily: Fontes.titulo2,
+        fontSize: Fontes.grande1,
+        marginBottom: 8,
+    },
 
+    linhaResumo: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: `${Cores.cinza_escuro}80`,
+    },
+
+    resumoNome: {
+        flex: 1,
+        color: Cores.branco,
         fontFamily: Fontes.secundaria,
         fontSize: Fontes.medio1,
+        marginRight: 10,
     },
 
-    campo: {
-        width: 80,
-        height: 44,
-
-        textAlign: "center",
-
-        backgroundColor: `${Cores.cinza_clara}35`,
-        color: Cores.branco,
-
-        fontFamily: Fontes.titulo1,
+    resumoValor: {
+        color: Cores.laranja,
+        fontFamily: Fontes.titulo2,
         fontSize: Fontes.medio1,
-
-        borderRadius: 12,
-
-        borderWidth: 2,
-        borderColor: Cores.cinza_escuro,
     },
-
 });

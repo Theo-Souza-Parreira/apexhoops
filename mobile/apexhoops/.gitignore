@@ -31,7 +31,6 @@ yarn-error.*
 *.pem
 
 # local env files
-# local env files
 .env
 .env.*
 !.env.example

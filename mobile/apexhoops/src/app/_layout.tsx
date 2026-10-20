@@ -133,6 +133,7 @@ if (!usuarioContexto && areaAutenticada) {
 
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
+      <Stack.Screen name="login" />
       <Stack.Screen name="novoUsuario" />
       <Stack.Screen name="treino-iniciar" />
       <Stack.Screen name="treino-criar" />
