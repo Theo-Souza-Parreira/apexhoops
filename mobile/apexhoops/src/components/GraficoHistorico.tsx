@@ -1,4 +1,3 @@
-
 import { StyleSheet, View, Text } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
 
@@ -14,21 +13,27 @@ type GraficoHistoricoProps = {
     dados: DadoHistorico[];
 };
 
-export default function GraficoHistorico({
-    dados,
-}: GraficoHistoricoProps) {
+export default function GraficoHistorico({ dados }: GraficoHistoricoProps) {
+    // Garante que dados nunca seja undefined
+    const dadosSeguros = dados ?? [];
 
-    const dadosGrafico = dados.map((item) => ({
+    const dadosGrafico = dadosSeguros.map((item) => ({
         value: item.minutos,
         label: item.periodo,
     }));
 
+    // Se não houver dados, não renderiza o gráfico (evita crash)
+    if (dadosGrafico.length === 0) {
+        return (
+            <View style={estilos.container}>
+                <Text style={estilos.textoVazio}>Sem dados para exibir.</Text>
+            </View>
+        );
+    }
+
     return (
         <View style={estilos.container}>
-
-            <Text style={estilos.rotuloEixo}>
-                Tempo (min)
-            </Text>
+            <Text style={estilos.rotuloEixo}>Tempo (min)</Text>
 
             <LineChart
                 data={dadosGrafico}
@@ -79,5 +84,12 @@ const estilos = StyleSheet.create({
         fontFamily: Fontes.primaria,
         fontSize: 10,
         marginBottom: 4,
+    },
+
+    textoVazio: {
+        color: Cores.cinza_clara,
+        fontFamily: Fontes.secundaria,
+        fontSize: 12,
+        textAlign: "center",
     },
 });

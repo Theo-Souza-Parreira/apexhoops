@@ -1,20 +1,34 @@
-// Tipos usados pela tela de Treinos.
-// Pensados para o futuro salvamento em: usuarios/{uid}/registros
-
 export type TipoExercicio = "bola" | "fisico";
+
+export type MedicaoExercicio = "acertos" | "repeticoes" | "tempo" | "concluido";
+
+export type AtributoTreino =
+    | "Arremesso"
+    | "Finalização"
+    | "Drible"
+    | "Condicionamento"
+    | "Mão Fraca"
+    | "Defesa";
 
 export type ExercicioTreino = {
     id: string;
     nome: string;
     tipo: TipoExercicio;
-    meta: number;
-    videoUrl?: string; // preenchido quando a gravação de vídeo existir
+    atributo: AtributoTreino;
+    medicao: MedicaoExercicio;
+    meta: number;          // para "concluido", use 1
+    nivel?: string;
+    posicoes?: string[];
+    instrucoes?: string;
+    videoUrl?: string;
 };
 
 export type ResultadoExercicio = {
     exercicioId: string;
     nome: string;
     tipo: TipoExercicio;
+    atributo: AtributoTreino;
+    medicao: MedicaoExercicio;
     meta: number;
     realizado: number;
 };

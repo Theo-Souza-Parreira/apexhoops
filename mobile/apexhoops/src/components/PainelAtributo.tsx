@@ -1,4 +1,5 @@
-import { Pressable, StyleSheet, Text, View, ScrollView } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+
 import GraficoHistorico from "@/components/GraficoHistorico";
 
 import { LineChart } from "react-native-gifted-charts";
@@ -21,7 +22,6 @@ type DadosEficiencia = {
     mensal: DadoDesempenhoMensal[];
 };
 
-
 type PainelAtributoProps = {
     atributo: string;
     dadosHistorico: DadoHistorico[];
@@ -36,12 +36,16 @@ export default function PainelAtributo({
     onFechar,
 }: PainelAtributoProps) {
 
-    const totalAcertos = dadosEficiencia?.mensal.reduce(
+    // Garante que dadosHistorico nunca seja undefined
+    const historicoSeguro = dadosHistorico ?? [];
+
+    // Cálculos de eficiência (só se dadosEficiencia existir)
+    const totalAcertos = dadosEficiencia?.mensal?.reduce(
         (total, mes) => total + mes.acertos,
         0
     ) ?? 0;
 
-    const totalErros = dadosEficiencia?.mensal.reduce(
+    const totalErros = dadosEficiencia?.mensal?.reduce(
         (total, mes) => total + mes.erros,
         0
     ) ?? 0;
@@ -52,142 +56,136 @@ export default function PainelAtributo({
         ? (totalAcertos / totalTentativas) * 100
         : 0;
 
-    const dadosAcertos = dadosEficiencia?.mensal.map((mes) => ({
+    // Prepara os dados dos gráficos com fallback seguro
+    const dadosAcertos = dadosEficiencia?.mensal?.map((mes) => ({
         value: mes.acertos,
         label: mes.periodo,
-    }));
+    })) ?? [];
 
-    const dadosErros = dadosEficiencia?.mensal.map((mes) => ({
+    const dadosErros = dadosEficiencia?.mensal?.map((mes) => ({
         value: mes.erros,
         label: mes.periodo,
-    }));
+    })) ?? [];
 
-    const possuiEficiencia = dadosEficiencia !== undefined;
+    // Só mostra o gráfico de eficiência se AMBOS os arrays tiverem dados
+    const podeMostrarGraficoEficiencia =
+        dadosAcertos.length > 0 && dadosErros.length > 0;
 
-    
-    return (            
-                <View style={estilos.container}>
-                    <View style={estilos.cabecalho}>
-                        <Text style={estilos.titulo}>{atributo}</Text>
+    return (
+        <View style={estilos.container}>
+            <View style={estilos.cabecalho}>
+                <Text style={estilos.titulo}>{atributo}</Text>
 
-                        <Pressable onPress={onFechar} style={estilos.botaoFechar}>
-                            <Text style={estilos.fechar}>x</Text>
-                        </Pressable>
-                    </View>
+                <Pressable onPress={onFechar} style={estilos.botaoFechar}>
+                    <Text style={estilos.fechar}>x</Text>
+                </Pressable>
+            </View>
 
-                    
-                        {/* Painel 1: histórico de treino */}
-                        <View style={estilos.conteudo}>
-                            <Text style={estilos.subtitulo}>Tempo treinado por mês</Text>
-                            <View style={estilos.graficoContainer}>
-                                <GraficoHistorico dados={dadosHistorico} />
-                            </View>
+            {/* Painel 1: histórico de treino */}
+            <View style={estilos.conteudo}>
+                <Text style={estilos.subtitulo}>Tempo treinado por mês</Text>
+                <View style={estilos.graficoContainer}>
+                    <GraficoHistorico dados={historicoSeguro} />
+                </View>
+            </View>
+
+            {/* Painel 2: desempenho (só se dadosEficiencia existir) */}
+            {dadosEficiencia && (
+                <View style={estilos.conteudo}>
+                    <Text style={estilos.subtitulo}>Desempenho nos treinos</Text>
+
+                    <View style={estilos.resumoEficiencia}>
+                        <View>
+                            <Text style={estilos.texto}>Eficiência geral</Text>
+                            <Text style={estilos.valor}>
+                                {eficienciaGeral.toFixed(1)}%
+                            </Text>
                         </View>
 
-                        {/* Painel 2: desempenho */}
-                        {dadosEficiencia && (
-                            <View style={estilos.conteudo}>
-                                <Text style={estilos.subtitulo}>Desempenho nos treinos</Text>
+                        <View style={estilos.resumoNumeros}>
+                            <Text style={estilos.texto}>Acertos: {totalAcertos}</Text>
+                            <Text style={estilos.texto}>Erros: {totalErros}</Text>
+                            <Text style={estilos.texto}>Tentativas: {totalTentativas}</Text>
+                        </View>
+                    </View>
 
-                                <View style={estilos.resumoEficiencia}>
-                                    <View>
-                                        <Text style={estilos.texto}>Eficiência geral</Text>
-                                        <Text style={estilos.valor}>
-                                            {eficienciaGeral.toFixed(1)}%
-                                        </Text>
-                                    </View>
+                    <Text style={estilos.textoGrafico}>Acertos x Erros por mês</Text>
 
-                                    <View style={estilos.resumoNumeros}>
-                                        <Text style={estilos.texto}>
-                                            Acertos: {totalAcertos}
-                                        </Text>
-                                        <Text style={estilos.texto}>
-                                            Erros: {totalErros}
-                                        </Text>
-                                        <Text style={estilos.texto}>
-                                            Tentativas: {totalTentativas}
-                                        </Text>
-                                    </View>
+                    {podeMostrarGraficoEficiencia ? (
+                        <LineChart
+                            data={dadosAcertos}
+                            data2={dadosErros}
+                            height={150}
+                            width={260}
+                            spacing={30}
+                            color={Cores.laranja}
+                            color2={Cores.azul}
+                            thickness={2}
+                            thickness2={2}
+                            dataPointsColor={Cores.laranja}
+                            dataPointsColor2={Cores.azul}
+                            xAxisLabelTextStyle={estilos.rotuloEixo}
+                            yAxisTextStyle={estilos.rotuloEixo}
+                            rulesColor={`${Cores.branco}25`}
+                            noOfSections={4}
+                            initialSpacing={10}
+                            endSpacing={10}
+                        />
+                    ) : (
+                        <Text style={estilos.textoVazio}>
+                            Sem dados de desempenho para exibir.
+                        </Text>
+                    )}
+
+                    <View style={estilos.legenda}>
+                        <View style={estilos.itemLegenda}>
+                            <View style={[estilos.pontoLegenda, { backgroundColor: Cores.laranja }]} />
+                            <Text style={estilos.texto}>Acertos</Text>
+                        </View>
+
+                        <View style={estilos.itemLegenda}>
+                            <View style={[estilos.pontoLegenda, { backgroundColor: Cores.azul }]} />
+                            <Text style={estilos.texto}>Erros</Text>
+                        </View>
+                    </View>
+
+                    <Text style={estilos.textoGrafico}>Desempenho mensal</Text>
+
+                    <View style={estilos.tabela}>
+                        <View style={[estilos.linhaTabela, estilos.cabecalhoTabela]}>
+                            <Text style={[estilos.celula, estilos.celulaMes]}>Mês</Text>
+                            <Text style={estilos.celula}>Acertos</Text>
+                            <Text style={estilos.celula}>Erros</Text>
+                            <Text style={estilos.celula}>Eficiência</Text>
+                        </View>
+
+                        {dadosEficiencia.mensal.map((mes) => {
+                            const tentativas = mes.acertos + mes.erros;
+                            const eficiencia = tentativas > 0
+                                ? (mes.acertos / tentativas) * 100
+                                : 0;
+
+                            return (
+                                <View key={mes.periodo} style={estilos.linhaTabela}>
+                                    <Text style={[estilos.celula, estilos.celulaMes]}>
+                                        {mes.periodo}
+                                    </Text>
+                                    <Text style={estilos.celula}>{mes.acertos}</Text>
+                                    <Text style={estilos.celula}>{mes.erros}</Text>
+                                    <Text style={estilos.celula}>
+                                        {eficiencia.toFixed(1)}%
+                                    </Text>
                                 </View>
-
-                                
-                                <Text style={estilos.textoGrafico}>Acertos x Erros por mês</Text>
-
-                                {dadosAcertos && dadosErros && (
-                                    <LineChart
-                                        data={dadosAcertos}
-                                        data2={dadosErros}
-                                        height={150}
-                                        width={260}
-                                        spacing={30}
-                                        color={Cores.laranja}
-                                        color2={Cores.azul}
-                                        thickness={2}
-                                        thickness2={2}
-                                        dataPointsColor={Cores.laranja}
-                                        dataPointsColor2={Cores.azul}
-                                        textColor={Cores.branco}
-                                        xAxisLabelTextStyle={estilos.rotuloEixo}
-                                        yAxisTextStyle={estilos.rotuloEixo}
-                                        rulesColor={`${Cores.branco}25`}
-                                        noOfSections={4}
-                                        initialSpacing={10}
-                                        endSpacing={10}
-                                    />
-                                )}
-
-                                <View style={estilos.legenda}>
-                                    <View style={estilos.itemLegenda}>
-                                        <View style={[estilos.pontoLegenda, { backgroundColor: Cores.laranja }]} />
-                                        <Text style={estilos.texto}>Acertos</Text>
-                                    </View>
-
-                                    <View style={estilos.itemLegenda}>
-                                        <View style={[estilos.pontoLegenda, { backgroundColor: Cores.azul }]} />
-                                        <Text style={estilos.texto}>Erros</Text>
-                                    </View>
-                                </View>
-                                
-                                <Text style={estilos.textoGrafico}>Desempenho mensal</Text>
-
-                                <View style={estilos.tabela}>
-                                    <View style={[estilos.linhaTabela, estilos.cabecalhoTabela]}>
-                                        <Text style={[estilos.celula, estilos.celulaMes]}>Mês</Text>
-                                        <Text style={estilos.celula}>Acertos</Text>
-                                        <Text style={estilos.celula}>Erros</Text>
-                                        <Text style={estilos.celula}>Eficiência</Text>
-                                    </View>
-
-                                    {dadosEficiencia.mensal.map((mes) => {
-                                        const tentativas = mes.acertos + mes.erros;
-                                        const eficiencia = tentativas > 0
-                                            ? (mes.acertos / tentativas) * 100
-                                            : 0;
-
-                                        return (
-                                            <View key={mes.periodo} style={estilos.linhaTabela}>
-                                                <Text style={[estilos.celula, estilos.celulaMes]}>
-                                                    {mes.periodo}
-                                                </Text>
-                                                <Text style={estilos.celula}>{mes.acertos}</Text>
-                                                <Text style={estilos.celula}>{mes.erros}</Text>
-                                                <Text style={estilos.celula}>
-                                                    {eficiencia.toFixed(1)}%
-                                                </Text>
-                                            </View>
-                                        );
-                                    })}
-                                </View>
-
-                            </View>
-                        )}
+                            );
+                        })}
+                    </View>
                 </View>
+            )}
+        </View>
     );
-
 }
 
 const estilos = StyleSheet.create({
-
     container: {
         width: "100%",
         alignItems: "center",
@@ -224,14 +222,18 @@ const estilos = StyleSheet.create({
         justifyContent: "center",
     },
 
-    descricaoContainer: {
-        height: "100%",
-    },
-
     texto: {
         color: Cores.branco,
         fontFamily: Fontes.secundaria,
         fontSize: 14,
+    },
+
+    textoVazio: {
+        color: Cores.cinza_clara,
+        fontFamily: Fontes.secundaria,
+        fontSize: 12,
+        textAlign: "center",
+        marginVertical: 12,
     },
 
     botaoFechar: {
@@ -246,50 +248,11 @@ const estilos = StyleSheet.create({
         fontSize: 24,
     },
 
-    pagina: {
-        width: 280,
-        height: 196,
-        padding: 10,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-
-    estatisticas: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 8,
-    },
-
     valor: {
         color: Cores.laranja,
         fontFamily: Fontes.titulo2,
         fontSize: 32,
     },
-
-    
-    indicadores: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 8,
-        marginTop: 12,
-    },
-
-    bolinha: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        backgroundColor: `${Cores.branco}50`,
-    },
-
-    bolinhaAtiva: {
-        backgroundColor: Cores.laranja,
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-    },
-
 
     subtitulo: {
         color: Cores.branco,
@@ -342,7 +305,6 @@ const estilos = StyleSheet.create({
         borderRadius: 4,
     },
 
-    
     tabela: {
         width: "100%",
         marginTop: 8,
