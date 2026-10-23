@@ -10,6 +10,8 @@ import {
   FiLock,
   FiMail,
   FiUser,
+  FiEye,
+  FiEyeOff,
 } from "react-icons/fi";
 
 import { useAutenticacao } from "../../hooks/useAutenticacao";
@@ -48,6 +50,12 @@ const cadastroSchema = z.object({
 });
 
 export function Cadastro() {
+
+  const [mostrarSenha, setMostrarSenha] =
+  useState(false);
+
+  const [mensagemSucesso, setMensagemSucesso] = useState("");
+
   const [mensagemErro, setMensagemErro] =
     useState("");
 
@@ -70,16 +78,21 @@ export function Cadastro() {
     data: FormValues,
   ) => {
     setMensagemErro("");
+    setMensagemSucesso("");
 
     try {
       await cadastrar(
-        data.nome.trim(),
-        data.email.trim(),
-        data.senha,
-      );
+      data.nome.trim(),
+      data.email.trim(),
+      data.senha,
+    );
 
-      navegacao("/home2");
+    setMensagemSucesso(
+      "Cadastro realizado! Verifique sua caixa de entrada e a pasta de spam para confirmar seu e-mail antes de entrar."
+    );
+
     } catch (error) {
+      console.error("Erro ao cadastrar:", error);
       if (error instanceof FirebaseError) {
         switch (error.code) {
           case "auth/email-already-in-use":
@@ -305,11 +318,28 @@ export function Cadastro() {
 
                 <input
                   id="senha"
-                  type="password"
+                  type={mostrarSenha ? "text" : "password"}
                   autoComplete="new-password"
                   placeholder="Crie uma senha"
                   {...register("senha")}
                 />
+
+                <button
+                  type="button"
+                  className={estilos.botaoSenha}
+                  onClick={() =>
+                    setMostrarSenha(
+                      (valorAtual) => !valorAtual
+                    )
+                  }
+                  aria-label={ mostrarSenha ? "Ocultar senha" : "Mostrar senha"}
+                >
+                  {mostrarSenha ? (
+                    <FiEyeOff aria-hidden="true" />
+                      ) : (
+                        <FiEye aria-hidden="true" />
+                      )}
+                </button>
               </div>
 
               {errors.senha && (
@@ -332,6 +362,12 @@ export function Cadastro() {
                 role="alert"
               >
                 {mensagemErro}
+              </p>
+            )}
+
+            {mensagemSucesso && (
+              <p role="status" className={estilos.mensagemSucesso}>
+                {mensagemSucesso}
               </p>
             )}
 

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
     FiActivity,
+    FiCamera,
     FiAward,
     FiEdit2,
     FiMapPin,
@@ -18,8 +19,6 @@ import {
     GiWeight,
 } from "react-icons/gi";
 
-import PerfilImagem from "../../assets/img/Perfil.png";
-
 import { useAutenticacao } from "../../hooks/useAutenticacao";
 
 import {
@@ -32,6 +31,8 @@ import type {
     Posicao,
     UsuarioTipo,
 } from "../../types/Usuario";
+
+import PerfilImagem from "../../assets/img/Perfil.png";
 
 import estilos from "./Perfil.module.css";
 
@@ -168,6 +169,7 @@ export function Perfil() {
         usuarioFirebase,
         perfil,
         recarregarPerfil,
+        atualizarFotoPerfil,
     } = useAutenticacao();
 
     const [rascunho, setRascunho] =
@@ -180,6 +182,15 @@ export function Perfil() {
     const [editando, setEditando] =
         useState(false);
 
+    const [arquivoFoto, setArquivoFoto] =
+        useState<File | null>(null);
+
+    const [previaFoto, setPreviaFoto] =
+        useState<string | null>(null);
+
+    const inputFotoRef =
+        useRef<HTMLInputElement>(null);
+
     const [salvando, setSalvando] =
         useState(false);
 
@@ -188,6 +199,14 @@ export function Perfil() {
 
     const [mensagemSucesso, setMensagemSucesso] =
         useState("");
+
+    useEffect(() => {
+        if (!previaFoto) {
+            return;
+        }
+
+        return () => URL.revokeObjectURL(previaFoto);
+    }, [previaFoto]);
 
     useEffect(() => {
         if (!perfil || editando) {
@@ -218,6 +237,8 @@ export function Perfil() {
 
         setMensagemErro("");
         setMensagemSucesso("");
+        setArquivoFoto(null);
+        setPreviaFoto(null);
 
         setRascunho(
             converterPerfilParaFormulario(perfil),
@@ -234,6 +255,8 @@ export function Perfil() {
         }
 
         setMensagemErro("");
+        setArquivoFoto(null);
+        setPreviaFoto(null);
         setEditando(false);
     };
 
@@ -338,8 +361,14 @@ export function Perfil() {
                 },
             );
 
+            if (arquivoFoto) {
+                await atualizarFotoPerfil(arquivoFoto);
+            }
+
             await recarregarPerfil();
 
+            setArquivoFoto(null);
+            setPreviaFoto(null);
             setEditando(false);
 
             setMensagemSucesso(
@@ -470,14 +499,68 @@ export function Perfil() {
                     className={estilos.identidade}
                 >
                     <div className={estilos.areaPerfil}>
-                        <div
-                            className={estilos.fotoPerfil}
-                        >
+
+
+                    <div className={estilos.controleFoto}>
+                        <div className={estilos.fotoPerfil}>
                             <img
-                                src={PerfilImagem}
-                                alt={`Foto de perfil de ${dadosExibidos.nome}`}
+                            src={
+                                previaFoto ??
+                                perfil.fotoPerfil ??
+                                PerfilImagem
+                            }
+                            alt={`Foto de perfil de ${dadosExibidos.nome}`}
                             />
                         </div>
+
+                        {editando && (
+                            <>
+                            <button
+                                type="button"
+                                className={estilos.botaoFoto}
+                                onClick={() => inputFotoRef.current?.click()}
+                                disabled={salvando}
+                                aria-label="Alterar foto de perfil"
+                                title="Alterar foto de perfil"
+                            >
+                                <FiCamera aria-hidden="true" />
+                            </button>
+
+                                <input
+                                    ref={inputFotoRef}
+                                    type="file"
+                                    accept="image/*"
+                                    className={estilos.inputFoto}
+                                    onChange={(event) => {
+                                    const arquivo = event.target.files?.[0];
+
+                                    if (!arquivo) return;
+
+                                    if (!arquivo.type.startsWith("image/")) {
+                                        setMensagemErro("Selecione um arquivo de imagem válido.");
+                                        event.target.value = "";
+                                        return;
+                                    }
+
+                                    if (arquivo.size > 5 * 1024 * 1024) {
+                                        setMensagemErro("A foto deve ter no máximo 5 MB.");
+                                        event.target.value = "";
+                                        return;
+                                    }
+
+                                    setMensagemErro("");
+                                    setArquivoFoto(arquivo);
+                                    setPreviaFoto(URL.createObjectURL(arquivo));
+                                    }}
+                                    disabled={salvando}
+                                />
+
+                                <p className={estilos.mensagemFoto}>
+                                    Alterar foto de perfil
+                                </p>
+                            </>
+                        )}
+                    </div>
 
                         <div
                             className={

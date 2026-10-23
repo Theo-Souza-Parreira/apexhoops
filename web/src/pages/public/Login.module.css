@@ -415,20 +415,45 @@
 
 .acoesSenha {
   width: 100%;
-
   display: flex;
   justify-content: flex-end;
-
   margin-top: -3px;
 }
 
-.acoesSenha span {
+.acoesSenha button {
+  padding: 0;
+  border: none;
+  background: transparent;
   color: var(--color-primary);
-
   font-family: var(--font-secondary);
-
   font-size: 0.78rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
 }
+
+.acoesSenha button:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+.acoesSenha button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mensagemSucesso {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--verde) 50%, transparent);
+  border-radius: 8px;
+  background-color: color-mix(in srgb, var(--verde-escuro) 25%, transparent);
+  color: var(--verde);
+  font-size: var(--text-m);
+  font-family: var(--font-secondary);
+  line-height: 1.6;
+  text-align: left;
+}
+
 
 
 /* =========================================

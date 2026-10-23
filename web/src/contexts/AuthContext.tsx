@@ -21,7 +21,10 @@ import {
 import {
   buscarUsuario,
   criarUsuario,
+  atualizarUsuario,
 } from "../services/UsuarioService";
+
+import { enviarImagem } from "../services/uploadImagem";
 
 import type { UsuarioTipo } from "../types/Usuario";
 
@@ -53,6 +56,10 @@ type AuthContextoTipo = {
   deslogar: () => Promise<void>;
 
   recarregarPerfil: () => Promise<void>;
+
+  atualizarFotoPerfil: (
+    arquivo: File,
+  ) => Promise<void>;
 };
 
 export const AuthContext =
@@ -80,6 +87,30 @@ export function AuthProvider({
 
   const [status, setStatus] =
     useState<StatusAutenticacao>("idle");
+
+  // Atualiza a foto no armazenamento e salva sua URL no Firestore.
+  const atualizarFotoPerfil = async (
+    arquivo: File,
+  ): Promise<void> => {
+    if (!usuarioFirebase) {
+      throw new Error("Usuário não autenticado.");
+    }
+
+    const urlFoto = await enviarImagem(arquivo);
+
+    await atualizarUsuario(usuarioFirebase.uid, {
+      fotoPerfil: urlFoto,
+    });
+
+    setPerfil((perfilAtual) =>
+      perfilAtual
+        ? {
+            ...perfilAtual,
+            fotoPerfil: urlFoto,
+          }
+        : perfilAtual,
+    );
+  };
 
   useEffect(() => {
     const cancelarObservador =
@@ -125,26 +156,30 @@ export function AuthProvider({
       const credencial =
         await criarConta(email, senha);
 
+      // Cria o perfil enquanto o usuário está autenticado.
       await criarUsuario({
         uid: credencial.user.uid,
         nome,
         email,
       });
 
-      const perfilCriado =
-        await buscarUsuario(
-          credencial.user.uid,
-        );
+      // Encerra a sessão após o cadastro.
+      await sairServico();
 
-      setUsuarioFirebase(
-        credencial.user,
-      );
-
-      setPerfil(perfilCriado);
-
+      setUsuarioFirebase(null);
+      setPerfil(null);
       setStatus("success");
     } catch (error) {
+      try {
+        await sairServico();
+      } catch {
+        // Preserva o erro original.
+      }
+
+      setUsuarioFirebase(null);
+      setPerfil(null);
       setStatus("error");
+
       throw error;
     }
   };
@@ -157,22 +192,13 @@ export function AuthProvider({
 
     try {
       const credencial =
-        await entrarServico(
-          email,
-          senha,
-        );
+        await entrarServico(email, senha);
 
       const perfilEncontrado =
-        await buscarUsuario(
-          credencial.user.uid,
-        );
+        await buscarUsuario(credencial.user.uid);
 
-      setUsuarioFirebase(
-        credencial.user,
-      );
-
+      setUsuarioFirebase(credencial.user);
       setPerfil(perfilEncontrado);
-
       setStatus("success");
     } catch (error) {
       setStatus("error");
@@ -204,9 +230,7 @@ export function AuthProvider({
       }
 
       const perfilAtualizado =
-        await buscarUsuario(
-          usuarioFirebase.uid,
-        );
+        await buscarUsuario(usuarioFirebase.uid);
 
       setPerfil(perfilAtualizado);
     };
@@ -227,6 +251,7 @@ export function AuthProvider({
         entrar,
         deslogar,
         recarregarPerfil,
+        atualizarFotoPerfil,
       }}
     >
       {Children}

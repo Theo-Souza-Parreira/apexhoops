@@ -478,6 +478,20 @@
 
   line-height: 1.2;
 }
+/*Mensagem sucesso*/
+
+.mensagemSucesso {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--verde) 50%, transparent);
+  border-radius: 8px;
+  background-color: color-mix(in srgb, var(--verde-escuro) 25%, transparent);
+  color: var(--verde);
+  font-size: var(--text-m);
+  font-family: var(--font-secondary);
+  line-height: 1.6;
+  text-align: left;
+}
 
 
 /* =========================================

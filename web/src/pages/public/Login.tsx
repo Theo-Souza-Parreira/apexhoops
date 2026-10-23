@@ -13,6 +13,10 @@ import {
 import { useAutenticacao } from "../../hooks/useAutenticacao";
 import estilos from "./Login.module.css";
 
+import { recuperarSenha } from "../../services/AutenticacaoService";
+
+
+
 type FormValues = {
     email: string;
     senha: string;
@@ -34,29 +38,79 @@ const loginSchema = z.object({
 });
 
 export function Login() {
-  const [mostrarSenha, setMostrarSenha] =
-    useState(false);
+    const [mostrarSenha, setMostrarSenha] =
+        useState(false);
 
-  const navegacao = useNavigate();
+    const navegacao = useNavigate();
 
-  const { entrar, status } =
-    useAutenticacao();
+    const { entrar, status } =
+        useAutenticacao();
 
-  const [mensagemErro, setMensagemErro] =
-    useState("");
+    const [mensagemErro, setMensagemErro] =
+        useState("");
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>({
-    resolver: zodResolver(loginSchema),
-  });
+    const [mensagemSucesso, setMensagemSucesso] = useState("");
+    const [recuperandoSenha, setRecuperandoSenha] = useState(false);
 
-  const autenticarUsuario = async (
-    data: FormValues,
-  ) => {
-    setMensagemErro("");
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<FormValues>({
+        resolver: zodResolver(loginSchema),
+    });
+
+    const solicitarRecuperacaoSenha = async () => {
+        setMensagemErro("");
+        setMensagemSucesso("");
+
+        // O valor será obtido diretamente do campo no próximo ajuste.
+        const campoEmail = document.querySelector<HTMLInputElement>("#email");
+        const emailInformado = campoEmail?.value.trim() ?? "";
+
+        if (!emailInformado) {
+            setMensagemErro("Informe seu e-mail no campo acima para recuperar a senha.");
+            return;
+        }
+
+        setRecuperandoSenha(true);
+
+        try {
+            await recuperarSenha(emailInformado);
+
+            setMensagemSucesso(
+                "Se houver uma conta associada a esse e-mail, você receberá as instruções para redefinir sua senha. Confira também a pasta de spam."
+            );
+        } catch (error) {
+            if (error instanceof FirebaseError) {
+                switch (error.code) {
+                    case "auth/invalid-email":
+                        setMensagemErro("Informe um e-mail válido.");
+                        break;
+
+                    case "auth/too-many-requests":
+                        setMensagemErro("Muitas tentativas. Aguarde alguns minutos e tente novamente.");
+                        break;
+
+                    case "auth/network-request-failed":
+                        setMensagemErro("Falha de conexão. Verifique sua internet.");
+                        break;
+
+                    default:
+                        setMensagemErro("Não foi possível solicitar a recuperação agora. Tente novamente.");
+                }
+            } else {
+                setMensagemErro("Ocorreu um erro inesperado ao solicitar a recuperação.");
+            }
+        } finally {
+            setRecuperandoSenha(false);
+        }
+    };
+
+    const autenticarUsuario = async (
+        data: FormValues,
+    ) => {
+        setMensagemErro("");
 
     try {
       await entrar(
@@ -65,46 +119,54 @@ export function Login() {
       );
 
       navegacao("/home2");
+    
     } catch (error) {
-      if (error instanceof FirebaseError) {
+    if (
+        error instanceof Error &&
+        error.message === "EMAIL_NAO_VERIFICADO"
+    ) {
+        setMensagemErro(
+        "Seu e-mail ainda não foi verificado. Confira sua caixa de entrada e clique no link enviado pelo Apex Hoops."
+        );
+        return;
+    }
+
+    if (error instanceof FirebaseError) {
         switch (error.code) {
-          case "auth/invalid-credential":
+        case "auth/invalid-credential":
+            setMensagemErro("E-mail ou senha incorretos.");
+            break;
+
+        case "auth/invalid-email":
+            setMensagemErro("Informe um e-mail válido.");
+            break;
+
+        case "auth/too-many-requests":
             setMensagemErro(
-              "E-mail ou senha incorretos.",
+            "Muitas tentativas de acesso. Aguarde alguns minutos."
             );
             break;
 
-          case "auth/invalid-email":
+        case "auth/network-request-failed":
             setMensagemErro(
-              "Informe um e-mail válido.",
+            "Não foi possível conectar ao servidor. Verifique sua internet."
             );
             break;
 
-          case "auth/too-many-requests":
+        default:
             setMensagemErro(
-              "Muitas tentativas de acesso. Aguarde alguns minutos.",
-            );
-            break;
-
-          case "auth/network-request-failed":
-            setMensagemErro(
-              "Não foi possível conectar ao servidor. Verifique sua internet.",
-            );
-            break;
-
-          default:
-            setMensagemErro(
-              "Não foi possível entrar na sua conta.",
+            "Não foi possível entrar na sua conta."
             );
         }
 
         return;
-      }
-
-      setMensagemErro(
-        "Ocorreu um erro inesperado durante o login.",
-      );
     }
+
+    setMensagemErro(
+        "Ocorreu um erro inesperado durante o login."
+    );
+    }
+
   };
     const novoUsuario = () => {
         navegacao("/cadastrar");
@@ -200,8 +262,7 @@ export function Login() {
                             </label>
 
                             <div
-                                className={`${estilos.campoContainer} ${errors.senha ? estilos.campoComErro : ""
-                                    }`}
+                                className={`${estilos.campoContainer} ${errors.senha ? estilos.campoComErro : ""}`}
                             >
                                 <FiLock
                                     className={estilos.iconeCampo}
@@ -249,9 +310,15 @@ export function Login() {
                         </div>
 
                         <div className={estilos.acoesSenha}>
-                            <span>
-                                Esqueceu sua senha?
-                            </span>
+                            <button
+                                type="button"
+                                onClick={solicitarRecuperacaoSenha}
+                                disabled={recuperandoSenha}
+                            >
+                                {recuperandoSenha
+                                    ? "Enviando..."
+                                    : "Esqueceu sua senha?"}
+                            </button>
                         </div>
                         {mensagemErro && (
                             <p
@@ -259,6 +326,15 @@ export function Login() {
                                 role="alert"
                             >
                                 {mensagemErro}
+                            </p>
+                        )}
+
+                        {mensagemSucesso && (
+                            <p
+                                className={estilos.mensagemSucesso}
+                                role="status"
+                            >
+                                {mensagemSucesso}
                             </p>
                         )}
                         <button
