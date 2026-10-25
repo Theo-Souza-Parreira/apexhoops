@@ -5,6 +5,7 @@ export type MedicaoExercicio = "acertos" | "repeticoes" | "tempo" | "concluido";
 export type AtributoTreino =
     | "Arremesso"
     | "Finalização"
+    | "Passe"
     | "Drible"
     | "Condicionamento"
     | "Mão Fraca"
@@ -16,11 +17,21 @@ export type ExercicioTreino = {
     tipo: TipoExercicio;
     atributo: AtributoTreino;
     medicao: MedicaoExercicio;
-    meta: number;          // para "concluido", use 1
+    meta: number;
     nivel?: string;
     posicoes?: string[];
+    locais?: string[];
     instrucoes?: string;
     videoUrl?: string;
+    objetivo?: string;
+    equipamentos?: string[];
+    espaco?: string;
+    progressao?: string;
+    regressao?: string;
+    cuidados?: string;
+    fonte?: string;
+    nota?: number;
+    faixa?: string;
 };
 
 export type ResultadoExercicio = {
@@ -38,4 +49,11 @@ export type RegistroTreino = {
     nomeTreino: string;
     data: string; // ISO string
     exercicios: ResultadoExercicio[];
+};
+
+export type TreinoRecomendado = {
+    id: string;
+    nome: string;
+    descricao: string;
+    exercicios: ExercicioTreino[];
 };

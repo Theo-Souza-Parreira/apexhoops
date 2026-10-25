@@ -15,7 +15,7 @@ export type Pergunta = {
     mascara?: "data";
     placeholder?: string;
     opcional?: boolean;
-    condicao?: (usuario: UsuarioTipo) => boolean; // se existir, a pergunta só aparece quando retorna true
+    condicao?: (usuario: UsuarioTipo) => boolean;
 };
 
 const igual = (valor: string): OpcaoPergunta => ({ valor, rotulo: valor });
@@ -76,7 +76,7 @@ export const Perguntas: Pergunta[] = [
         tipo: "multipla",
         icone: "sports-basketball",
         condicao: (u) => u.foco === "basquete" || u.foco === "ambos",
-        opcoes: ["Arremesso", "Finalização", "Drible", "Mão Fraca", "Defesa"].map(igual),
+        opcoes: ["Arremesso", "Finalização", "Passe", "Drible", "Mão Fraca", "Defesa"].map(igual),
     },
     {
         campo: "habilidadesFisico",
@@ -90,7 +90,8 @@ export const Perguntas: Pergunta[] = [
             { valor: "agilidade", rotulo: "Agilidade" },
             { valor: "explosao", rotulo: "Explosão e salto" },
         ],
-    },    {
+    },
+    {
         campo: "frequencia",
         titulo: "Quantos dias por semana você consegue treinar?",
         tipo: "unica",

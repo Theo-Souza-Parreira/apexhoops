@@ -1,7 +1,8 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
+    ActivityIndicator,
     Alert,
     Pressable,
     ScrollView,
@@ -15,61 +16,66 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { addDoc, collection } from "firebase/firestore";
 
 import CampoResultado from "@/components/CampoResultado";
+import VideoAula from "@/components/VideoAula";
 import { Cores } from "@/constants/Cores";
 import { Fontes } from "@/constants/Fontes";
 import { textoMeta, textoResultado } from "@/constants/Medicoes";
 import { useAutenticacao } from "@/hooks/useAutenticacao";
+import { chamarApi } from "@/services/Api";
 import { banco } from "@/services/Firebase";
-import { ExercicioTreino, RegistroTreino } from "@/types/Treino";
+import { RegistroTreino, TreinoRecomendado } from "@/types/Treino";
 import ExecucaoExercicio, { EstadoExercicio } from "@/components/ExecucaoExercicio";
-
-// Treino fictício de demonstração.
-// Na fase da API, isso virá do endpoint de treino recomendado.
-const treinoDemo = {
-    id: "demo-arremesso",
-    nome: "Treino de Arremesso",
-    descricao: "Treino de demonstração — dados fictícios enquanto a recomendação automática não está pronta.",
-
-    exercicios: [
-        {
-            id: "arremesso-media-distancia",
-            nome: "Arremesso de média distância",
-            tipo: "bola",
-            atributo: "Arremesso",
-            medicao: "acertos",
-            meta: 10, //unidade
-        },
-        {
-            id: "agilidade-lateral",
-            nome: "Agilidade lateral",
-            tipo: "fisico",
-            atributo: "Condicionamento",
-            medicao: "tempo",
-            meta: 15, // minutos
-        },
-    ] as ExercicioTreino[],
-};
 
 export default function TreinoIniciar() {
 
     const { usuarioContexto } = useAutenticacao();
+
+    const [treino, setTreino] = useState<TreinoRecomendado | null>(null);
+    const [carregandoTreino, setCarregandoTreino] = useState(true);
+    const [erroTreino, setErroTreino] = useState<string | null>(null);
+
     const [estados, setEstados] = useState<Record<string, EstadoExercicio>>({});
     const [iniciado, setIniciado] = useState(false);
     const [passo, setPasso] = useState(0);
     const [resultados, setResultados] = useState<Record<string, string>>({});
     const [salvando, setSalvando] = useState(false);
 
-    const exercicios = treinoDemo.exercicios;
+    useEffect(() => {
+        let cancelado = false;
+
+        async function buscar() {
+            try {
+                const dados = await chamarApi<TreinoRecomendado>("/v1/treinos/recomendado");
+                if (!cancelado) setTreino(dados);
+            } catch (erro: any) {
+                if (!cancelado) {
+                    console.log("ERRO API (treino):", erro.message);
+                    setErroTreino(erro.message);
+                }
+            } finally {
+                if (!cancelado) setCarregandoTreino(false);
+            }
+        }
+
+        buscar();
+        return () => { cancelado = true; };
+    }, []);
+
+    const exercicios = treino?.exercicios ?? [];
     const emResumo = passo === exercicios.length;
-    const exercicio = exercicios[passo]; // undefined quando está no resumo
+    const exercicio = exercicios[passo];
 
-        const estado: EstadoExercicio = exercicio ? estados[exercicio.id] ?? "pronto" : "pronto";
+    const estado: EstadoExercicio = exercicio
+        ? estados[exercicio.id] ?? "pronto"
+        : "pronto";
 
-    const iniciarExercicio = () =>
+    const iniciarExercicio = () => {
+        if (!exercicio) return;
         setEstados({ ...estados, [exercicio.id]: "executando" });
+    };
 
-    // Nos exercícios de tempo, o cronômetro já devolve os minutos feitos
     const finalizarExercicio = (minutos?: number) => {
+        if (!exercicio) return;
         setEstados({ ...estados, [exercicio.id]: "finalizado" });
         if (minutos !== undefined) {
             atualizarResultado(exercicio.id, String(minutos));
@@ -80,17 +86,16 @@ export default function TreinoIniciar() {
         setResultados({ ...resultados, [id]: valor });
     };
 
-    // Só avança se o campo do exercício atual foi respondido
     const podeAvancar = !!exercicio && (resultados[exercicio.id] ?? "") !== "";
 
     const concluirTreino = async () => {
-        if (!usuarioContexto || salvando) return;
+        if (!usuarioContexto || !treino || salvando) return;
 
         const registro: RegistroTreino = {
-            treinoId: treinoDemo.id,
-            nomeTreino: treinoDemo.nome,
+            treinoId: treino.id,
+            nomeTreino: treino.nome,
             data: new Date().toISOString(),
-            exercicios: exercicios.map((e) => ({
+            exercicios: treino.exercicios.map((e) => ({
                 exercicioId: e.id,
                 nome: e.nome,
                 tipo: e.tipo,
@@ -119,11 +124,49 @@ export default function TreinoIniciar() {
         }
     };
 
-    return (
+    // --------------------------------------------------
+    // Estado de carregamento / erro
+    // --------------------------------------------------
+    if (carregandoTreino || !treino) {
+        return (
+            <LinearGradient
+                colors={[Cores.primaria, Cores.preto, Cores.musgo]}
+                locations={[0, 0.5, 1]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={estilos.fundo}
+            >
+                <SafeAreaView style={estilos.container}>
+                    <Pressable onPress={() => router.back()}>
+                        <Text style={estilos.voltar}>← Voltar</Text>
+                    </Pressable>
 
+                    <View style={estilos.loadingArea}>
+                        {erroTreino ? (
+                            <>
+                                <MaterialIcons name="error-outline" size={42} color={Cores.laranja} />
+                                <Text style={estilos.loadingTexto}>
+                                    Não foi possível carregar o treino.
+                                </Text>
+                                <Text style={estilos.loadingDetalhe}>{erroTreino}</Text>
+                            </>
+                        ) : (
+                            <>
+                                <ActivityIndicator size="large" color={Cores.laranja} />
+                                <Text style={estilos.loadingTexto}>
+                                    Preparando seu treino...
+                                </Text>
+                            </>
+                        )}
+                    </View>
+                </SafeAreaView>
+            </LinearGradient>
+        );
+    }
+
+    return (
         <ScrollView showsVerticalScrollIndicator={false}
             contentContainerStyle={{ flexGrow: 1 }}>
-
             <LinearGradient
                 colors={[Cores.primaria, Cores.preto, Cores.musgo]}
                 locations={[0, 0.5, 1]}
@@ -134,24 +177,17 @@ export default function TreinoIniciar() {
                 <SafeAreaView style={estilos.container}>
 
                     <Pressable onPress={() => router.back()}>
-                        <Text style={estilos.voltar}>
-                            ← Voltar
-                        </Text>
+                        <Text style={estilos.voltar}>← Voltar</Text>
                     </Pressable>
 
                     <View style={estilos.cabecalho}>
-                        <Text style={estilos.titulo}>
-                            {treinoDemo.nome}
-                        </Text>
+                        <Text style={estilos.titulo}>{treino.nome}</Text>
 
                         {!iniciado && (
-                            <Text style={estilos.subtitulo}>
-                                {treinoDemo.descricao}
-                            </Text>
+                            <Text style={estilos.subtitulo}>{treino.descricao}</Text>
                         )}
                     </View>
 
-                    {/* ===== ANTES DE INICIAR ===== */}
                     {!iniciado && (
                         <Pressable
                             style={({ pressed }) => [
@@ -165,8 +201,7 @@ export default function TreinoIniciar() {
                         </Pressable>
                     )}
 
-                    {/* ===== UM EXERCÍCIO POR VEZ ===== */}
-                    {iniciado && !emResumo && (
+                    {iniciado && !emResumo && exercicio && (
                         <>
                             <Text style={estilos.progresso}>
                                 Exercício {passo + 1} de {exercicios.length}
@@ -174,14 +209,19 @@ export default function TreinoIniciar() {
 
                             <View style={estilos.card}>
 
-                                <View style={estilos.videoPlaceholder}>
-                                    <MaterialIcons
-                                        name="videocam-off"
-                                        size={28}
-                                        color={Cores.cinza_clara}
-                                    />
-                                    <Text style={estilos.videoTexto}>Vídeo em breve</Text>
-                                </View>
+                                {/* Vídeo: usa VideoAula se tiver ID, senão placeholder */}
+                                {exercicio.videoUrl ? (
+                                    <VideoAula videoId={exercicio.videoUrl} altura={180} />
+                                ) : (
+                                    <View style={estilos.videoPlaceholder}>
+                                        <MaterialIcons
+                                            name="videocam-off"
+                                            size={28}
+                                            color={Cores.cinza_clara}
+                                        />
+                                        <Text style={estilos.videoTexto}>Vídeo em breve</Text>
+                                    </View>
+                                )}
 
                                 <Text style={estilos.exercicioNome}>
                                     {exercicio.nome}
@@ -225,7 +265,7 @@ export default function TreinoIniciar() {
                                 <MaterialIcons name="arrow-forward" size={22} color={Cores.branco} />
                             </Pressable>
 
-                              {passo > 0 && estado !== "executando" && (
+                            {passo > 0 && estado !== "executando" && (
                                 <Pressable onPress={() => setPasso(passo - 1)}>
                                     <Text style={estilos.voltar}>Exercício anterior</Text>
                                 </Pressable>
@@ -233,7 +273,6 @@ export default function TreinoIniciar() {
                         </>
                     )}
 
-                    {/* ===== RESUMO FINAL ===== */}
                     {iniciado && emResumo && (
                         <>
                             <View style={estilos.card}>
@@ -283,7 +322,6 @@ const estilos = StyleSheet.create({
 
     container: {
         flexGrow: 1,
-
         paddingHorizontal: 24,
         paddingTop: 25,
         paddingBottom: 30,
@@ -291,10 +329,8 @@ const estilos = StyleSheet.create({
 
     voltar: {
         color: Cores.laranja,
-
         fontFamily: Fontes.secundaria,
         fontSize: Fontes.medio1,
-
         marginBottom: 20,
     },
 
@@ -304,19 +340,15 @@ const estilos = StyleSheet.create({
 
     titulo: {
         color: Cores.branco,
-
         fontFamily: Fontes.titulo2,
         fontSize: Fontes.grande3,
     },
 
     subtitulo: {
         color: Cores.textoSecundaria,
-
         fontFamily: Fontes.secundaria,
         fontSize: Fontes.pequeno,
-
         marginTop: 6,
-
         lineHeight: 18,
     },
 
@@ -324,82 +356,61 @@ const estilos = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-
         backgroundColor: Cores.laranja,
-
         borderRadius: 16,
-
         paddingVertical: 16,
-
         marginBottom: 18,
-
         gap: 8,
     },
 
     botaoIniciarTexto: {
         color: Cores.branco,
-
         fontFamily: Fontes.titulo2,
         fontSize: Fontes.medio1,
     },
 
     card: {
         width: "100%",
-
         backgroundColor: `${Cores.primaria}50`,
-
         borderWidth: 1,
         borderColor: `${Cores.laranja}55`,
-
         borderRadius: 16,
-
         padding: 20,
-
         marginBottom: 18,
     },
 
     videoPlaceholder: {
         width: "100%",
         height: 120,
-
         alignItems: "center",
         justifyContent: "center",
-
         backgroundColor: `${Cores.preto}60`,
-
         borderRadius: 12,
-
         marginBottom: 14,
-
         gap: 4,
     },
 
     videoTexto: {
         color: Cores.textoSecundaria,
-
         fontFamily: Fontes.secundaria,
         fontSize: Fontes.pequeno,
     },
 
     exercicioNome: {
         color: Cores.branco,
-
         fontFamily: Fontes.titulo2,
         fontSize: Fontes.medio1,
     },
 
     exercicioMeta: {
         color: Cores.textoSecundaria,
-
         fontFamily: Fontes.secundaria,
         fontSize: Fontes.pequeno,
-
         marginTop: 2,
         marginBottom: 14,
     },
 
-
-        progresso: {
+    progresso: {
         color: Cores.textoSecundaria,
         fontFamily: Fontes.secundaria,
         fontSize: Fontes.pequeno,
@@ -434,5 +445,27 @@ const estilos = StyleSheet.create({
         color: Cores.laranja,
         fontFamily: Fontes.titulo2,
         fontSize: Fontes.medio1,
+    },
+
+    loadingArea: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: 24,
+        gap: 16,
+    },
+
+    loadingTexto: {
+        color: Cores.branco,
+        fontFamily: Fontes.titulo2,
+        fontSize: Fontes.medio1,
+        textAlign: "center",
+    },
+
+    loadingDetalhe: {
+        color: Cores.textoSecundaria,
+        fontFamily: Fontes.secundaria,
+        fontSize: Fontes.pequeno,
+        textAlign: "center",
     },
 });

@@ -3,6 +3,7 @@ import { AtributoTreino, RegistroTreino, ResultadoExercicio } from "../tipos/Tre
 export const ATRIBUTOS: AtributoTreino[] = [
     "Arremesso",
     "Finalização",
+    "Passe",
     "Drible",
     "Condicionamento",
     "Mão Fraca",
